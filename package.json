@@ -1,5 +1,6 @@
 {
   "name": "talk_template",
+  "packageManager": "pnpm@9.2.0",
   "scripts": {
     "dev": "slidev slides.md",
     "build": "slidev build",
