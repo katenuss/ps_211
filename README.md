@@ -15,3 +15,10 @@ To export to pdf:
 
 `pnpm export`
 
+# Publishing live 
+
+To auto publish live enable github pages from github actions on your forked repo.
+
+# Note
+
+If you change the name of your repo then change the "name" field in `package.json` to match.

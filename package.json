@@ -3,7 +3,7 @@
   "packageManager": "pnpm@9.2.0",
   "scripts": {
     "dev": "slidev slides.md",
-    "build": "slidev build",
+    "build": "slidev build --base /$npm_package_name",
     "export": "slidev export --wait 1000  --per-slide --output ./slides.pdf"
   },
   "type": "module",
