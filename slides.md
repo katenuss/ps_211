@@ -8,5 +8,5 @@ neversink_slug: my happy talk
 
 # My talk
 
-**Todd M. Gureckis**
+**Todd M. Gureckis**  
 New York University
