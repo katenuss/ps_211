@@ -1,0 +1,17 @@
+{
+  "name": "talk_template",
+  "scripts": {
+    "dev": "slidev slides.md",
+    "build": "slidev build",
+    "export": "slidev export --wait 1000  --per-slide --output ./slides.pdf"
+  },
+  "type": "module",
+  "version": "0.0.0",
+  "devDependencies": {
+    "vite": "^5.3.2",
+    "@slidev/cli": "^0.49.16"
+  },
+  "dependencies": {
+    "slidev-theme-neversink": "^0.0.3"
+  }
+}
