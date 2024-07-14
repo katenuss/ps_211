@@ -13,6 +13,6 @@
     "@slidev/cli": "^0.49.16"
   },
   "dependencies": {
-    "slidev-theme-neversink": "^0.0.3"
+    "slidev-theme-neversink": "^0.1.0"
   }
 }
