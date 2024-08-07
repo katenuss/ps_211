@@ -106,7 +106,7 @@ function checkvars() {
       }
     }
 
-    if ($frontmatter.layout == 'cover') {
+    if ($frontmatter.layout == 'cover' || $frontmatter.layout == 'section') {
       process_top_left_colors($frontmatter.color)
     }
   } else if ($frontmatter.layout == 'end') {
@@ -138,7 +138,7 @@ function checkvars() {
       }
     }
 
-    if ($frontmatter.layout == 'cover') {
+    if ($frontmatter.layout == 'cover' || $frontmatter.layout == 'section') {
       process_top_right_colors($frontmatter.color)
     }
   } else if ($frontmatter.layout == 'end') {
@@ -152,9 +152,10 @@ onMounted(() => checkvars())
 <template>
   <div
     v-if="
-      ($slidev.nav.currentLayout == 'cover' && $frontmatter.brand_tl !== false) ||
-      ($slidev.nav.currentLayout == 'intro' && $frontmatter.brand_tl !== false) ||
-      ($slidev.nav.currentLayout == 'end' && $frontmatter.brand_tl !== false) ||
+      ($frontmatter.layout == 'cover' && $frontmatter.brand_tl !== false) ||
+      ($frontmatter.layout == 'section' && $frontmatter.brand_tl !== false) ||
+      ($frontmatter.layout == 'intro' && $frontmatter.brand_tl !== false) ||
+      ($frontmatter.layout == 'end' && $frontmatter.brand_tl !== false) ||
       $frontmatter.brand_tl == true ||
       $frontmatter.brand_tl == 'auto_true'
     "
@@ -167,12 +168,12 @@ onMounted(() => checkvars())
     v-if="
       $frontmatter.brand_tr == true ||
       ($frontmatter.brand_tr == 'auto_true' &&
-        $frontmatter.currentLayout != 'image' &&
-        $frontmatter.currentLayout != 'image-right' &&
-        $frontmatter.currentLayout != 'iframe-right' &&
-        $frontmatter.currentLayout != 'iframe' &&
-        $frontmatter.currentLayout != 'top-title' &&
-        $frontmatter.currentLayout != 'top-title-twocols')
+        $frontmatter.layout != 'image' &&
+        $frontmatter.layout != 'image-right' &&
+        $frontmatter.layout != 'iframe-right' &&
+        $frontmatter.layout != 'iframe' &&
+        $frontmatter.layout != 'top-title' &&
+        $frontmatter.layout != 'top-title-two-cols')
     "
     class="absolute top-3 right-2 p-3 pr-3 border.b-1 z-10 font-size-3 font-mono width-full text-right"
     :class="brand_tr_color"
