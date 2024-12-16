@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       slidev-theme-neversink:
-        specifier: ^0.3.4
-        version: 0.3.4(@nuxt/kit@3.12.3(rollup@4.18.1))(@vue/compiler-sfc@3.4.34)(markdown-it@14.1.0)(postcss@8.4.39)(rollup@4.18.1)(typescript@5.5.4)(vite@5.3.3(@types/node@18.19.39))(vue-template-compiler@2.7.16)(vue@3.4.34(typescript@5.5.4))
+        specifier: ^0.3.6
+        version: 0.3.6(@nuxt/kit@3.12.3(rollup@4.18.1))(@vue/compiler-sfc@3.4.34)(markdown-it@14.1.0)(postcss@8.4.39)(rollup@4.18.1)(typescript@5.5.4)(vite@5.3.3(@types/node@18.19.39))(vue-template-compiler@2.7.16)(vue@3.4.34(typescript@5.5.4))
     devDependencies:
       '@slidev/cli':
         specifier: ^0.49.21
@@ -2421,8 +2421,8 @@ packages:
     resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
     engines: {node: '>=14.16'}
 
-  slidev-theme-neversink@0.3.4:
-    resolution: {integrity: sha512-KGZ8uR9HUMieR7NHqL28dRKQzUiqNk0km9GkX3+3B6K2Q4C+w1rf7B9d2cxM9jwEPoQQQin1JK2cRnGLHhznzg==}
+  slidev-theme-neversink@0.3.6:
+    resolution: {integrity: sha512-x2fD986NYTmrXpR3d6EeST421voUk3GkL6XCn/6Ba2CcozWLNmXhEQPnjWdyngZfPMs7NNLbT2PLvOCrwXNymA==}
     engines: {node: '>=18.0.0', slidev: '>=0.49.21'}
 
   source-map-js@1.2.0:
@@ -6054,7 +6054,7 @@ snapshots:
   slash@5.1.0:
     optional: true
 
-  slidev-theme-neversink@0.3.4(@nuxt/kit@3.12.3(rollup@4.18.1))(@vue/compiler-sfc@3.4.34)(markdown-it@14.1.0)(postcss@8.4.39)(rollup@4.18.1)(typescript@5.5.4)(vite@5.3.3(@types/node@18.19.39))(vue-template-compiler@2.7.16)(vue@3.4.34(typescript@5.5.4)):
+  slidev-theme-neversink@0.3.6(@nuxt/kit@3.12.3(rollup@4.18.1))(@vue/compiler-sfc@3.4.34)(markdown-it@14.1.0)(postcss@8.4.39)(rollup@4.18.1)(typescript@5.5.4)(vite@5.3.3(@types/node@18.19.39))(vue-template-compiler@2.7.16)(vue@3.4.34(typescript@5.5.4)):
     dependencies:
       '@iconify-json/logos': 1.1.43
       '@iconify-json/mdi': 1.1.67
