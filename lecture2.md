@@ -6,7 +6,7 @@ theme: neversink
 neversink_slug: PS 211 - Lecture 1
 ---
 
-# PS 211: Introductions & Syllabus Review
+# PS 211: Lecture 2
 ## Fall 2025 · Section C1
 
 ---
