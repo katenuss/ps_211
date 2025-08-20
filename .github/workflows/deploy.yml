@@ -1,3 +1,19 @@
+name: Deploy pages
+
+on:
+  push:
+    branches: [ main ]   # run on pushes to main
+  workflow_dispatch:      # allow manual trigger
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -7,13 +23,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'   # cache dependencies for faster builds
+          cache: 'pnpm'
 
-      # Enable pnpm
       - uses: pnpm/action-setup@v4
         with:
           version: 9
-          run_install: false   # we'll handle install separately
+          run_install: false
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -33,3 +48,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
