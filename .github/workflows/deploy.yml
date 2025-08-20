@@ -1,4 +1,4 @@
-name: Deploy pages (multi-lecture)
+name: Deploy pages (multi-lecture, simple)
 
 on:
   push:
@@ -15,50 +15,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  REPO: ${{ github.event.repository.name }}  # ps_211
+  REPO: ${{ github.event.repository.name }}  # e.g., ps_211
 
 jobs:
-  discover:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    outputs:
-      lectures: ${{ steps.set-matrix.outputs.lectures }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Show workspace contents (root)
-        run: |
-          pwd
-          ls -la
-          echo "--- end ls root ---"
-
-      - id: set-matrix
-        shell: bash
-        run: |
-          set -e
-          echo "🔎 Searching for lecture*.md in repo root…"
-          shopt -s nullglob
-          files=(lecture*.md)
-          echo "Raw matches: ${files[*]:-"(none)"}"
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "⚠️ No lecture*.md files found in repo root."
-            echo "lectures=[]" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # strip .md extension
-          json=$(printf '%s\n' "${files[@]}" | sed 's/\.md$//' | jq -R -s -c 'split("\n")[:-1]')
-          echo "Found lectures: $json"
-          echo "lectures=$json" >> "$GITHUB_OUTPUT"
-
-
-  build:
-    needs: discover
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        lecture: ${{ fromJson(needs.discover.outputs.lectures) }}
-    steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -75,61 +39,48 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Build ${{ matrix.lecture }}
+      - name: Discover & build all lecture*.md
+        shell: bash
         run: |
-          LECTURE="${{ matrix.lecture }}"
-          echo "Building $LECTURE"
-          pnpm exec slidev build "${LECTURE}.md" \
-            --base "/${REPO}/${LECTURE}/" \
-            --out "dist/${LECTURE}"
+          set -e
+          shopt -s nullglob
+          # find lecture*.md in repo root (adjust to use find for recursive)
+          lectures=(lecture*.md)
+          if [ ${#lectures[@]} -eq 0 ]; then
+            echo "No lecture*.md files found."
+            exit 1
+          fi
 
-      - name: Upload partial
-        uses: actions/upload-artifact@v4
-        with:
-          name: partial-${{ matrix.lecture }}
-          path: dist/${{ matrix.lecture }}
+          echo "Found lectures: ${lectures[*]}"
 
-  assemble-and-deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download all partials
-        uses: actions/download-artifact@v4
-        with:
-          pattern: partial-*
-          path: dist
-          merge-multiple: true
-
-      - name: Generate simple index page
-        run: |
-          mkdir -p dist
-          cat > dist/index.html <<'HTML'
-          <!doctype html>
-          <meta charset="utf-8">
-          <title>PS 211 — Lectures</title>
-          <style>
-            body { font: 16px/1.5 system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-            h1 { margin-bottom: .5rem; }
-            ul { line-height: 1.8; }
-          </style>
-          <h1>PS 211 — Slide Decks</h1>
-          <ul>
-          HTML
-
-          # auto-generate list of links based on lecture folders
-          for d in dist/*/ ; do
-            dname=$(basename "$d")
-            echo "<li><a href=\"$dname/\">$dname</a></li>" >> dist/index.html
+          # build each into dist/<slug>/ with correct base /<repo>/<slug>/
+          for f in "${lectures[@]}"; do
+            slug="${f%.md}"
+            echo "📦 Building $f → dist/$slug  (base=/${REPO}/${slug}/)"
+            pnpm exec slidev build "$f" \
+              --base "/${REPO}/${slug}/" \
+              --out "dist/${slug}"
           done
 
-          cat >> dist/index.html <<'HTML'
-          </ul>
-          HTML
+          # Create a simple index at /ps_211/
+          mkdir -p dist
+          {
+            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Lectures</title>'
+            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
+            echo '<h1>PS 211 — Slide Decks</h1><ul>'
+            for d in dist/*/ ; do
+              dname=$(basename "$d")
+              echo "<li><a href=\"$dname/\">$dname</a></li>"
+            done
+            echo '</ul>'
+          } > dist/index.html
 
-      - name: Sanity check
+      - name: Sanity check output
         run: |
+          echo "Top-level dist contents:"
           ls -la dist
-          test -f dist/index.html
+          echo "Index files found:"
+          find dist -maxdepth 2 -type f -name index.html -print
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
