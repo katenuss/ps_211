@@ -24,10 +24,31 @@ jobs:
       lectures: ${{ steps.set-matrix.outputs.lectures }}
     steps:
       - uses: actions/checkout@v4
-      - id: set-matrix
+
+      - name: Show workspace contents (root)
         run: |
-          files=$(ls lecture*.md | sed 's/\.md$//' | jq -R -s -c 'split("\n")[:-1]')
-          echo "lectures=$files" >> $GITHUB_OUTPUT
+          pwd
+          ls -la
+          echo "--- end ls root ---"
+
+      - id: set-matrix
+        shell: bash
+        run: |
+          set -e
+          echo "🔎 Searching for lecture*.md in repo root…"
+          shopt -s nullglob
+          files=(lecture*.md)
+          echo "Raw matches: ${files[*]:-"(none)"}"
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "⚠️ No lecture*.md files found in repo root."
+            echo "lectures=[]" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # strip .md extension
+          json=$(printf '%s\n' "${files[@]}" | sed 's/\.md$//' | jq -R -s -c 'split("\n")[:-1]')
+          echo "Found lectures: $json"
+          echo "lectures=$json" >> "$GITHUB_OUTPUT"
+
 
   build:
     needs: discover
