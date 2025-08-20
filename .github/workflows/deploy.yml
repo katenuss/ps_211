@@ -1,9 +1,9 @@
-name: Deploy pages
+name: Deploy pages (multi-lecture)
 
 on:
   push:
-    branches: [ main ]   # run on pushes to main
-  workflow_dispatch:      # allow manual trigger
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,39 +14,103 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+env:
+  REPO: ${{ github.event.repository.name }}  # ps_211
 
-      # Setup pnpm first
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      lectures: ${{ steps.set-matrix.outputs.lectures }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        run: |
+          files=$(ls lecture*.md | sed 's/\.md$//' | jq -R -s -c 'split("\n")[:-1]')
+          echo "lectures=$files" >> $GITHUB_OUTPUT
+
+  build:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        lecture: ${{ fromJson(needs.discover.outputs.lectures) }}
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.2.0
+          version: 9
           run_install: false
 
-      # Setup Node.js with caching for pnpm
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Build (Slidev)
-        run: pnpm run build
+      - name: Build ${{ matrix.lecture }}
+        run: |
+          LECTURE="${{ matrix.lecture }}"
+          echo "Building $LECTURE"
+          pnpm exec slidev build "${LECTURE}.md" \
+            --base "/${REPO}/${LECTURE}/" \
+            --out "dist/${LECTURE}"
 
-      - name: Sanity check artifact
+      - name: Upload partial
+        uses: actions/upload-artifact@v4
+        with:
+          name: partial-${{ matrix.lecture }}
+          path: dist/${{ matrix.lecture }}
+
+  assemble-and-deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all partials
+        uses: actions/download-artifact@v4
+        with:
+          pattern: partial-*
+          path: dist
+          merge-multiple: true
+
+      - name: Generate simple index page
+        run: |
+          mkdir -p dist
+          cat > dist/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>PS 211 — Lectures</title>
+          <style>
+            body { font: 16px/1.5 system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+            h1 { margin-bottom: .5rem; }
+            ul { line-height: 1.8; }
+          </style>
+          <h1>PS 211 — Slide Decks</h1>
+          <ul>
+          HTML
+
+          # auto-generate list of links based on lecture folders
+          for d in dist/*/ ; do
+            dname=$(basename "$d")
+            echo "<li><a href=\"$dname/\">$dname</a></li>" >> dist/index.html
+          done
+
+          cat >> dist/index.html <<'HTML'
+          </ul>
+          HTML
+
+      - name: Sanity check
         run: |
           ls -la dist
           test -f dist/index.html
 
-      - name: Setup Pages
+      - name: Configure Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
@@ -54,13 +118,6 @@ jobs:
         with:
           path: dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
