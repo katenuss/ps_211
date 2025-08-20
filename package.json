@@ -1,10 +1,10 @@
 {
-  "name": "talk_template",
+  "name": "ps_211",
   "packageManager": "pnpm@9.2.0",
   "scripts": {
-    "dev": "slidev slides.md",
+    "dev": "slidev lecture1_intro.md",
     "build": "slidev build --base /$npm_package_name",
-    "export": "slidev export --wait 1000  --per-slide --output ./slides.pdf"
+    "export": "slidev export --wait 1000  --per-slide --output ./lecture1.pdf"
   },
   "type": "module",
   "version": "0.0.0",
