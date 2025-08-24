@@ -17,8 +17,11 @@
       "slidev-theme-neversink": "^0.3.6",
       "vue": "^3.5.18"
     },
-    "scripts": {
-      "dev": "slidev"
+    "dependencies": {
+      "@slidev/cli": "52.1.0",
+      "@slidev/theme-default": "0.25.0",
+      "@slidev/theme-seriph": "0.25.0",
+      "slidev-theme-neversink": "0.3.6",
+      "vue": "3.5.19"
     }
   }
-
