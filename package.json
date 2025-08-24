@@ -11,12 +11,14 @@
     "export": "echo \"Use: pnpm run export:lecture --lecture=<name>\" && exit 0"
   },
     "devDependencies": {
-      "slidev": "0.49.29",
-      "vite": "5.4.10",
-      "unocss": "0.62.4",
-      "slidev-theme-neversink": "0.3.6"
+      "@slidev/cli": "^52.1.0",
+      "@slidev/theme-default": "latest",
+      "@slidev/theme-seriph": "latest",
+      "slidev-theme-neversink": "^0.3.6",
+      "vue": "^3.5.18"
     },
     "scripts": {
       "dev": "slidev"
     }
   }
+
