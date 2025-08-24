@@ -4,17 +4,19 @@
   "type": "module",
   "packageManager": "pnpm@9.2.0",
   "scripts": {
-    "dev": "slidev ${npm_config_lecture:-lecture1_intro}.md",
+    "dev": "slidev",
     "build:lecture": "slidev build ${npm_config_lecture}.md --base /$npm_package_name/${npm_config_lecture}/ --out dist/${npm_config_lecture}",
     "export:lecture": "slidev export ${npm_config_lecture}.md --wait 1000 --per-slide --output ./${npm_config_lecture}.pdf",
     "build": "echo \"Use: pnpm run build:lecture --lecture=<name> (e.g., lecture2)\" && exit 0",
     "export": "echo \"Use: pnpm run export:lecture --lecture=<name>\" && exit 0"
   },
-  "devDependencies": {
-    "@slidev/cli": "^0.49.21",
-    "vite": "^5.3.2"
-  },
-  "dependencies": {
-    "slidev-theme-neversink": "^0.3.6"
+    "devDependencies": {
+      "slidev": "0.49.29",
+      "vite": "5.4.10",
+      "unocss": "0.62.4",
+      "slidev-theme-neversink": "0.3.6"
+    },
+    "scripts": {
+      "dev": "slidev"
+    }
   }
-}
