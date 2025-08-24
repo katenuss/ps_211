@@ -6,6 +6,7 @@ color: indigo-light
 theme: neversink
 mdc: true
 neversink_slug: PS 211 - Lecture 1
+css: styles.css
 ---
 
 # PS 211: Introductions & Syllabus Review
@@ -21,8 +22,7 @@ align: lt
 # Statistics!
 
 :: content ::
-<img src="/public/images/timothee.jpg" alt="Statistics" class="w-1/2 mx-auto mb-8" />
-
+<img src="/images/timothee.jpg" alt="Statistics" class="w-1/2 mx-auto mb-8" />
 
 
 ---
@@ -32,44 +32,21 @@ align: lt
 ---
 
 :: title ::
+
 # Outline for Today
 
 :: content ::
-<p v-click>
-- Introductions  
-</p>
 
-<p v-click>
+- Introductions
 - Logistics (meeting times, locations)
-</p>
-
-<p v-click>
 - Syllabus review
-</p>
-
-<p v-click>
 - Tools you’ll use
-</p>
-
-<p v-click>
-- Course goals & outcomes 
-</p>
-
-<p v-click>
-- Requirements & grading 
-</p>
-
-<p v-click>
-- Policies, participation, and help 
-</p>
-
-<p v-click>
+- Course goals & outcomes
+- Requirements & grading
+- Policies, participation, and help
 - Getting started with Slack, R, and R Studio
-</p>
+- Q&amp;A
 
-<p v-click>
-- Q&A  
-</p>
 
 ---
 layout: top-title-two-cols
@@ -84,8 +61,6 @@ align: l-lt-lt
 
 :: left ::
 
-<p v-click>
-
 ## Kate Nussenbaum
 ##### Assistant Professor of Psychological & Brain Sciences
 
@@ -98,20 +73,14 @@ align: l-lt-lt
   - Tuesdays 9:30 - 10:30 a.m.
   - Wednesdays 2:30 - 3:30 p.m.
 
-</p>
 
 :: right ::
 
 <p v-click>
 
-One aspect of my job is to teach this course, but the main part of my job is to run a research lab.
+I also run a ==research lab== that investigates how learning, memory, and decision making change across development.
 
 <img src="/public/images/lab_logo.png" alt="CoLD Lab" class="w-full rounded-lg border-2 border-indigo-200 shadow-lg" />
-
-We investigate how learning, memory, and decision-making change across development.
-
-We use statistics every day! 
-
 
 </p>
 
@@ -128,26 +97,17 @@ align: l-lt-lt
 
 :: left ::
 
-<p v-click>
-
 ## Juneau Wang
 ##### PhD Student in Psychological & Brain Sciences
 
-- **Pronouns:** 
-- **Email:** 
-- **Office:** 
-- **Office Hours:** 
+- **Pronouns:** he/him
+- **Email:** juneauw@bu.edu
+- **Office:** 111 Cummington Mall, Room 242
+- **Office Hours:** Tuesdays 12:30 - 2:30 p.m.
 
-</p>
 
 :: right ::
 
-
-<p v-click>
-
-
-
-</p>
 
 
 ---
@@ -156,6 +116,7 @@ color: indigo-light
 align: lt
 ---
 :: title ::
+
 # Logistics
 
 :: content ::
@@ -173,6 +134,7 @@ color: indigo-light
 align: lt
 ---
 :: title ::
+
 # Communication logistics
 
 :: content ::
@@ -182,6 +144,7 @@ align: lt
 - We will use **Slack** for class communication. Everyone should be added. Please reach out to Kate or Juneau if you are not yet on the Slack workspace.
 
 </p>
+
 <p v-click>
 
 - Please check Slack regularly for important announcements. 
@@ -195,18 +158,21 @@ align: lt
     - In general, our policy is that if you ask us a question about course material, we will publicly post it (anonymously, if you desire) and the answer on Slack, so that everyone can benefit from the learning opportunity.
 
 </p>
+
 <p v-click>
 
 - That said, our hope is that you will take advantage of lecture, discussion, and office hours to ask questions **IN PERSON**. If you send us a content-based question via email or slack, we may ask you to come to office hours or ask during lecture/discussion instead.
 
 
-<div class="mt-8 w-full text-center">
-  <span class="bg-indigo-100 text-indigo-500 p-2 border-2 border-indigo-200 rounded-lg px-4">
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-md p-4 transform -rotate-1">
     Please come talk to us!
-  </span>
+  </div>
 </div>
 
 </p>
+
+
 
 ---
 layout: top-title
@@ -218,26 +184,18 @@ align: lt
 # What is this class?
 
 :: content ::
-- Intro to the logic and processes of  descriptive & inferential statistics for psychology.  
-- Not a math memorization class — you won’t be memorizing complex formulas.  
-- You’ll  analyze data  with statistical software  (R and R Studio) to test hypotheses and interpret results.  
 
+==Introduction to the logic and processes involved in descriptive & inferential statistics for psychology==
 
 <p v-click>
 
-We will cover: Statistical inference, significance, and tests such as t-tests, ANOVAs, correlation, and regression.
+*This class involves math and programming, but the goal of the course is not for you to derive or memorize complex formulas or to become an expert coder.* 
 
 </p>
 
 <p v-click>
 
-The goal is for you to strengthen your critical thinking an quantative reasoning skills, and learn how to conduct statistical analyses and interpret their results ==*with as little pain as possible.*==
-
-</p>
-
-<p v-click>
-
-This is my first time teaching this course! (or any course!) Please feel free to give us feedback throughout the semester. An anonymous feedback form will be posted on Slack.
+The goal is for you to strengthen your critical thinking and quantitative reasoning skills, and learn how to conduct statistical analyses and interpret their results ==with as little pain as possible.==
 
 </p>
 
@@ -247,19 +205,20 @@ color: indigo-light
 align: lt
 ---
 :: title ::
+
 # Course learning goals
 
 :: content ::
 
 In this course, you will (ideally) learn:
 
-<p v-click>1) How to describe key properties of data. </p>
-<p v-click>2) When and how to apply basic statistical tests to answer research questions. </p>
-<p v-click>3) How to use statistical software to analyze data and communicate findings. </p>
-<p v-click>4) How to interpret the results of statistical tests. </p>
-<p v-click>5) How to communicate results via graphs, figures, and written text. </p>
-<p v-click>6) The limits and risks of statistics, and how to avoid misusing them. </p>
-
+<p v-click>1) How to describe and measure different types of variables. </p>
+<p v-click>2) The difference between populations and samples, and the concept of sampling. </p>
+<p v-click>3) What it means to test a hypothesis. </p>
+<p v-click>4) How to use R to analyze data 
+<p v-click>5) How to interpret the results of statistical tests. </p>
+<p v-click>6) How to communicate results via graphs, figures, and written text. </p>
+<p v-click>7) The limits and risks of statistics, and how to avoid misusing them. </p>
 
 ---
 layout: top-title-two-cols
@@ -504,7 +463,7 @@ Follow the link and instructions posted on Slack.
 **Installing R Studio:**  
 Install R, then follow the link and instructions posted on Slack to install R Studio.
 
-#sticky note: If you have trouble installing R or R Studio, please come to office hours or your first discussion section.
+
 ---
 
 
