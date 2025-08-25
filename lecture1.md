@@ -237,7 +237,7 @@ We will cover:
 <p v-click> 4) The normal distribution, standardization, z-scores.  </p>
 <p v-click> 5) Hypothesis-testing. </p>
 <p v-click> 6) Confidence intervals, effect sizes, statistical power. </p>
-<p v-click> 7) T-tests, ANOVA (one-way, two-way, repeated-measures), Correlations, Chi-Square tests. </p>
+<p v-click> 7) T-tests, ANOVA (one-way, two-way, repeated-measures), Correlations, Regressions, Chi-Square tests. </p>
 
 <div class="mt-8 w-full flex justify-center">
   <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-md p-4 transform -rotate-1">
@@ -356,7 +356,7 @@ align: lt
 
   <p v-click>
 
-  - Late homeworks will lose 3 points each day they are late; No late work accepted after 1 week past due date.
+  - Late homeworks will lose 3 points each day they are late; No late work accepted after answers are posted.
   
   </p>
 
@@ -397,7 +397,7 @@ align: lt
    </p>
   <p v-click>
   
-  - Data write-ups will lose 3 points each day they are late; No late work accepted after 1 week past due date.
+  - Data write-ups will lose 3 points each day they are late; No late work accepted after answers are posted.
   
   </p>
 
@@ -583,6 +583,26 @@ align: lt
 
 - Boston University provides reasonable accommodations for students with documented disabilities.
 - Please reach out to Kate and Juneau (via Slack) **as soon as possible** and share your paperwork from disability services.
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+
+# Pre-course survey
+
+:: content ::
+
+- We have posted a link to a pre-course survey on Slack.
+- Please complete it by the end of the day on Friday, September 6 (for a bonus point on Exam 1).
+- The survey has two parts:
+  - A few questions about your background and comfort with math and programming.
+  - A few fun questions to generate a dataset for us to analyze later in the semester.
+
+
 
 ---
 layout: top-title
