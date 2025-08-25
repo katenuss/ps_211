@@ -737,7 +737,7 @@ align: lt-lt-lt
 - Used for calculation, reasoning, discussion, decision-making.
 
 :: right ::
-<img src="/images/lecture2/data_plural.webp" alt="data" />
+<img src="/images/lecture1/data_plural.webp" alt="data" />
 
 ---
 layout: top-title-two-cols
@@ -756,7 +756,7 @@ color: indigo-light
 - The science of creating and applying such techniques.
 
 :: right ::
-<img src="/images/lecture2/stats_pic.jpg" alt="Statistics" />
+<img src="/images/lecture1/stats_pic.jpg" alt="Statistics" />
 
 ---
 layout: top-title
@@ -801,7 +801,7 @@ align: lt-lt-lt
 - Determine causal relationships between variables.
 
 :: right ::
-<img src="/images/lecture2/goals_of_science.webp" alt="science" />
+<img src="/images/lecture1/goals_of_science.webp" alt="science" />
 
 
 ---
@@ -887,7 +887,7 @@ align: lt-lt-lt
 - Other scientists in the field review the manuscript and provide feedback.
 
 :: right ::
-<img src="/images/lecture2/journal_article.png" alt="publication" />
+<img src="/images/lecture1/journal_article.png" alt="publication" />
 
 ---
 layout: top-title-two-cols
@@ -906,7 +906,7 @@ align: lt-lt-lt
 ==Caveat: Not all published research is useful AND not all useful research is published in traditional journals.==
 
 :: right ::
-<img src="/images/lecture2/journal_article.png" alt="publication" />
+<img src="/images/lecture1/journal_article.png" alt="publication" />
 
 
 ---
@@ -928,7 +928,7 @@ align: lt-lt-lt
 ==There are multiple types of scientific publications. We will focus on empirical research articles.==
 
 :: right ::
-<img src="/images/lecture2/journal_article.png" alt="publication" />
+<img src="/images/lecture1/journal_article.png" alt="publication" />
 
 
 ---
@@ -947,19 +947,19 @@ align: lt-lt-lt
 </div>
 
 :: left ::
-<img src="/images/lecture2/elife_article.png" alt="elife" />
+<img src="/images/lecture1/elife_article.png" alt="elife" />
 
 :: right ::
 
 ##### Question and hypothesis:
 
-<img src="/images/lecture2/elife_hypothesis.png" alt="elife_hyp" />
+<img src="/images/lecture1/elife_hypothesis.png" alt="elife_hyp" />
 
 <br>
 
 ##### Methods:
 
-<img src="/images/lecture2/elife_methods.png" alt="elife_methods" />
+<img src="/images/lecture1/elife_methods.png" alt="elife_methods" />
 
 
 ---
@@ -982,19 +982,19 @@ align: lt-lt-lt
 
 ##### Results (statistics!):
 
-<img src="/images/lecture2/elife_stats.png" alt="elife_stats" />
+<img src="/images/lecture1/elife_stats.png" alt="elife_stats" />
 
 <br>
 
 ##### Results (figures)
 
-<img src="/images/lecture2/elife_fig.png" alt="elife_fig" />
+<img src="/images/lecture1/elife_fig.png" alt="elife_fig" />
 
 :: right ::
 
 ##### Conclusions:
 
-<img src="/images/lecture2/elife_conclusions.png" alt="elife_conclusions" />
+<img src="/images/lecture1/elife_conclusions.png" alt="elife_conclusions" />
 
 
 
@@ -1256,7 +1256,7 @@ align: lt-lt-lt
 - Can only take on specific values.
 
 :: right ::
-<img src="/images/lecture2/continuous_vs_discrete.webp" alt="continuous discrete" />
+<img src="/images/lecture1/continuous_vs_discrete.webp" alt="continuous discrete" />
 
 
 
@@ -1306,7 +1306,7 @@ align: lt-lt-lt
 - Interval variables with a true zero point (i.e., absence of the quantity being measured).
 
 :: right ::
-<img src="/images/lecture2/levels_of_measurement.jpg" alt="levels of measurement" />
+<img src="/images/lecture1/levels_of_measurement.jpg" alt="levels of measurement" />
 
 <div class="mt-8 w-full flex justify-center">
   <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
