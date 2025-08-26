@@ -45,47 +45,63 @@ jobs:
       - name: Discover & build all lecture*.md
         shell: bash
         run: |
-          set -e
-          shopt -s nullglob
-          # find lecture*.md in repo root (adjust to use find for recursive)
-          lectures=(lecture*.md)
-          if [ ${#lectures[@]} -eq 0 ]; then
+        set -e
+        shopt -s nullglob
+        lectures=(lecture*.md)
+        if [ ${#lectures[@]} -eq 0 ]; then
             echo "No lecture*.md files found."
             exit 1
-          fi
+        fi
 
-          echo "Found lectures: ${lectures[*]}"
+        echo "Found lectures: ${lectures[*]}"
 
-          # build each into dist/<slug>/ with correct base /<repo>/<slug>/
-          for f in "${lectures[@]}"; do
+        for f in "${lectures[@]}"; do
             slug="${f%.md}"
             echo "📦 Building $f → dist/$slug  (base=/${REPO}/${slug}/)"
+            # 1) Build the SPA and ASK Slidev to include a PDF
             pnpm exec slidev build "$f" \
-              --base "/${REPO}/${slug}/" \
-              --out "dist/${slug}" \
-              --download
-          done
+            --base "/${REPO}/${slug}/" \
+            --out "dist/${slug}" \
+            --download
 
-          # Create a simple index at /ps_211/
-          mkdir -p dist
-          {
-              echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
-              echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem             auto;padding:0 1rem}ul{line-height:1.8}</style>'
-              echo '<h1>PS 211 — Slide Decks</h1><ul>'
-              # only list subdirs that actually have a built deck (index.html)
-              for d in dist/*/ ; do
-              [ -f "${d}index.html" ] || continue
-              dname=$(basename "$d")
-              pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
-              if [ -n "$pdf" ]; then
-                  echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename               "$pdf")\">$(basename "$pdf")</a></li>"
-              else
-                  echo "<li><a href=\"$dname/\">$dname</a></li>"
-              fi
-              done
-              echo '</ul>'
-          } > dist/index.html
-            
+            # 2) Fallback: if no PDF showed up, export explicitly
+            if ! ls "dist/${slug}"/*.pdf >/dev/null 2>&1; then
+            # Try to read exportFilename from the deck (front-matter)
+            export_name=$(awk '
+                BEGIN{inY=0}
+                /^---[[:space:]]*$/{inY=!inY; next}
+                inY && $1=="exportFilename:"{print $2; exit}
+            ' "$f")
+
+            # Default to slug if not set
+            [ -n "$export_name" ] || export_name="$slug"
+
+            echo "🖨  No PDF found after build, exporting → dist/${slug}/${export_name}.pdf"
+            pnpm exec slidev export "$f" \
+                --format pdf \
+                --output "dist/${slug}/${export_name}.pdf"
+            fi
+        done
+
+        # Generate index that links decks + PDFs (shows real filenames)
+        mkdir -p dist
+        {
+            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
+            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
+            echo '<h1>PS 211 — Slide Decks</h1><ul>'
+            for d in dist/*/ ; do
+            [ -f "${d}index.html" ] || continue
+            dname=$(basename "$d")
+            pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
+            if [ -n "$pdf" ]; then
+                echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename "$pdf")\">$(basename "$pdf")</a></li>"
+            else
+                echo "<li><a href=\"$dname/\">$dname</a></li>"
+            fi
+            done
+            echo '</ul>'
+        } > dist/index.html
+    
       - name: Sanity check output
         run: |
           echo "Top-level dist contents:"
