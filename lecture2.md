@@ -212,6 +212,22 @@ align: lt
 - Discrete variable example: "Type of pet" has levels "dog", "cat", "hamster", etc.
 - Continuous variable example: "Reaction time" has levels from 0 to infinity.
 
+--- 
+layout: top-title
+color: indigo-light
+align: lt
+---
+:: title ::
+
+# Defining and graphing variables using X and Y
+
+:: content ::
+
+- **X** = Independent Variable (IV); goes on the X (horizontal) axis
+- **Y** = Dependent Variable (DV); goes on the Y (vertical) axis
+
+<img src="/images/lecture2/xy_axes.png" alt="xy axes" class="mx-auto max-h-96 object-contain" />
+
 
 
 ---
@@ -263,6 +279,150 @@ align: lt-lt-lt
 **Answer:** They can be influenced by confounding variables (more on this later)! They cannot establish causality.
 
 </p>
+
+---
+layout: top-title-two-cols
+color: indigo-light
+align: lt-lt-lt
+---
+
+:: title ::
+# Practice: Identifying Variables
+
+:: left ::
+
+### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
+
+
+:: right ::
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
+    What is the IV and what are its levels?
+  </div>
+</div>
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
+    What is the DV?
+  </div>
+</div>
+
+---
+layout: top-title-two-cols
+color: indigo-light
+align: lt-lt-lt
+---
+
+:: title ::
+# Practice: Identifying Variables
+
+:: left ::
+
+### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
+
+
+:: right ::
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    Is this an experiment?
+  </div>
+</div>
+
+**Answer**: Yes! The researcher is manipulating whether students bring laptops or not.
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the IV and what are its levels?
+  </div>
+</div>
+
+**Answer**: IV = Laptop use; Levels = laptop, no laptop
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the DV?
+  </div>
+</div>
+
+**Answer**: DV = Exam score
+
+---
+layout: top-title-two-cols
+color: indigo-light
+align: lt-lt-lt
+---
+
+:: title ::
+
+# Practice: Identifying Variables
+
+:: left ::
+
+### A researcher wants to see if watching a movie about climate change affects attitudes towards climate change. She polls 100 people about whether they have watched *An Inconvenient Truth* and then asks them to fill out a questionnaire about their attitudes towards climate change.
+
+:: right ::
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    Is this an experiment?
+  </div>
+</div>
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the IV and what are its levels?
+  </div>
+</div>
+
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the DV?
+  </div>
+</div>
+
+
+---
+layout: top-title-two-cols
+color: indigo-light
+align: lt-lt-lt
+---
+
+:: title ::
+
+# Practice: Identifying Variables
+
+:: left ::
+
+### A researcher wants to see if watching a movie about climate change affects attitudes towards climate change. She polls 100 people about whether they have watched *An Inconvenient Truth* and then asks them to fill out a questionnaire about their attitudes towards climate change.
+
+:: right ::
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    Is this an experiment?
+  </div>
+</div>
+
+**Answer**: No. The researcher is not manipulating anything; she is just collecting observational/survey data.
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the IV and what are its levels?
+  </div>
+</div>
+
+**Answer**: IV = Watching *An Inconvenient Truth*; Levels = watched, not watched
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the DV?
+  </div>
+</div>
+
+**Answer**: DV = Attitudes towards climate change (measured via questionnaire)
 
 
 ---
@@ -409,7 +569,7 @@ align: lt-lt-lt
 ---
 
 :: title ::
-# Example: Identifying Confounds
+# Practice: Identifying Confounds
 
 :: left ::
 
@@ -451,152 +611,6 @@ align: lt-lt-lt
 **Answer:** The manipulation may not have worked. Maybe the low-exercise group actually exercised more than the high-exercise group!
 
 </p>
-
-
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
-
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
-    What is the DV?
-  </div>
-</div>
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
-
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    Is this an experiment?
-  </div>
-</div>
-
-**Answer**: Yes! The researcher is manipulating whether students bring laptops or not.
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-**Answer**: IV = Laptop use; Levels = laptop, no laptop
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the DV?
-  </div>
-</div>
-
-**Answer**: DV = Exam score
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
-
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if watching a movie about climate change affects attitudes towards climate change. She polls 100 people about whether they have watched *An Inconvenient Truth* and then asks them to fill out a questionnaire about their attitudes towards climate change.
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    Is this an experiment?
-  </div>
-</div>
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the DV?
-  </div>
-</div>
-
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
-
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if watching a movie about climate change affects attitudes towards climate change. She polls 100 people about whether they have watched *An Inconvenient Truth* and then asks them to fill out a questionnaire about their attitudes towards climate change.
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    Is this an experiment?
-  </div>
-</div>
-
-**Answer**: No. The researcher is not manipulating anything; she is just collecting observational/survey data.
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-**Answer**: IV = Watching *An Inconvenient Truth*; Levels = watched, not watched
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the DV?
-  </div>
-</div>
-
-**Answer**: DV = Attitudes towards climate change (measured via questionnaire)
 
 
 ---
@@ -770,22 +784,6 @@ align: lt-lt-lt
 
 **Answer:** You could use it alongside an established scale for measuring happiness and compare results.
 
-
---- 
-layout: top-title
-color: indigo-light
-align: lt
----
-:: title ::
-
-# Defining and graphing variables using X and Y
-
-:: content ::
-
-- **X** = Independent Variable (IV); goes on the X (horizontal) axis
-- **Y** = Dependent Variable (DV); goes on the Y (vertical) axis
-
-<img src="/images/lecture2/xy_axes.png" alt="xy axes" class="mx-auto max-h-96 object-contain" />
 
 
 ---
