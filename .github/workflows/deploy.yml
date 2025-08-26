@@ -69,20 +69,22 @@ jobs:
           # Create a simple index at /ps_211/
           mkdir -p dist
           {
-            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Lectures</title>'
-            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
-            echo '<h1>PS 211 — Slide Decks</h1><ul>'
-            for d in dist/*/ ; do
-            # find any PDF generated in this deck’s folder (matches exportFilename)
-            pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
-            if [ -n "$pdf" ]; then
-                echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename "$pdf")\">PDF</a></li>"
-            else
-                echo "<li><a href=\"$dname/\">$dname</a></li>"
-            fi
-            done
-            echo '</ul>'
-            } > dist/index.html
+              echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
+              echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem             auto;padding:0 1rem}ul{line-height:1.8}</style>'
+              echo '<h1>PS 211 — Slide Decks</h1><ul>'
+              # only list subdirs that actually have a built deck (index.html)
+              for d in dist/*/ ; do
+              [ -f "${d}index.html" ] || continue
+              dname=$(basename "$d")
+              pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
+              if [ -n "$pdf" ]; then
+                  echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename               "$pdf")\">$(basename "$pdf")</a></li>"
+              else
+                  echo "<li><a href=\"$dname/\">$dname</a></li>"
+              fi
+              done
+              echo '</ul>'
+          } > dist/index.html
             
       - name: Sanity check output
         run: |
@@ -90,6 +92,12 @@ jobs:
           ls -la dist
           echo "Index files found:"
           find dist -maxdepth 2 -type f -name index.html -print
+    
+      - name: List built decks & PDFs
+        run: |
+           echo "Top-level dist:" && ls -la dist
+           echo "Deck indexes:" && find dist -maxdepth 2 -type f -name index.html -print
+           echo "PDFs:" && find dist -maxdepth 2 -type f -name '*.pdf' -print
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
