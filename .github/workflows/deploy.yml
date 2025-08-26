@@ -38,6 +38,9 @@ jobs:
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
+        
+      - name: Install Playwright (Chromium + deps)
+        run: npx playwright install --with-deps chromium
 
       - name: Discover & build all lecture*.md
         shell: bash
@@ -60,6 +63,7 @@ jobs:
             pnpm exec slidev build "$f" \
               --base "/${REPO}/${slug}/" \
               --out "dist/${slug}"
+              --download
           done
 
           # Create a simple index at /ps_211/
@@ -69,12 +73,17 @@ jobs:
             echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
             echo '<h1>PS 211 — Slide Decks</h1><ul>'
             for d in dist/*/ ; do
-              dname=$(basename "$d")
-              echo "<li><a href=\"$dname/\">$dname</a></li>"
+            # find any PDF generated in this deck’s folder (matches exportFilename)
+            pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
+            if [ -n "$pdf" ]; then
+                echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename "$pdf")\">PDF</a></li>"
+            else
+                echo "<li><a href=\"$dname/\">$dname</a></li>"
+            fi
             done
             echo '</ul>'
-          } > dist/index.html
-
+            } > dist/index.html
+            
       - name: Sanity check output
         run: |
           echo "Top-level dist contents:"
