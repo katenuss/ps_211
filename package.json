@@ -10,18 +10,19 @@
     "build": "echo \"Use: pnpm run build:lecture --lecture=<name> (e.g., lecture2)\" && exit 0",
     "export": "echo \"Use: pnpm run export:lecture --lecture=<name>\" && exit 0"
   },
-    "devDependencies": {
-      "@slidev/cli": "^52.1.0",
-      "@slidev/theme-default": "latest",
-      "@slidev/theme-seriph": "latest",
-      "slidev-theme-neversink": "^0.3.6",
-      "vue": "^3.5.18"
-    },
-    "dependencies": {
-      "@slidev/cli": "52.1.0",
-      "@slidev/theme-default": "0.25.0",
-      "@slidev/theme-seriph": "0.25.0",
-      "slidev-theme-neversink": "0.3.6",
-      "vue": "3.5.19"
-    }
+  "devDependencies": {
+    "@slidev/cli": "^52.1.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "playwright-chromium": "^1.55.0",
+    "slidev-theme-neversink": "^0.3.6",
+    "vue": "^3.5.18"
+  },
+  "dependencies": {
+    "@slidev/cli": "52.1.0",
+    "@slidev/theme-default": "0.25.0",
+    "@slidev/theme-seriph": "0.25.0",
+    "slidev-theme-neversink": "0.3.6",
+    "vue": "3.5.19"
   }
+}
