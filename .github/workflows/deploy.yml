@@ -62,7 +62,7 @@ jobs:
             echo "📦 Building $f → dist/$slug  (base=/${REPO}/${slug}/)"
             pnpm exec slidev build "$f" \
               --base "/${REPO}/${slug}/" \
-              --out "dist/${slug}"
+              --out "dist/${slug}" \
               --download
           done
 
