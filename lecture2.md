@@ -6,6 +6,7 @@ color: indigo-light
 theme: neversink
 mdc: true
 neversink_slug: PS 211 - Lecture 2
+download: true
 ---
 
 # PS 211: Introduction to Experimental Design
