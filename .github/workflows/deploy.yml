@@ -83,24 +83,24 @@ jobs:
                 fi
             done
 
-        # Generate index that links decks + PDFs (shows real filenames)
-        mkdir -p dist
-        {
-            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
-            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
-            echo '<h1>PS 211 — Slide Decks</h1><ul>'
-            for d in dist/*/ ; do
-            [ -f "${d}index.html" ] || continue
-            dname=$(basename "$d")
-            pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
-            if [ -n "$pdf" ]; then
-                echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename "$pdf")\">$(basename "$pdf")</a></li>"
-            else
-                echo "<li><a href=\"$dname/\">$dname</a></li>"
-            fi
-            done
-            echo '</ul>'
-        } > dist/index.html
+            # Generate index that links decks + PDFs (shows real filenames)
+            mkdir -p dist
+            {
+                echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
+                echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
+                echo '<h1>PS 211 — Slide Decks</h1><ul>'
+                for d in dist/*/ ; do
+                    [ -f "${d}index.html" ] || continue
+                    dname=$(basename "$d")
+                    pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
+                    if [ -n "$pdf" ]; then
+                        echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename "$pdf")\">$(basename "$pdf")</a></li>"
+                    else
+                        echo "<li><a href=\"$dname/\">$dname</a></li>"
+                    fi
+                done
+                echo '</ul>'
+                } > dist/index.html
     
       - name: Sanity check output
         run: |
