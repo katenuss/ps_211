@@ -38,82 +38,64 @@ jobs:
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
-        
-      - name: Install Playwright (Chromium + deps)
-        run: npx playwright install --with-deps chromium
 
       - name: Discover & build all lecture*.md
         shell: bash
         run: |
-            set -e
-            shopt -s nullglob
-            lectures=(lecture*.md)
-            if [ ${#lectures[@]} -eq 0 ]; then
-                echo "No lecture*.md files found."
-                exit 1
-            fi
+          set -e
+          shopt -s nullglob
+          lectures=(lecture*.md)
+          if [ ${#lectures[@]} -eq 0 ]; then
+            echo "No lecture*.md files found."
+            exit 1
+          fi
 
-            echo "Found lectures: ${lectures[*]}"
+          echo "Found lectures: ${lectures[*]}"
 
-            for f in "${lectures[@]}"; do
-                slug="${f%.md}"
-                echo "📦 Building $f → dist/$slug  (base=/${REPO}/${slug}/)"
-                # 1) Build the SPA and ASK Slidev to include a PDF
-                pnpm exec slidev build "$f" \
-                --base "/${REPO}/${slug}/" \
-                --out "dist/${slug}" \
-                --download
+          # Build each deck into dist/<slug>/ with correct base /<repo>/<slug>/
+          for f in "${lectures[@]}"; do
+            slug="${f%.md}"
+            echo "📦 Building $f → dist/$slug  (base=/${REPO}/${slug}/)"
+            pnpm exec slidev build "$f" \
+              --base "/${REPO}/${slug}/" \
+              --out "dist/${slug}"
+          done
 
-            # 2) Fallback: if no PDF showed up, export explicitly
-            if ! ls "dist/${slug}"/*.pdf >/dev/null 2>&1; then
-                # Try to read exportFilename from the deck (front-matter)
-                export_name=$(awk '
-                    BEGIN{inY=0}
-                    /^---[[:space:]]*$/{inY=!inY; next}
-                    inY && $1=="exportFilename:"{print $2; exit}
-                ' "$f")
+          # Publish PDFs placed in repo at public/pdfs/*
+          mkdir -p dist/pdfs
+          if [ -d public/pdfs ]; then
+            cp -R public/pdfs/. dist/pdfs/
+          fi
 
-                # Default to slug if not set
-                [ -n "$export_name" ] || export_name="$slug"
-
-                echo "🖨  No PDF found after build, exporting → dist/${slug}/${export_name}.pdf"
-                pnpm exec slidev export "$f" \
-                    --format pdf \
-                    --output "dist/${slug}/${export_name}.pdf"
-                fi
+          # Root index with link to /pdfs and deck list
+          mkdir -p dist
+          {
+            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
+            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
+            echo '<h1>PS 211 — Slide Decks</h1>'
+            echo '<p><a href="pdfs/">📄 PDFs</a></p>'
+            echo '<ul>'
+            for d in dist/*/ ; do
+              [ -f "${d}index.html" ] || continue
+              dname=$(basename "$d")
+              [ "$dname" = "pdfs" ] && continue
+              echo "<li><a href=\"$dname/\">$dname</a></li>"
             done
+            echo '</ul>'
+          } > dist/index.html
 
-            # Generate index that links decks + PDFs (shows real filenames)
-            mkdir -p dist
-            {
-                echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
-                echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
-                echo '<h1>PS 211 — Slide Decks</h1><ul>'
-                for d in dist/*/ ; do
-                    [ -f "${d}index.html" ] || continue
-                    dname=$(basename "$d")
-                    pdf=$(find "$d" -maxdepth 1 -name '*.pdf' | head -n 1)
-                    if [ -n "$pdf" ]; then
-                        echo "<li><a href=\"$dname/\">$dname</a> — <a href=\"$dname/$(basename "$pdf")\">$(basename "$pdf")</a></li>"
-                    else
-                        echo "<li><a href=\"$dname/\">$dname</a></li>"
-                    fi
-                done
-                echo '</ul>'
-                } > dist/index.html
-    
-      - name: Sanity check output
-        run: |
-          echo "Top-level dist contents:"
-          ls -la dist
-          echo "Index files found:"
-          find dist -maxdepth 2 -type f -name index.html -print
-    
-      - name: List built decks & PDFs
-        run: |
-           echo "Top-level dist:" && ls -la dist
-           echo "Deck indexes:" && find dist -maxdepth 2 -type f -name index.html -print
-           echo "PDFs:" && find dist -maxdepth 2 -type f -name '*.pdf' -print
+          # /pdfs index that lists all uploaded PDFs
+          {
+            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — PDFs</title>'
+            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
+            echo '<h1>Downloadable PDFs</h1><ul>'
+            if [ -d dist/pdfs ]; then
+              find dist/pdfs -maxdepth 1 -type f -name '*.pdf' -printf '%f\n' | sort | while read -r f; do
+                echo "<li><a href=\"$f\">$f</a></li>"
+              done
+            fi
+            echo '</ul>'
+          } > dist/pdfs/index.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
