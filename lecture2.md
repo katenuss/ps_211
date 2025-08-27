@@ -6,7 +6,6 @@ color: indigo-light
 theme: neversink
 mdc: true
 neversink_slug: PS 211 - Lecture 2
-download: true
 exportFilename: ps211_fall2025_lecture2
 ---
 
