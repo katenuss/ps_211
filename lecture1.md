@@ -285,7 +285,7 @@ align: lt
 # Course Requirements & Grading
 
 :: content ::
-- **Exams (4 × 15%) = 60%**  
+- **Exams (3 × 15% + 1 x 25%) = 70%**  
   <p v-click>Exams will involve short-answer + multiple-choice questions. </p>
 
   <p v-click>
@@ -310,6 +310,12 @@ align: lt
   <p v-click> 
 
   - Make-ups will be given for excused/extreme circumstances only; Make-ups must be taken within 1 week of the scheduled exam.
+  </p>
+
+ <p v-click> 
+
+  - Your BEST exam will count for 25% of your grade. The other three exams will each count for 15%.
+
   </p>
 
 ---
@@ -372,7 +378,7 @@ align: lt
 
 :: content ::
 
-- **Data Write-Ups (2 x 10%) = 20%**  
+- **Data Write-Ups (1 x 10%) = 10%**  
   <p v-click>
 
   - You will use R to analyze and interpret a provided dataset.
@@ -393,12 +399,12 @@ align: lt
 
   <p v-click>
 
-  - Data write-ups are due 11:59 PM ET on syllabus dates.
+  - The data write-up is due 11:59 PM ET on syllabus dates.
   
    </p>
   <p v-click>
   
-  - Data write-ups will lose 3 points each day they are late; No late work accepted after answers are posted.
+  - You will lose 3 points each day it is late; No late work accepted after answers are posted.
   
   </p>
 
@@ -483,7 +489,7 @@ align: lt
 **Office hours:** 
 If you prefer to ask questions in a one-on-one setting, please come to office hours. We are happy to talk to you! 
 
-- That said, our availability to meet outside of scheduled office hours is extremely limited.
+- That said, our availability to meet outside of scheduled office hours is limited.
  </p>
 
 ---
@@ -598,7 +604,7 @@ align: lt
 :: content ::
 
 - We have posted a link to a pre-course survey on Slack.
-- Please complete it by the end of the day on Friday, September 6 (for a bonus point on Exam 1).
+- Please complete it by the end of the day on Friday, September 5 (for a bonus point on Exam 1).
 - The survey has two parts:
   - A few questions about your background and comfort with math and programming.
   - A few fun questions to generate a dataset for us to analyze later in the semester.
