@@ -242,7 +242,7 @@ We will cover:
 
 <div class="mt-8 w-full flex justify-center">
   <div class="bg-yellow-100 border-2 border-yellow-300 rounded-lg shadow-md p-4 transform -rotate-1">
-    Don't worry if you don't know what any or all of these are yes! The whole purpose of this class is to gain this knowledge.
+    Don't worry if you don't know what any or all of these are yet! The whole purpose of this class is to gain this knowledge.
   </div>
 </div>
 
@@ -1311,6 +1311,7 @@ align: lt-lt-lt
 - Examples: class rank, satisfaction ratings (e.g., 1-5 stars).
 
 :: right ::
+
 
 ---
 layout: top-title-two-cols
