@@ -85,6 +85,10 @@ I also run a ==research lab== that investigates how learning, memory, and decisi
 
 </p>
 
+<!--
+Note
+-->
+
 ---
 layout: top-title-two-cols
 color: indigo-light

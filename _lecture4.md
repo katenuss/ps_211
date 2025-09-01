@@ -1,8 +1,41 @@
-
+---
+colorSchema: light
+routerMode: hash
+layout: cover
+color: indigo-light
+theme: neversink
+mdc: true
+neversink_slug: PS 211 - Lecture 4
+exportFilename: ps211_fall2025_lecture4
+---
 
 # PS 211: Introduction to Experimental Design
 ## Spring 2025 · Section C1
-### Lecture 4: Central Tendency
+### Lecture 4: Central Tendency & Variability
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+# Updates and reminders
+
+:: content ::
+
+- Homework 1 is due (via Blackboard) on Monday, September 15 at 11:59 PM.
+    - Homework 1 mostly covers material from Lectures 1 - 3, with a small amount of material from today's lecture.
+- Exam 1 is scheduled for Tuesday, September 23 during our regular class time.
+    - Exam 1 will cover material from Lectures 1 - 4.
+    - After today's lecture, I will post a review sheet on Slack that has all the topics that will be covered on the exam.
+    - The exam will be closed book/notes, but you may print this review sheet (and write on it with your own notes) or you may bring one 8.5" x 11" sheet of paper with handwritten notes (both sides).
+    - You will be able to complete the exam without a calculator. However, you are welcome to bring a calculator if you would like. Phones and phone calculators are not allowed.
+- If you have accommodations and have not yet contacted me or Juneau, please do so as soon as possible.
+- If you need to miss the exam for any reason, please contact me as soon as possible to schedule a makeup exam.
+    - Make-ups must be taken within one week of the original exam date.
+- We will have a review session for Exam 1 on Thursday, September 18 during our regular class time.
+
 
 ---
 layout: top-title
