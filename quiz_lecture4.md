@@ -23,6 +23,7 @@ align: lt
 # Quiz time!
 
 :: content ::
+
 ## Congratulations on attending class today. 
 
 - We are going to administer a short quiz to help you review some of the material we have covered so far this semester.

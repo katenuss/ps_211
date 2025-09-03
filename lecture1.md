@@ -376,13 +376,14 @@ layout: top-title
 color: indigo-light
 align: lt
 ---
+
 :: title ::
 
 # Course Requirements & Grading (cont.)
 
 :: content ::
 
-- **Data Write-Ups (1 x 10%) = 10%**  
+- **Data Write-Up (1 x 10%) = 10%**  
   <p v-click>
 
   - You will use R to analyze and interpret a provided dataset.
