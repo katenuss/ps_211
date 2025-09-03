@@ -277,7 +277,60 @@ align: lt-lt-lt
 
 <p v-click>
 
-**Answer:** They can be influenced by confounding variables (more on this later)! They cannot establish causality.
+**Answer:** They cannot establish causality. They can also be influenced by confounding variables (more on this later)! 
+
+</p>
+
+
+---
+layout: top-title-two-cols
+color: indigo-light
+align: lt-lt-lt
+---
+
+:: title ::
+# Practice: Identifying Variables
+
+:: left ::
+
+### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
+
+
+:: right ::
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    Is this an experiment?
+  </div>
+</div>
+
+<p v-click>
+
+**Answer**: Yes! The researcher is manipulating whether students bring laptops or not.
+
+</p>
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the IV and what are its levels?
+  </div>
+</div>
+
+<p v-click>
+
+**Answer**: IV = Laptop use; Levels = laptop, no laptop
+
+</p>
+
+<div class="mt-8 w-full flex justify-center">
+  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
+    What is the DV?
+  </div>
+</div>
+
+<p v-click>
+
+**Answer**: DV = Exam score
 
 </p>
 
@@ -288,74 +341,6 @@ align: lt-lt-lt
 ---
 
 :: title ::
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
-
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-4 transform">
-    What is the DV?
-  </div>
-</div>
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if having students bring laptops to class affects their exam scores. Half the students are randomly assigned to bring laptops; half are not. At the end of the semester, all students take the same exam.
-
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    Is this an experiment?
-  </div>
-</div>
-
-**Answer**: Yes! The researcher is manipulating whether students bring laptops or not.
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-**Answer**: IV = Laptop use; Levels = laptop, no laptop
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the DV?
-  </div>
-</div>
-
-**Answer**: DV = Exam score
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
 
 # Practice: Identifying Variables
 
@@ -371,51 +356,23 @@ align: lt-lt-lt
   </div>
 </div>
 
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the IV and what are its levels?
-  </div>
-</div>
-
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    What is the DV?
-  </div>
-</div>
-
-
----
-layout: top-title-two-cols
-color: indigo-light
-align: lt-lt-lt
----
-
-:: title ::
-
-# Practice: Identifying Variables
-
-:: left ::
-
-### A researcher wants to see if watching a movie about climate change affects attitudes towards climate change. She polls 100 people about whether they have watched *An Inconvenient Truth* and then asks them to fill out a questionnaire about their attitudes towards climate change.
-
-:: right ::
-
-<div class="mt-8 w-full flex justify-center">
-  <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
-    Is this an experiment?
-  </div>
-</div>
+<p v-click>
 
 **Answer**: No. The researcher is not manipulating anything; she is just collecting observational/survey data.
 
+</p>
+
 <div class="mt-8 w-full flex justify-center">
   <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
     What is the IV and what are its levels?
   </div>
 </div>
 
+<p v-click>
+
 **Answer**: IV = Watching *An Inconvenient Truth*; Levels = watched, not watched
+
+</p>
 
 <div class="mt-8 w-full flex justify-center">
   <div class="bg-green-100 border-2 border-green-300 rounded-lg shadow-md p-2 transform">
@@ -423,7 +380,11 @@ align: lt-lt-lt
   </div>
 </div>
 
+<p v-click>
+
 **Answer**: DV = Attitudes towards climate change (measured via questionnaire)
+
+</p>
 
 
 ---
@@ -577,7 +538,7 @@ align: lt-lt-lt
 - Researchers decide to manipulate exercise (IV) to see if it affects mood (DV). 
 - They assign 10 college students to a high-exercise group (jogging 5 times a week) and 10 to a low-exercise group (no exercise). 
 - After 4 weeks, they measure mood using a questionnaire. 
-- They then find that students in the high-exercise group reports better moods than the low-exercise group. 
+- They then find that students in the high-exercise group report better moods than the low-exercise group. 
 - The researchers conclude that exercise improves mood.
 
 :: right ::
@@ -1169,3 +1130,4 @@ color: indigo-light
 See you next class. Please remember to:
 - Fill out the pre-course survey.
 - Install R and R Studio before the next lecture.
+- Come to office hours if you need help! 
