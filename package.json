@@ -7,22 +7,17 @@
     "dev": "slidev",
     "build:lecture": "slidev build ${npm_config_lecture}.md --base /$npm_package_name/${npm_config_lecture}/ --out dist/${npm_config_lecture}",
     "export:lecture": "slidev export ${npm_config_lecture}.md --wait 1000 --per-slide --output ./${npm_config_lecture}.pdf",
-    "build": "echo \"Use: pnpm run build:lecture --lecture=<name> (e.g., lecture2)\" && exit 0",
+    "build": "echo \"Use: pnpm run build:lecture --lecture=<name> (e.g. lecture2)\" && exit 0",
     "export": "echo \"Use: pnpm run export:lecture --lecture=<name>\" && exit 0"
-  },
-  "devDependencies": {
-    "@slidev/cli": "^52.1.0",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest",
-    "playwright-chromium": "^1.55.0",
-    "slidev-theme-neversink": "^0.4.0",
-    "vue": "latest"
   },
   "dependencies": {
     "@slidev/cli": "52.1.0",
     "@slidev/theme-default": "0.25.0",
     "@slidev/theme-seriph": "0.25.0",
     "slidev-theme-neversink": "0.4.0",
-    "vue": "latest"
+    "vue": "3.5.19"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.55.0"
   }
 }
