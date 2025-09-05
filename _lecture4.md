@@ -29,9 +29,9 @@ align: lt
 - Exam 1 is scheduled for Tuesday, September 23 during our regular class time.
     - Exam 1 will cover material from Lectures 1 - 4.
     - After today's lecture, I will post a review sheet on Slack that has all the topics that will be covered on the exam.
-    - The exam will be closed book/notes, but you may print this review sheet (and write on it with your own notes) or you may bring one 8.5" x 11" sheet of paper with handwritten notes (both sides).
+    - The exam will be closed book/notes, but you may print the provided review sheet (and write on it with your own notes) or you may bring one 8.5" x 11" sheet of paper with handwritten notes (both sides).
     - You will be able to complete the exam without a calculator. However, you are welcome to bring a calculator if you would like. Phones and phone calculators are not allowed.
-- If you have accommodations and have not yet contacted me or Juneau, please do so as soon as possible.
+- If you have accommodations, Juneau will reach out to you (via Slack) to confirm your accommodations for the exam. If you do not hear from Juneau by the end of the day, please contact both of us.
 - If you need to miss the exam for any reason, please contact me as soon as possible to schedule a makeup exam.
     - Make-ups must be taken within one week of the original exam date.
 - We will have a review session for Exam 1 on Thursday, September 18 during our regular class time.

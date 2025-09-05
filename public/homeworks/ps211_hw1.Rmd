@@ -1,0 +1,367 @@
+---
+title: "PS 211 C1 — Homework #1"
+subtitle: "Fall 2025 · Interpreting Data & Visualizations"
+author: "Your Name"
+date: "Due: Friday, September 19 by 11:59 p.m."
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: readable
+---
+
+# How this homework works
+
+**Almost all code is already written for you.** Your job is to **run** each chunk (click the green ▶ in the top-right of the chunk in RStudio) and then **answer the interpretation questions** in plain English where it says “**Your answer:**”.
+
+- Work **top-to-bottom**; later chunks often depend on objects created earlier.
+- If a plot/table doesn’t appear, run the chunk **above** it first.
+- When a question says **(text)**, just type your answer below it in full sentences.
+
+---
+
+## Packages (run this once at the top)
+
+This assignment uses only **ggplot2**, **dplyr**, and **tidyr**. These are "packages" that contain pre-written "functions", which are reusable chunks of code that perform specific tasks.
+
+```{r libraries}
+# If needed, remove the # and run these once on your computer to install:
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+
+# Once you have installed the packages, you can "comment" those lines out (put the hashtag back) and just use the "library" function to load the packages into your R session.
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+#set seed for reproducibility
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+```
+
+---
+
+# 1) BU Satisfaction Survey (20 pts)
+Imagine that you are asked to complete a survey measuring your level of satisfaction with various services at BU. 
+
+Below are **five questions from the survey**. You do not have to answer these questions -- they are just example questions that we will ask you about in 1a and 1b.
+
+- **Q1.** **Academic class**: First Year, Sophomore, Junior, Senior.  
+- **Q2.** **Age**: 
+- **Q3.** **High school GPA**: 
+- **Q4.** **SAT Score (200 - 1600 scale)**:
+- **Q5.** Rate your satisfaction with the University's library services on a **1–7 scale**
+  (1 = Not at all satisfied, 7 = Extremely satisfied): 
+
+**1a. Discrete vs. continuous (5 points)**  
+For each Q1–Q5, state whether the responses are **discrete** or **continuous** variables and explain your choice in one sentence. 
+
+**Your answer:**  
+*(Replace this line with your 5 classifications + brief reasons.)*
+
+**1b. Scale type (5 points)**  
+For each Q1–Q5, state whether the responses are  **nominal / ordinal / interval / or ratio** variables and explain your choice in one sentence.
+
+**Your answer:**  
+*(Replace this line with your 5 scale types + brief justifications.)*
+
+**1c. Understanding the data (5 pts)**
+You analyze the data and discover that there is a relation between high school GPA and satisfaction with the library services. From this data, you conclude that doing well in high school causes people to be more satisfied with the library services at BU. What is wrong with this conclusion? 
+
+**Your answer:** 
+*(1–2 sentences.)*
+
+**1d. Samples and populations (5 pts)**
+BU administers the above survey to 500 students. In their published results, they write, "90% of BU students are satisfied with the library." What is the *sample* and what is the *population* they are likely referring to? 
+
+**Your answer:** 
+*(1–2 sentences.)*
+
+---
+
+# 2) Exam Score Histogram (10 pts)
+
+Your friend shows you a histogram of exam scores from a course they took last semester. Run the code below to generate the histogram.
+
+Before you run, remember:  
+- A **histogram** groups numeric values into **bins** and shows how many observations fall into each bin.  
+
+```{r q2}
+
+#set seed
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+#generate exam scores from 0 - 100
+exam_scores <- round(rnorm(200, mean = 90, sd = 10), 0)
+exam_scores[exam_scores < 0] <- 0
+exam_scores[exam_scores > 100] <- 100
+  
+#combine into dataframe
+df_example <- data.frame(x = exam_scores)
+
+ggplot(df_example, aes(x = x)) +
+  geom_histogram(binwidth = 1, boundary = 0, fill = "lightgrey", color = "black") +
+  labs(title = "Exam Scores",
+       x = "Exam Score", y = "Number of Students") +
+  theme_classic() 
+```
+
+**2a. Skew (5 pts)**  
+Is this distribution **positively** or **negatively** skewed? 
+
+**Your answer:**  
+*(1–2 sentences.)*
+
+**2b. Floor/ceiling effects (5 pts)**  
+Could this distribution be due to a floor or ceiling effect? If so, which one?
+
+**Your answer:**  
+*(1–2 sentences.)*
+
+---
+
+# 3) Mass Pike Speeds (25 pts)
+
+A state trooper recorded speeds (mph) for **20** individuals on the Mass Pike using a radar gun:
+
+```{r q3}
+speeds <- c(60, 70, 89, 70, 50, 59, 67, 72, 65, 63,
+            68, 65, 77, 65, 79, 82, 67, 63, 65, 64)
+
+length(speeds)  # prints number of speeds you recorded
+range(speeds)   # prints minimum and maximum speeds
+```
+
+## Grouped frequency table with **5 equal-width** intervals
+
+The code below builds **five non-overlapping, equal-width** intervals that cover the full range and counts how many speeds fall in each interval. It also adds a **percentage** column.
+
+- We create **6 breakpoints** from the observed min to max to define **5 intervals** of equal width.  
+- `cut()` assigns each speed to one of these intervals.  
+- `count()` tallies how many values fall in each bin.  
+- We then compute `percent = frequency / total * 100`.
+
+```{r}
+min_speed <- min(speeds)
+max_speed <- max(speeds)
+
+# Create 6 breakpoints => 5 equal-width intervals
+breaks <- seq(from = 45, to = 95, length.out = 6)
+# Ensure the maximum observation is included when right = FALSE
+breaks[length(breaks)] <- breaks[length(breaks)] + 1e-8
+
+# Assign each observation to an interval [a, b)
+speed_bins <- cut(
+  speeds,
+  breaks = breaks,
+  right = FALSE,         # include left endpoint, exclude right
+  include.lowest = TRUE
+)
+
+# Frequency and percent table
+freq_table <- data.frame(interval = speed_bins) |>
+  dplyr::count(interval, name = "frequency") |>
+  dplyr::mutate(percent = round(100 * frequency / sum(frequency), 1))
+
+freq_table
+```
+
+**3a. Which interval has the highest frequency?  (5 pts)**
+
+**Your answer:**  
+
+**3b Approximately what percent of drivers had speeds at or above 75 mph (use the table to justify)? (5 pts)**
+
+**Your answer:**  
+*(1 - 2 sentences)*
+
+## Histogram of the same data
+
+This plot visualizes the **same data** with a histogram.
+
+```{r}
+df_speeds <- data.frame(speed = speeds)
+
+ggplot(df_speeds, aes(x = speed)) +
+  geom_histogram(binwidth = 10, fill = "lightgrey", color = "black") +
+  labs(title = "Speeds on the Mass Pike (n = 20)",
+       x = "Speed (mph)", y = "Number of drivers") +
+  theme_classic()
+```
+
+**3c. Describe one advantage of visualizing the data in the histogram vs. the frequency table, and one advantage of viewing the data in the frequency table vs. the histogram. (5 pts)**
+
+**Your answer:**  
+*(2 sentences.)*
+
+**3d In the above code, change the line that says binwidth = 10 to binwidth = 30. What happens to the histogram, and what question would this help you answer? (5 pts)**
+
+**Your answer:**  
+*(1–2 sentences.)*
+
+**3e. A driver pulled over for going 90 MPH argues with the state trooper that the measurements from his radar gun are unreliable. What does this mean and how could the driver demonstrate this? (5 pts)**
+
+**Your answer:**  
+*(2–3 sentences.)*
+
+
+---
+
+# 4) Movies Seen Data (35 pts)
+
+The following is the number of movies seen in theaters by **20** high school seniors last summer:
+
+```{r}
+movies <- c(4, 3, 5, 2, 0, 2, 1, 6, 2, 4,
+            2, 3, 4, 6, 4, 2, 3, 7, 0, 5)
+
+length(movies)  # 20
+range(movies)   # min/max for helpful reference
+```
+
+The code below creates a histogram of the data
+
+```{r}
+
+df_movies <- data.frame(movies = movies)
+
+ggplot(df_movies, aes(x = movies)) + 
+  geom_histogram(binwidth = 10, color = "black", fill = "lightgrey") + 
+  labs(title = "FILL IN HERE",
+       x = "FILL IN HERE", y = "FILL IN HERE") +
+  theme_classic()
+```
+
+**4a. Edit the histogram code (10 pts)**
+- Edit the code above so that the histogram displays one bar for each response (one bar for each number of movies). (5 pts)
+- Edit the code above to add appropriate labels for the X axis, Y axis, and title. (5 pts total) 
+- Once you have made these edits, re-run the code chunk.
+
+**4b. Interpret the histogram (10 pts)**
+
+- What is the **mode** of this distribution?  (5 pts)
+
+**Your answer:**  
+
+- If you had to summarize the **typical** number of movies with one number, which would you pick—**mean** or **median**—and why? (5 pts)
+
+**4c. Visualizing other data (5 pts)**
+You also have data on the number of books read by these same 20 students last summer:
+
+```{r}
+books <- c(5, 6, 10, 1, 3, 0, 0, 0, 1, 2,
+            9, 1, 1, 7, 6, 5, 4, 3, 3, 4)
+
+df_movies_books <- data.frame(movies = movies, books=books)
+```
+
+You want to determine whether there is a relation between the number of movies seen and the number of books read last summer, so you create a scatter plot:
+
+```{r}
+
+#create scatterplot
+ggplot(df_movies_books, aes(x = movies, y = books)) +
+  geom_point(color = "darkblue", size = 2) +
+  labs(x = "Number of Movies Seen", y = "Number of Books Read") +
+  theme_classic()
+
+```
+
+- Why is a scatter plot a good choice for visualizing the relation between these two variables? (4 pts)
+
+**Your answer:**  
+*1-2 sentences*
+
+- What type of line would you add to this plot to help visualize the relation between the two variables? (Note, you do not have to actually add the line to the plot) (1 pt)
+
+**Your answer:**  
+
+**4d. Good visualizations (10 pts)**
+
+The following code creates a plot of the same data, with additional added elements.
+
+```{r}
+
+#create scatterplot
+ggplot(df_movies_books, aes(x = movies, y = books)) +
+  geom_point(color = "darkblue", size = 5) +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  geom_smooth(method = "lm", color = "black", se = TRUE) +
+  geom_line(color = "lightblue", size = 1) +
+  labs(title = "Number of Movies vs. Number of Books Read Last Summer",
+       x = "Number of Movies Seen", y = "Number of Books Read") +
+  theme_classic() +
+  theme(panel.background = element_rect(fill = "lightpink"),
+        panel.grid.major = element_line(color = "white", linetype = "dashed"),
+        panel.grid.minor = element_line(color = "white", linetype = "dashed"),
+        plot.title = element_text(hjust = 0.5, size = 12, face = "bold"))
+
+```
+
+- Identify **three** elements of this plot that make it a **bad** visualization. For each element, explain why it is problematic. (5 pts)
+
+**Your answer:**
+*(3 elements + brief explanations)*
+
+- Identify **two** elements of this plot that were NOT in the original, simpler plot above (you can re-run that code chunk to get it to appear again) but that you think are **good** additions. For each element, explain why you think it is a good addition (5 pts). 
+
+**Your answer:**
+*(2 elements + brief explanations)*
+
+---
+
+# 5) Course feedback (10 points)
+
+You made it to the end of the first homework! We would like to get your feedback on the course so far. We would like thoughtful, honest responses. You will NOT be penalized for criticizing any aspect of the course. 
+
+**5a. What is one concept that you think could have been explained more clearly or that you are still confused about? (5 pts)**
+
+**Your answer:**
+
+**5b. How would you rate the course difficulty so far (5 pts)**
+*Put an X in the appropriate box.*
+- [ ] Too easy
+- [ ] Just right
+- [ ] Too hard
+
+**5c. Is there anything else you would like to share?**
+*No points but we are always open to feedback and suggestions!*
+
+**Your answer:**
+
+
+
+---
+
+# AI and collaboration statement
+
+- [ ] I worked with another person / other people on this assignment.
+
+**If yes, who did you work with?**
+**Your answer:**
+
+- [ ] I used an AI tool (e.g., ChatGPT, Bard, etc.) to help me with this assignment.
+
+**If yes, what tool did you use and how did you use it?**
+**Your answer:**
+
+---
+
+# ✅ Submission checklist
+
+- [ ] I ran every code chunk and can see each table/plot.  
+- [ ] I replaced each “**Your answer**” placeholder with my responses.  
+- [ ] My name is at the top.  
+- [ ] I knitted to **HTML** and verified that all figures and responses appear.
+
+**How to submit:** Knit to HTML and upload the `.html` file to Blackboard.
+
+---
+
+# Quick help
+
+- If something fails to run, execute the **Packages** chunk first, then work top-to-bottom.  
+- Read error messages—they usually name the variable or function that needs attention.  
+- Still stuck on a code bug? Share a screenshot of your code and the exact error message on the "r questions" channel on Slack.

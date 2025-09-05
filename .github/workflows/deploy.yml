@@ -96,6 +96,11 @@ jobs:
             fi
             echo '</ul>'
           } > dist/pdfs/index.html
+    
+     - name: Copy homeworks
+        run: |
+            mkdir -p dist/homeworks
+            cp -r homeworks/* dist/homeworks/
 
       - name: Configure Pages
         uses: actions/configure-pages@v4

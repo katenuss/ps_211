@@ -29,7 +29,9 @@ align: lt
 - Homework 1 has been posted and is due (via Blackboard) on Monday, September 15 at 11:59 PM.
     - Homework 1 mostly covers material from Lectures 1 - 3, with a small amount of material from Lecture 4.
     - You should be able to do most of it after today's lecture.
-- In today's lecture, we will also go over instructions for how to use R Markdown to complete Homework 1.
+- In today's lecture, we will also go over instructions for using R Markdown to complete Homework 1.
+- My office hours tomorrow (Sept. 10) are cancelled, but if you need to meet, please Slack me and we can find an alternate time.
+
 
 ---
 layout: top-title-two-cols
