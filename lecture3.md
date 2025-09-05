@@ -372,9 +372,25 @@ align: lt
 :: content ::
 - Graphs are often more effective than tables for seeing patterns in data.
 - A **histogram** is a graphical representation of a grouped frequency table.
-- The x-axis shows the intervals (or "bins") of values.
+- The x-axis shows the intervals (or "bins") of continuous values.
 - The y-axis shows the frequency (or count) of observations in each interval.
-- A histogram *looks* like a bar graph, but ==the y-axis always represents frequency or count==, not a separate variable.
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+# Histograms (Continued)
+
+:: content ::
+
+- A histogram *looks* like a bar graph, but **the y-axis always represents frequency or count**, not a separate variable.
+
+<img src="/images/lecture3/bar_vs_hist.png" alt="bar vs hist" class="mx-auto w-1/2" />
+
+==Note: Histograms are for continuous variables only. Classically, the bars should touch to indicate this.== 
 
 ---
 layout: top-title
@@ -460,9 +476,6 @@ align: lt
 - A distribution describes how values of a variable are spread or clustered.
 - The shape of a distribution provides key insights into the characteristics of the data.
 
-<img src="/images/lecture3/yelp_stars.webp" alt="yelp stars" class="mx-auto w-1/2" />
-
-==Note: Some people say histograms are for continuous variables only and that the bars should touch to indicate this.== I don't think this is a hard-and-fast rule, but it's something to be aware of.
 
 
 ---
