@@ -283,7 +283,7 @@ align: lt
 - We actually often do this implicitly, without realizing it or using math.
 - Example:
     - If a movie critic typically gives 4-star reviews, and another typically gives 2-star reviews, who gave the better review if they both gave a movie 3 stars?
-    - You might intuitively say the first critic, because 3 stars is above their average, while it's below the second critic's average.
+    - You might intuitively say the second critic, because 3 stars is above their average, while it's below the first critic's average.
 
 <p v-click>
 
@@ -291,7 +291,6 @@ align: lt
 - We can use math to quantify this!
 
 </p>
-
 
 ---
 layout: top-title
@@ -593,7 +592,7 @@ align: lt
 - Imagine we are comparing grades across two PS 211 classes, taught by different professors.
 
 - Your grade: 92/100, class mean = 78.1, SD = 12.2  
-- Your friend's grade: 8.1/10, class mean = 6.8, SD = 0.74  
+- Your friend's grade: 8.1/10, class mean = 9, SD = 0.74  
 
 *Who did better, you or your friend?*
 
@@ -661,8 +660,8 @@ align: lt-lt-lt
 <p v-click>
 
 **Step 1:** Calculate the mean and SD for each critic's ratings.
-- Critic A: $M = 6.2$, $SD \approx 1.79$
-- Critic B: $M = 6.2$, $SD \approx 2.59$
+- Critic A: $M = 6.2$, $SD \approx 1.48$
+- Critic B: $M = 6.2$, $SD \approx 2.17$
 
 </p>
 
@@ -670,8 +669,8 @@ align: lt-lt-lt
 <p v-click>
 
 **Step 2:** Calculate the z score for each restaurant's rating.
-- Restaurant A: $z = \frac{7 - 6.2}{1.79} \approx 0.45$
-- Restaurant B: $z = \frac{7 - 6.2}{2.59} \approx 0.31$
+- Restaurant A: $z = \frac{7 - 6.2}{1.48} \approx 0.54$
+- Restaurant B: $z = \frac{7 - 6.2}{2.17} \approx 0.37$
 
 </p>
 
