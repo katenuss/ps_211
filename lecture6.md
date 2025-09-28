@@ -866,6 +866,20 @@ align: lt-lt-lt
 **Answer:** The distribution of means is less variable because averaging reduces the impact of extreme values. When we take the mean of a sample, we are essentially smoothing out the variability that exists in individual scores.
 </p>
 
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+# The Central Limit Theorem: Video Explanation
+
+:: content ::
+Let's watch someone else explain this!
+
+https://www.youtube.com/watch?v=YAlJCEDH2uY
+
 
 ---
 layout: top-title-two-cols
@@ -1065,6 +1079,44 @@ align: lt-lt-lt
 <img src="/images/lecture6/gpa_boxplot.png" alt="Boxplot of GPA" class="w-3/4 mx-auto"/>
 
 
+---
+layout: top-title-two-cols
+color: indigo-light
+align: lt-lt-lt
+---
+
+:: title ::
+
+# R Demo: Z Scores and Percentiles
+
+:: left ::
+- Let's do a quick demo in R to calculate z scores and percentiles.
+
+
+```r
+# Sample data: Happiness scores of countries
+happiness_scores <- c(7.313, 6.48, 4.362, 5.5, 3.8, 6.9, 4.12)
+
+# Calculate mean and standard deviation
+mean_happiness <- mean(happiness_scores)
+sd_happiness <- sd(happiness_scores)
+
+# Calculate z scores
+z_scores <- (happiness_scores - mean_happiness) / sd_happiness
+z_scores
+
+# Convert z scores to percentiles with the 'pnorm' function
+percentiles <- pnorm(z_scores) * 100
+percentiles
+```
+
+
+:: right ::
+
+- Now let's try some R practice! 
+- We will use the dataset "quakes" which contains information about earthquakes, including their magnitudes.
+- Imagine you experience an earthquake of magnitude 6. What percentage of earthquakes off the coast of Fiji are less severe than the one you experienced?
+
 
 
 
@@ -1073,5 +1125,4 @@ layout: cover
 color: indigo-light
 ---
 
-# That's all for today!
-See you Tuesday for the Exam 1 review session!
+# Time for Lecture 7!
