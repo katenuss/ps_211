@@ -10,7 +10,7 @@ exportFilename: ps211_fall2025_lecture2
 ---
 
 # PS 211: Introduction to Experimental Design
-## Spring 2025 · Section C1
+## Fall 2025 · Section C1
 ### Lecture 2: More variables and research methods
 
 ---

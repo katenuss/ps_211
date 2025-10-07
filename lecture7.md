@@ -10,7 +10,7 @@ exportFilename: ps211_fall2025_lecture7
 ---
 
 # PS 211: Introduction to Experimental Design
-## Spring 2025 · Section C1
+## Fall 2025 · Section C1
 ### Lecture 7: Hypothesis Testing with Z Tests
 
 ---
@@ -180,7 +180,7 @@ You want to know how well you did on Exam 1 relative to your classmates. You sco
 2. Find row 0.2 and column 0.05 → 0.5987  
 3. z is positive, so percentile = 0.5987 = **59.87%**.
 4. You did better than about 60% of the class.
-5. That means about 40% of the class scored lower than you.
+5. That means about 60% of the class scored lower than you.
 
 </p>
 

@@ -10,7 +10,7 @@ exportFilename: ps211_fall2025_lecture5
 ---
 
 # PS 211: Introduction to Experimental Design
-## Spring 2025 · Section C1
+## Fall 2025 · Section C1
 ### Lecture 5: Overview of Sampling, Probability, and Hypothesis Testing
 
 ---
