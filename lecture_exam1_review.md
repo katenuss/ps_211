@@ -10,7 +10,7 @@ exportFilename: ps211_fall2025_exam1_review
 ---
 
 # PS 211: Introduction to Experimental Design
-## Spring 2025 · Section C1
+## Fall 2025 · Section C1
 ### Exam 1 Review Session
 
 ---
