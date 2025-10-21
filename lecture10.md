@@ -461,7 +461,7 @@ align: lt-lt-lt
 ---
 
 :: title ::
-# Example: Beliefs About Violence & Mental Illness
+# Example: Sleep and Internet Access
 
 :: left ::
 A researcher wants to determine whether students sleep more when internet access in their dorms is restricted at night. She has 5 students report their average nightly sleep duration for one week *with* internet access and one week *without* internet access.  
