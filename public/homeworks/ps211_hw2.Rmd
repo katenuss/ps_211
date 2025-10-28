@@ -1,0 +1,489 @@
+---
+title: 'PS 211 C1 — Homework #2'
+author: "Your Name"
+date: 'Due: Friday, October 10 by 11:59 p.m.'
+output: pdf_document
+subtitle: Fall 2025
+---
+
+# How this homework works
+
+**Almost all code is already written for you.** Your job is to **run** each chunk (click the green play button in the top-right of the chunk in RStudio) and then **answer the interpretation questions** in plain English where it says “**Your answer:**”.
+
+- Work **top-to-bottom**; later chunks often depend on objects created earlier.
+- If a plot/table doesn’t appear, run the chunk **above** it first.
+- Please type your answers inside the brackets where it says "PUT YOUR ANSWER IN THESE BRACKETS." That will make your answer show up in blue, and will be easier for us to find and grade.
+
+- When you are done, you should "knit" the file to a **pdf** document and upload the pdf to Blackboard.
+
+---
+# Problems and Points (50 total points)
+# 1: 1a (2 pts), 1b (2 pts), 1c (2 pts) = 6 pts
+# 2: 2a (1 pt), 2b (1 pt), 2c (1 pt), 2d (2 pts), 2e (2 pts), 2f (1 pt), 2g (2 pts) = 10 pts
+# 3: 3a (2 pts), 3b (1 pt), 3c (2 pts), 3d (1 pt), 3e (1 pt), 3f (2 pts) = 9 pts
+# 4: 4a (2 pts), 4b (2 pts), 4c (3 pts), 4d (2 pts), 4e (1 pt), 4f (2 pts), 4g (2 pts) = 14 pts
+# 5: 5a (2 pts), 5b (1 pt), 5c (3 pts), 5d (2 pts), 5e (1 pt) = 9 pts
+# 6: 6a (1 pt), 6b (1 pt) = 2 pts
+
+
+---
+
+## Packages (run this once at the top)
+
+This assignment uses only **ggplot2**, **dplyr**, and **tidyr**. These are "packages" that contain pre-written "functions", which are reusable chunks of code that perform specific tasks.
+
+```{r libraries}
+# If needed, remove the # and run these once on your computer to install:
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+
+# Once you have installed the packages, you can "comment" those lines out (put the hashtag back) and just use the "library" function to load the packages into your R session.
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+#set seed for reproducibility
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+```
+
+---
+
+# 1) Choosing a Restaurant
+
+In an effort to make a new friend at BU, you invite one of your PS 211 classmates to get lunch, and they suggest that you go to either Nud Pob or Noodle Street. You want to decide which restaurant to go to, so you ask one of your friends what they think.
+
+"I've only been to Nud Pob and I'd give it a 7 out of 10," they say. 
+
+You ask another friend what they think. "I've only been to Noodle Street, and I'd give it an 86 out of 100."
+
+You now want to compare these two ratings to decide which restaurant to try.
+
+*1a. How could you compare these two ratings given that they are from different people who used different scales? What type of value could you use? (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS}
+
+To standardize these ratings, you need to know the mean and standard deviation of each friend's restaurant ratings. You collect additional ratings for other restaurants from each friend and compute the mean and standard deviation (see code below)
+
+```{r friend restaurant ratings}
+
+#list of friends' ratings
+friendA_ratings <- c(6, 7, 8, 5, 9, 7, 6, 8, 7, 7, 5)  # ratings out of 10
+friendB_ratings <- c(70, 80, 72, 90, 85, 95, 88, 82, 86, 84, 89)  # ratings out of 100
+
+#compute mean and standard of each friends' ratings
+mean_A <- mean(friendA_ratings)
+sd_A <- sd(friendA_ratings)
+
+mean_B <- mean(friendB_ratings)
+sd_B <- sd(friendB_ratings)
+
+#print values
+mean_A  # mean rating for friend A
+sd_A    # standard deviation for friend A
+mean_B  # mean rating for friend B
+sd_B    # standard deviation for friend B
+```
+
+*1b. You decide to use these means and standard deviations to compute a Z score for each restaurant. The code below computes the Z score for Nud Pob. Edit the line of code that says z_NoodleStreet <- 100 to replace the 100 with the correct Z score formula. (2 pts)*
+
+```{r z score computation}
+
+NudPob_rating <- 7  # friend A's rating out of 10
+NoodleStreet_rating <- 86  # friend B's rating out of 100
+
+# Compute Z scores
+z_NudPob <- (NudPob_rating - mean_A) / sd_A
+
+# EDIT THIS LINE AND THEN RUN
+z_NoodleStreet  <-  100 #REPLACE 100 WITH YOUR CODE
+
+#Print out the z scores
+z_NudPob
+z_NoodleStreet
+
+```
+
+*1c. What do these two z scores tell you? Which restaurant would you choose? (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+---
+
+# 2) Exam grade distributions
+
+Five hundred students took a Psych 101 exam. The code below plots their distribution of scores.
+
+```{r q2.0}
+
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+# --- Simulate a "population" of exam scores ---
+N <- 500
+sec   <- rbinom(N, 1, 0.80)                 
+pop   <- ifelse(sec==1, rnorm(N, 85, 10), rnorm(N, 40, 10))
+pop   <- pmin(pmax(pop, 0), 100)         
+
+# --- Plot distribution of exam scores ---
+ggplot(data.frame(pop), aes(x=pop)) +
+  geom_histogram(binwidth=2, fill="lightblue", color="black") +
+  labs(title="Individual Exam Scores (PS 101)",
+       x="Score", y="Number of Students") +
+  theme_classic()
+```
+
+*2a. How would you describe the shape of this distribution: Normal, negatively skewed, or positively skewed? (1 pt)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+
+
+You want to estimate the mean exam score of this population distribution by drawing 30 samples from it. The code below draws 10 samples and computes the mean of those samples.
+
+```{r q2.1}
+
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+# --- Sample 30 times from the "population" of exam scores ---
+n <- 30
+
+#draw samples
+samples <- sample(pop, n, replace=FALSE)
+
+#compute mean
+sample_mean <- mean(samples)
+
+#display mean
+sample_mean
+```
+
+
+*2b. Based on this sample mean (NOT the population histogram), what is your best estimate of the population mean? (1 pt)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+
+*2c. Is this a point estimate or an interval estimate? (1 pt)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+*2d. If you were to draw another sample of 30 exam scores from this population, would you expect the sample mean to be exactly the same as the one you just computed? Why or why not? (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+*2e. Imagine you drew samples of 10 scores and computed the mean of the 30 scores 100 times (so you had 100 means). If you plotted these means, what would you expect the shape of that distribution to be? (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+
+The following code does exactly that: it draws 30 samples from the population 100 times, computes the mean of each sample, and then plots the distribution of those sample means.
+
+```{r q2.2}
+
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+# --- Sample 30 times from the "population" of exam scores ---
+n <- 30
+
+#draw samples
+samples <- sample(pop, n, replace=FALSE)
+
+#compute mean
+sample_mean <- mean(samples)
+
+
+# --- Repeat the sampling process 100 times to create a distribution of sample means ---
+
+num_samples <- 100
+sample_means <- numeric(num_samples)
+for (i in 1:num_samples) {
+  samples <- sample(pop, n, replace=FALSE)
+  sample_means[i] <- mean(samples)
+}
+
+#plot distribution of sample means
+ggplot(data.frame(sample_means), aes(x=sample_means)) +
+  geom_histogram(binwidth=1, fill="lightgreen", color="black") +
+  labs(title="Distribution of Sample Means (n=10; 100 samples)",
+       x="Sample Mean", y="Frequency") +
+  theme_classic()
+
+```
+
+*2f. What is the standard deviation of this distribution of means called? (1 pt)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+
+*2g. If you were to repeat the same process but sample 50 scores instead of 30 scores, would you expect this distribution of means to be more or less spread out? Explain both in terms of the mathematical formula you would use to compute the "spread" (1 pt) AND in more intuitive, real-world terms (1 pt; 2 pts total)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+---
+
+#3) Extraversion scores
+In a large psychology study, researchers measured extraversion scores (mean = 50, SD = 10) in a college population.  The distribution of extraversion is approximately normal.  
+
+*3a. A student has a raw score of 60. Would you expect their z score to be positive or negative? Explain. (2 pts)* 
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+*3b. Without using a calculator, what is their z score? Explain your reasoning. (1 pt)* 
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+*3c. A student has a raw score of 60. Would you expect their percentile to be above or below 50% Explain (2 pts)* 
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+*3d. The code below currently computes the z score by adding the raw_score + mean_extraversion + sd_extraversion. But this is not the right formula! Edit the code below to use the correct formula to calculate the z score for this student (1 pt).*
+
+```{r q3.0}
+
+#DO NOT EDIT THESE
+raw_score <- 60
+mean_extraversion <- 50
+sd_extraversion <- 10
+
+#EDIT THIS CODE TO COMPUTE THE Z SCORE FOR THIS STUDENT
+z_score <- raw_score + mean_extraversion + sd_extraversion  # REPLACE WITH YOUR CODE
+
+#Print z score
+z_score
+```
+
+Now that you have the (correct) z_score for the student, let's convert it to a percentile, using the pnorm function:
+
+```{r q3.1}
+
+#compute percentile
+percentile <- pnorm(z_score) * 100
+
+#Print percentile
+percentile
+
+```
+
+*3e. Based on the percentile you computed above, what percentage of students in the population would you expect to be LESS extraverted than this student? (1 pt)* 
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+*3f. Another student has a raw score of 35. Edit the code below to compute their z score and percentile using the same formulas as above. (2 pts)*
+
+```{r q3.2}
+
+#EDIT THE RAW SCORE
+raw_score <- 60
+
+#DO NOT EDIT THESE
+mean_extraversion <- 50
+sd_extraversion <- 10
+
+#EDIT THIS CODE WITH YOUR Z SCORE FORMULA
+z_score <- raw_score + mean_extraversion + sd_extraversion  # REPLACE WITH YOUR CODE
+
+#EDIT THIS CODE TO COMPUTE THE PERCENTILE
+percentile <- z_score  # REPLACE WITH YOUR CODE
+
+
+#PRINT Z SCORE
+z_score
+
+#PRINT PERCENTILE
+percentile
+
+
+```
+
+
+
+#4) BU Students and Anxiety
+
+National surveys find that the **average anxiety score** for college-aged students is mu = 52 (with a population SD of 7).  
+
+You want to test whether BU students show either **higher or lower anxiety** than the national average. You collect data from a sample of **n = 36 BU students** and find a **mean anxiety score of M = 54**.  
+
+*4a. State the null hypothesis (H0) and the alternative hypothesis (H1) in terms of population means. (2 pts)* 
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+*4b. As stated above, you want to test that BU students show either higher or lower anxiety than the national average. What kind of test should you use: one-tailed or two-tailed? Explain. (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+*4c. You decide to compute the z score for your sample mean to see how extreme it is under the null hypothesis. Look at the equation in the code below. What is wrong with the equation? (3 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+```{r q4.0}
+
+# Given values
+mu <- 52               # population mean under H0
+M <- 54                # sample mean
+sigma <- 7             # population standard deviation
+n <- 36                # sample size
+
+# INCORRECT Z SCORE FORMULA
+z <- (M - mu) / sigma  
+
+```
+
+*4d. Now edit the code below to include the CORRECT z score formula. Then run the code to print the correct z score (2 pts)*
+
+```{r q4.1}
+
+# Given values
+mu <- 52               # population mean under H0
+M <- 54                # sample mean
+sigma <- 7             # population standard deviation
+n <- 36                # sample size
+
+# INCORRECT Z SCORE FORMULA - REPLACE THIS WITH THE CORRECT FORMULA
+z <- (M - mu) / sigma  
+
+# Print z score
+z
+
+```
+
+
+*4e. Based on the z score you computed above, how many standard errors is the sample mean away from the population mean? (1 pt)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+Run the code below to determine the percentile associated with this z score.
+```{r q4.2}
+
+#plot standard normal distribution with percentile shaded
+x <- seq(-4, 4, length=100)
+y <- dnorm(x)
+plot(x, y, type="l", main="Standard Normal Distribution", ylab="Density", xlab="Z Score")
+polygon(c(-4, x[x <= z], z), c(0, y[x <= z], 0), col="lightblue")
+abline(v=z, col="red", lty=2)
+
+#convert z score to percentile
+percentile <- pnorm(z) * 100
+
+#print percentile
+percentile
+
+
+```
+ 
+ 
+*4f. If we are running a two-tailed test with an alpha level of 0.05, what are our upper and lower percentile cutoffs? (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+ 
+*4g. Based on our percentile, would you reject or fail to reject the null hypothesis at an alpha level of 0.05? Explain. (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}
+
+
+#5) Sleep and Academic Performance 
+Psychologists are studying the relationship between sleep and academic performance.  
+A sample of **n = 49 college students** was asked how many hours of sleep they usually get on a school night. The sample mean was **M = 6.8 hours**, and from past research the **population standard deviation is estimated as sigma = 1.2 hours**.  
+
+We want to compute the **95% confidence interval** for the population mean.
+
+*1a. Write down the formula for a confidence interval using z. (2 pts)*  
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.}  
+
+To build a 95% confidence interval, you need the critical z value. Run the code below to find the z value that leave 2.5% in the upper tail.
+
+```{r q5.0}
+upper_cutoff <- qnorm(0.975)   # percentile cutoff for 95% CI
+
+#print
+upper_cutoff
+
+```
+
+*1b. Given that z values are based on symmetric distributions, what is the critical z value that leaves 2.5% in the lower tail? (1 pt)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+
+*1c. Now, use the critical z values to compute the 95% confidence interval for the population mean. Edit the code below to compute the lower and upper bounds of the confidence interval. (3 pts)*
+
+```{r q5.1}
+
+#Given values
+M <- 6.8
+sigma <- 1.2
+n <- 49
+SE <- sigma / sqrt(n)
+
+
+#EDIT THE CODE BELOW TO COMPUTE THE LOWER AND UPPER BOUNDS OF THE 95% CI
+#These equations are incorrect! Edit them to make them correct. Remember, your cutoff value is a z score, and you need to convert this z score back to the original units.
+upper_bound <- M + upper_cutoff + SE
+lower_bound <- M + upper_cutoff + SE 
+
+#print
+upper_bound
+lower_bound
+
+
+#This code will PLOT your cutoffs. Your 95% confidence interval for the mean amount of sleep will be shaded in blue. You do not need to edit this plotting code. Instead, look at the generated plot and see if it seems reasonable. If it does not, it means your calculations for the upper and lower bounds are likely incorrect.
+x <- seq(4, 9, length=100)
+y <- dnorm(x, mean=M, sd=SE)
+plot(x, y, type="l", main="95% Confidence Interval for Mean Sleep", ylab="Density", xlab="Hours of Sleep")
+polygon(c(lower_bound, x[x >= lower_bound & x <= upper_bound], upper_bound), c(0, y[x >= lower_bound & x <= upper_bound], 0), col="lightblue")
+#add red vertical lines at cutoffs
+abline(v=lower_bound, col="red", lty=2)
+abline(v=upper_bound, col="red", lty=2)
+
+```
+
+
+*1d. Based on these values, what is the 95% confidence interval for the mean amount of sleep in the population? (2 pts)*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+*1e. What is the interpretation of this confidence interval in words? (1 pt) *
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+
+---
+
+# 6) Course feedback 
+
+You made it to the end of the second homework! We would like to get your feedback on the course so far. We would like thoughtful, honest responses. You will NOT be penalized for criticizing any aspect of the course. 
+
+*6a. What is one concept that you think could have been explained more clearly or that you are still confused about? (1 pt) *
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+
+*6b. How would you rate the course difficulty so far (1 pt)*
+*Put an X in the appropriate box.*
+- [ ] Too easy
+- [ ] Just right
+- [ ] Too hard
+
+*6c. Is there anything else you would like to share?*
+*No points but we are always open to feedback and suggestions!*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+
+# AI and collaboration statement
+
+- [ ] I worked with another person / other people on this assignment.
+
+*If yes, who did you work with?*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+- [ ] I used an AI tool (e.g., ChatGPT, Bard, etc.) to help me with this assignment.
+
+*If yes, what tool did you use and how did you use it?*
+\textcolor{blue}{PUT YOUR ANSWER IN THESE BRACKETS.} 
+
+---
+
+# Submission checklist
+
+- [ ] I ran every code chunk and can see each table/plot.  
+- [ ] I replaced each “**Your answer**” placeholder with my responses.  
+- [ ] My name is at the top.  
+- [ ] I knitted to **PDF** and verified that all figures and responses appear.
+
+**How to submit:** Knit to HTML and upload the `.pdf` file to Blackboard.
+
+---
+
+# Quick help
+
+- If something fails to run, execute the **Packages** chunk first, then work top-to-bottom.  
+- Read error messages—they usually name the variable or function that needs attention.  
+- Still stuck on a code bug? Share a screenshot of your code and the exact error message on the "r questions" channel on Slack.

@@ -1,0 +1,481 @@
+---
+title: 'PS 211 C1 — Homework #3'
+author: "YOUR NAME"
+date: 'Due: Friday, October 31 by 11:59 p.m.'
+output: pdf_document
+subtitle: Fall 2025
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# How this homework works
+
+**Almost all code is already written for you.** Your job is to **run** each chunk (click the green play button in the top-right of the chunk in RStudio) and then **answer the interpretation questions** in plain English where it says “**Your answer:**”.
+
+- Work **top-to-bottom**; later chunks often depend on objects created earlier.
+- If a plot/table doesn’t appear, run the chunk **above** it first.
+- Please type your answers inside the brackets where it says "PUT YOUR ANSWER IN THESE BRACKETS." That will make your answer show up in blue, and will be easier for us to find and grade.
+
+- When you are done, you should "knit" the file to a **pdf** document and upload the pdf to Blackboard.
+---
+
+# Problems and Points (30 total points)
+# 1: 5pts - 1 pt for each part
+# 2: 14pts - 1 pt for each part
+# 3: 9pts - 1 pt for each part
+# 4: 2pts - 1 pt for each part
+
+---
+
+## Packages (run this once at the top)
+
+This assignment uses only **ggplot2**, **dplyr**, and **tidyr**. These are "packages" that contain pre-written "functions", which are reusable chunks of code that perform specific tasks.
+
+```{r libraries}
+# If needed, remove the # and run these once on your computer to install:
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+
+# Once you have installed the packages, you can "comment" those lines out (put the hashtag back) and just use the "library" function to load the packages into your R session.
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+#set seed for reproducibility
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+```
+
+---
+
+# 1) Determining which statistical tests to use
+
+1. For each of the following scenarios, indicate which statistical test you would use address your research question: a *z* test, a single-sample *t* test, a paired-samples *t* test, or an independent-samples *t* test.
+
+a. You want to know whether the average height of students in your class is different from the national average height of 5'7", SD = 3 inches.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+b. You want to know whether students who attend a review session before an exam perform better on the exam than different students who do not attend the review session.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+c. You want to know whether students perform better on a second exam after attending a review session compared to their performance on the first exam before attending the review session.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+d. You want to know whether the average number of hours students sleep per night is different from the recommended 8 hours.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+e. You want to know whether students who drink coffee perform better on exams than students who do not drink coffee.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+# 2) Loneliness and Social Media Use
+
+We are studying the impact of social media use on the experience of feeling alone or
+isolated among college students at Boston University. We want to know if social
+media use has an impact on self-reported loneliness.
+
+We first sample 5 students who regularly use social media. These report loneliness
+scores of 7, 4, 6, 5, and 8 on a continuous scale of 1-10.
+
+We then ask these students to stop using social media for 2 weeks. After 2 weeks, these
+same students report loneliness scores of 8, 6, 6, 4, and 9.
+
+a) What is the null hypothesis for this study? 
+\textcolor{blue}{YOUR ANSWER HERE}
+
+b) What is the research / alternative hypothesis for this study?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+c) Should you use a one-tailed or two-tailed test?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+d) Why should you use a paired-samples *t* test to test your hypothesis?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+The following R code creates a "dataframe" with the loneliness scores for each participant, with and without social media use. Run the code to print a table of scores.
+```{r loneliness data}
+
+loneliness_data <- data.frame(
+  participant = 1:5,
+  with_social_media = c(7, 4, 6, 5, 8),
+  without_social_media = c(8, 6, 6, 4, 9)
+)
+
+loneliness_data
+```
+
+The following code adds a new column to the dataframe with the difference in loneliness scores for each participant (without social media - with social media). Run the code to see the updated table.
+
+```{r loneliness data differences}
+
+loneliness_data$difference <- loneliness_data$without_social_media - loneliness_data$with_social_media
+
+loneliness_data
+```
+
+For fun, the next code chunk creates a plot of the loneliness scores for each participant, with lines connecting their scores with and without social media use. The larger blue dots represent the means. Run the code to see the plot.
+```{r loneliness data plot, fig.height=4, fig.width=6}
+
+loneliness_data_long <- loneliness_data %>%
+  pivot_longer(cols = c(with_social_media, without_social_media),
+               names_to = "condition",
+               values_to = "loneliness_score")
+
+
+#add means
+mean_with_social_media <- mean(loneliness_data$with_social_media)
+mean_without_social_media <- mean(loneliness_data$without_social_media)
+
+#put means into dataframe
+means <- data.frame(
+  condition = c("with_social_media", "without_social_media"),
+  loneliness_score = c(mean_with_social_media, mean_without_social_media)
+) %>%
+  mutate(participant = "mean")
+
+
+ggplot(loneliness_data_long, aes(x = condition, y = loneliness_score, group = participant)) +
+  geom_point() +
+  geom_line() +
+  geom_point(aes(x = "with_social_media", y = mean_with_social_media), color = "blue", size = 4) +
+  geom_point(aes(x = "without_social_media", y = mean_without_social_media), color = "blue", size = 4) +
+  #add line connecting means
+  geom_line(data = means, aes(x = condition, y = loneliness_score), color = "blue", size = 1.5) +
+  labs(title = "Loneliness Scores With and Without Social Media Use",
+       x = "Condition",
+       y = "Loneliness Score") +
+  theme_classic()
+
+```
+
+Now you have difference scores for each participant. You can run the next chunk of code to compute the *mean* and *standard deviation* of these difference scores.
+
+```{r loneliness data stats}
+
+#compute scores
+mean_difference <- mean(loneliness_data$difference)
+sd_difference <- sd(loneliness_data$difference)
+
+#print results
+mean_difference
+sd_difference
+
+```
+
+e) Edit the next code chunk to compute the *standard error* of the difference scores. Hint: You can compute the square root using the `sqrt()` function, and the number of observations is already provided as `n`.
+
+```{r loneliness data se}
+#number of observations - Don't edit this!
+n <- 5 
+
+# Computation of standard error
+se_difference <- sd_difference + n  # EDIT THIS LINE TO COMPUTE STANDARD ERROR
+
+# Print standard error
+se_difference
+
+```
+
+f) Based on what you computed above, if you were to take many samples of 5 pairs of scores from this population and compute the mean difference score for each sample, what would be the expected standard deviation of those mean difference scores? 
+\textcolor{blue}{YOUR ANSWER HERE}
+
+g) If you were to increase your sample size to 10, would you expect the standard error to be bigger or smaller?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+h) If the difference scores were more variable (i.e., had a larger standard deviation), would you expect the standard error to be bigger or smaller?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+i) Edit the following code chunk to compute the *t* statistic for this paired-samples *t* test. Note that the formula is INCORRECT, and your job is to fix it.
+
+```{r loneliness data tstat}
+
+t_statistic <- mean_difference + se_difference + n  # EDIT THIS LINE TO COMPUTE T STATISTIC
+
+#print out t_statistic
+t_statistic
+
+```
+
+The following code chunk runs the paired-samples *t* test using R's built-in `t.test()` function. Note: We have *not* gone over this in class yet. Run the code to see the results of the test.
+
+```{r loneliness data ttest}
+
+t_test_result <- t.test(
+  loneliness_data$without_social_media,
+  loneliness_data$with_social_media,
+  paired = TRUE,
+  alternative = "two.sided"
+)
+
+#print result
+t_test_result
+
+```
+
+The t value that is printed here should MATCH the t value you computed. If it does not, double check your calculations! It means you did something wrong.
+
+The R output here tells us that our t statistic is 1.1767, with 4 degrees of freedom (df = 4), and a p-value of 0.3046. It also tells us that our 95% confidence interval for the mean difference is -0.816 to 2.016.
+
+j) Based on the results of this paired-samples *t* test, what is your conclusion regarding the impact of social media use on loneliness among college students? 
+\textcolor{blue}{YOUR ANSWER HERE}
+
+k) If you were ONLY given the 95% confidence interval, could you draw a conclusion regarding the impact of social media use on loneliness among college students? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+You decide your study was *underpowered* so you run it again, but this time, you include 20 students. The code chunk below computes the results of the paired-samples *t* test for this larger sample size. Run the code to see the results.
+
+```{r loneliness study larger sample}
+
+#compile data
+loneliness_data_larger <- data.frame(
+  participant = 1:20,
+  with_social_media = c(7, 4, 6, 5, 8, 6, 7, 5, 4, 6, 7, 5, 6, 8, 7, 5, 6, 4, 5, 7),
+  without_social_media = c(8, 5, 3, 4, 9, 7, 8, 6, 4, 7, 8, 6, 7, 9, 8, 6, 7, 5, 5, 8)
+)
+
+#run t test
+t_test_result_larger <- t.test(
+  loneliness_data_larger$without_social_media,
+  loneliness_data_larger$with_social_media,
+  paired = TRUE,
+  alternative = "two.sided"
+)
+
+#print results
+t_test_result_larger
+
+```
+
+l) Based on the results of this paired-samples *t* test with the larger sample size, what is your conclusion regarding the impact of social media use on loneliness among college students? 
+\textcolor{blue}{YOUR ANSWER HERE}
+
+m) In both cases, your mean difference score was the same (i.e., the average change in loneliness from with social media to without social media was the same). Why might your conclusions have been different? In your answer, refer to the concept of *standard error* to explain.
+\textcolor{blue}{YOUR ANSWER HERE}
+
+n) The results from the larger sample size indicate the conclusion that you drew from the smaller sample size was incorrect. Did you make a Type I or Type II error with the smaller sample size?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+# 3) DoorDash spending amongst college students
+
+A researcher is interested in whether college students on *suburban* versus *urban* campuses spend more money ordering DoorDash. To test this, she surveys 6 random students from BC (suburban) and 7 random students from BU (urban), asking them how much money they spent on DoorDash in the past month. The data are provided below.
+
+```{r doordash data}
+doordash_data <- data.frame(
+  campus = c(rep("BC", 6), rep("BU", 7)),
+  spending = c(45, 30, 25, 50, 40, 35, 60, 55, 70, 65, 80, 75, 90)
+)
+
+#print
+doordash_data
+
+```
+
+a) What type of *t* test should the researcher use to test whether there is a difference in DoorDash spending between suburban and urban campuses? Why?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+b) The researcher determines that her first step is to compute paired differences between the two groups. To do so, she "pairs" students such that the student from BC with the lowest spending is paired with the student from BU with the lowest spending, the student from BC with the second-lowest spending is paired with the student from BU with the second-lowest spending, and so on. Is this a correct step for conducting the appropriate *t* test? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+The researcher decides to compute the mean and standard deviation of DoorDash spending for each campus. Run the following code chunk to see the results.
+
+```{r doordash stats}
+doordash_stats <- doordash_data %>%
+  group_by(campus) %>%
+  summarize(
+    mean_spending = mean(spending),
+    sd_spending = sd(spending),
+    n = n()
+  )
+
+#print
+doordash_stats
+
+```
+
+
+For fun, the next code chunk creates a plot of DoorDash spending for each campus. The larger blue dots represent the means. Run the code to see the plot.
+
+```{r doordash data plot, fig.height=4, fig.width=6}
+
+ggplot(doordash_data, aes(x = campus, y = spending)) +
+  geom_point() +
+  geom_jitter(width = 0.1) +
+  stat_summary(fun = mean, geom = "point", color = "blue", size = 4) +
+  labs(title = "DoorDash Monthly Spending by Campus",
+       x = "Campus",
+       y = "DoorDash Spending ($)") +
+  theme_classic()
+
+```
+
+c) She knows she needs to compute the *pooled variance*. To do so, she takes the average of the two squared standard deviations. Is this correct? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+d) Edit the following code chunk to compute the *pooled variance* correctly.
+```{r doordash pooled variance}
+
+#This part of the code gives you the values you need. It is correct!
+sd_bc <- doordash_stats$sd_spending[doordash_stats$campus == "BC"] #standard deviations
+sd_bu <- doordash_stats$sd_spending[doordash_stats$campus == "BU"]
+n_bc <- doordash_stats$n[doordash_stats$campus == "BC"] # n numbers
+n_bu <- doordash_stats$n[doordash_stats$campus == "BU"]
+n_total <- n_bc + n_bu
+var_bc <- sd_bc^2 #variance
+var_bu <- sd_bu^2 
+
+#print out values
+sd_bc
+sd_bu
+var_bc
+var_bu
+n_bc
+n_bu
+n_total 
+
+#This part of the code combines the values to compute the pooled variance. It is NOT correct and needs to be edited. Remember, the variance is the squared standard deviation (sd^2).
+
+pooled_var = (sd_bc^2 + sd_bu^2) / 2  # EDIT THIS LINE TO COMPUTE POOLED VARIANCE CORRECTLY. Remember, you are just typing an equation.
+
+#print out pooled variance
+pooled_var
+```
+
+e) Based on the pooled variance you computed above, what is your best estimate for the population variance of DoorDash spending among college students?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+f) Sanity check: The variance of the BU sample is approximately 145. The variance of the BC sample is approximately 87.5. Should the pooled variance you computed be between these two values? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE} 
+
+The next code chunk computes the *standard error* for the independent-samples *t* test, from your pooled variance estimate. If your pooled variance estimate is correct, this code will compute the correct standard error. You do not need to edit it, but go through the steps to make sure you understand how the standard error is computed.
+
+```{r compute standard error}
+
+#First, compute squared standard errors for each group
+se_BU_squared = pooled_var / n_bu
+se_BC_squared = pooled_var / n_bc
+
+#Next, sum to get the total squared standard error of the difference
+se_difference_squared = se_BU_squared + se_BC_squared
+
+#Finally, take the square root to get the standard error
+se_difference = sqrt(se_difference_squared)
+
+#Print out
+se_difference
+
+```
+
+g) Finally, you can compute your *t* statistic for the independent-samples *t* test. Edit the following code chunk to compute the *t* statistic correctly.
+
+```{r compute t statistic}
+
+#Get means for each group - this part of the code is correct!
+mean_bc <- doordash_stats$mean_spending[doordash_stats$campus == "BC"]
+mean_bu <- doordash_stats$mean_spending[doordash_stats$campus == "BU"]
+
+#Compute your t statistic - this part of the code is NOT correct and needs to be edited.
+t_statistic <- (mean_bu + mean_bc) / se_difference  # EDIT THIS LINE TO COMPUTE T STATISTIC CORRECTLY
+
+#print out
+t_statistic
+
+```
+
+The following code computes the critical *t* value for this independent-samples *t* test, given an alpha level of 0.05 and a two-tailed test. Run the code to see the critical *t* value.
+
+```{r critical t value}
+
+df <- n_bc + n_bu - 2  #degrees of freedom
+upper_critical_t <- qt(0.975, df)  #two-tailed test, alpha = 0.05
+lower_critical_t <- qt(0.025, df)  #two-tailed test, alpha = 0.05
+
+#print critical t
+upper_critical_t
+lower_critical_t
+
+```
+
+h) Based on these values and your computed *t* statistic, what is your conclusion regarding whether there is a significant difference in DoorDash spending between suburban and urban campuses?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+Let's check your work by running R's built-in `t.test()` function for independent-samples *t* tests. Run the code chunk below to see the results. Note: If your computed *t* statistic is very slightly different (<.1), don't worry about it.
+
+```{r independent t test}
+
+t_test_result_independent <- t.test(
+  doordash_data$spending[doordash_data$campus == "BU"],
+  doordash_data$spending[doordash_data$campus == "BC"],
+  paired = FALSE,
+  var.equal = TRUE,
+  alternative = "two.sided",
+)
+
+#print result
+t_test_result_independent
+
+```
+
+i) The 95% confidence interval for the difference in means is printed in the R output above. Describe what this means in words, in the context of this study. What are the units of 19.8 and 46.57, and what do they represent?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+# 4) Course feedback 
+
+You made it to the end of the third homework! We would like to get your feedback on the course so far. We would like thoughtful, honest responses. You will NOT be penalized for criticizing any aspect of the course. 
+
+a. What is one concept that you think could have been explained more clearly or that you are still confused about? (1 pt) *
+\textcolor{blue}{} 
+
+b. How would you rate the course difficulty so far (1 pt)*
+*Put an X in the appropriate box.*
+- [] Too easy
+- [] Just right
+- [] Too hard
+
+c. Is there anything else you would like to share?
+*No points but we are always open to feedback and suggestions!*
+\textcolor{blue}{} 
+
+
+# AI and collaboration statement
+
+- [] I worked with another person / other people on this assignment.
+
+*If yes, who did you work with?*
+\textcolor{blue}{} 
+
+- [] I used an AI tool (e.g., ChatGPT, Bard, etc.) to help me with this assignment.
+
+*If yes, what tool did you use and how did you use it?*
+\textcolor{blue}{} 
+
+---
+
+# Submission checklist
+
+- [] I ran every code chunk and can see each table/plot.  
+- [] I replaced each “**Your answer**” placeholder with my responses.  
+- [] My name is at the top.  
+- [] I knitted to **PDF** and verified that all figures and responses appear.
+
+**How to submit:** Knit to pdf and upload the `.pdf` file to Blackboard.
+
+---
+
+# Quick help
+
+- If something fails to run, execute the **Packages** chunk first, then work top-to-bottom.  
+- Read error messages—they usually name the variable or function that needs attention.  
+- Still stuck on a code bug? Share a screenshot of your code and the exact error message on the "r questions" channel on Slack.
+
