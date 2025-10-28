@@ -24,7 +24,7 @@ align: lt
 
 :: content ::
 - Class time today was the ==mid-semester survey== deadline.
-   - Unfortunately, only 35 students filled it out -> no bonus points *sad face*
+   - You met the threshold! +2 bonus percentage points on Exam 3.
 - ==Homework 3== is due Friday at midnight.
 - By the end of class today, you will know everything you need to complete it!
 
