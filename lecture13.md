@@ -323,7 +323,7 @@ align: lt
 | Element | Why Include It | Example |
 |----------|----------------|----------|
 | **Effect size** | Shows *magnitude* of difference | *d* = 0.68 |
-| **Confidence interval (CI)** | Range of plausible values | 95% CI [0.12, 1.24] |
+| **Confidence interval (CI)** | Range of plausible values | 95% CI \[0.12, 1.24] |
 | **Exact p value** | More informative than *p* < .05 | *p* = .037 |
 
 <div class="mt-3 text-gray-600">
@@ -332,7 +332,6 @@ align: lt
 - Many journals now require effect sizes, CIs, and exact p-values.
 - There is no reason *not* to include them!
 </div>
-
 
 ---
 layout: top-title
@@ -533,7 +532,7 @@ Below are the **APA-corrected versions** of those two messy examples.
 #### ☕️ Correct Example 1 — Independent-Samples *t*
 
 > The caffeine group (*M* = 14.2, *SD* = 3.0) scored higher than the placebo group (*M* = 11.1, *SD* = 2.8),  
-> *t*(28) = 3.20, *p* = .004, *d* = 0.79, 95% CI \[0.50, 4.80].
+> *t*(28) = 3.20, *p* = .004, *d* = 0.79, 95% CI \[0.5, 4.8].
 
 *What was fixed?*
 - Italicize statistical symbols (*t*, *p*, *d*, *M*, *SD*).  
