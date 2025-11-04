@@ -584,7 +584,7 @@ B. Larger sample sizes will increase our *t* statistic, but will not change the 
 
 C. Larger sample sizes will change the shape of the *t* distribution, decreasing the critical value needed to reach significance, but will not affect our *t* statistic.
 
-D. Larger sample sizes will increaes our effect size.
+D. Larger sample sizes will increase our effect size.
 
 <p v-click>
 
@@ -625,10 +625,9 @@ align: lt
 ## Five steps to compute the standard error:
 1. Compute each sample's variance (s²).  
 2. Compute the pooled variance (s²pooled).
-3. Convert the pooled variance from the squared standard deviation (SD²) to the squared standard error (SE²).  
+3. Convert the pooled variance from the squared standard deviation (SD²) to the squared standard error (SE²). Remember the squared SD IS the pooled variance.  
 4. Add the two squared standard errors together to get the variance of the difference between means (SE²difference).
 5. Take the square root of the variance of the difference to get the standard error of the difference between means (SEdifference).
-
 
 ---
 layout: top-title
@@ -680,7 +679,6 @@ B. This enables us to calculate the difference between the sample means.
 
 C. We need the pooled variance so we know which sample has more variability.
 
-D. There is no reason to compute the mean of the two sample means when conducting an independent-samples *t* test.
 
 
 <p v-click>
@@ -690,7 +688,6 @@ D. There is no reason to compute the mean of the two sample means when conductin
 - In an independent-samples *t* test, we compute the pooled variance to combine the variances from both samples, providing a more accurate estimate of the population variance when the two groups are assumed to have equal variances.
 
 </p>
-
 
 ---
 layout: top-title
