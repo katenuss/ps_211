@@ -23,10 +23,62 @@ align: lt
 # Updates & Reminders
 
 :: content ::
-- == Data Write-Up== due Monday (11/17) by 11:59pm.
-  - You can work in groups of up to 3 people. 
+- ==Exam 3== grades will be posted Wed. night.
+  - We will go over difficult questions in class on Thursday.
+- ==Data Write-Up== due Monday (11/17) by 11:59pm.
+  - You can work in groups of up to 3 people. We highly recommend working in a group!
   - If you work in a group, only one person needs to submit it.
   - You *will* lose points for spelling, grammar, poor writing, etc. Work carefully!
+
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+
+# What's coming up
+
+:: content ::
+- Three more "gradeable" assignments after this lecture:
+  - Data Write-Up (due Mon. 11/17)
+  - Homework 4 (due Tues, 12/2)
+  - Exam 4 (12/9)
+- This week:
+  - Lecture 14 (today): One-way ANOVA
+  - Lecture 15 (Thurs): Repeated-Measures ANOVA & Mixed Designs
+- Next week (11/18):
+  - Lecture 16 (Tues): Correlation
+  - Lecture 17 (Thurs): Regression
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+
+# What's coming up
+
+:: content ::
+- Week of Nov. 24th: No classes (Thanksgiving)
+- Week of Dec. 1st: 
+  - Lecture 18 (Tues): Non-parametric tests (& extra time to finish previous lectures)
+  - Lecture 19 (Thurs): Exam 4 Review
+  - Discussion: Final group poster presentations!
+- Week of Dec. 9th
+  - Exam 4 on 12/9 (Tuesday)
+
+---
+layout: section
+color: indigo-light
+---
+
+
+# One-Way ANOVA: Comparing More Than Two Groups
 
 ---
 layout: top-title
@@ -559,6 +611,42 @@ align: lt
 ---
 
 :: title ::
+# Comparing *F* to *t*
+
+:: content ::
+At its core, the *F* statistic is a **signal-to-noise ratio**.
+
+$$
+F = \frac{\text{Systematic variance (between groups)}}{\text{Random variance (within groups)}}
+$$
+
+<br>
+
+<p v-click>
+
+==The *t* statistic can also be expressed as a signal-to-noise ratio:==
+
+$$
+t = \frac{\text{Difference Between Means}}{\text{Standard Error}}
+$$
+  
+</p>
+
+<p v-click>
+
+- The measures are different, but the logic is the same.
+- The numerator reflects systematic differences between groups, while the denominator reflects random noise.
+
+</p>
+
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
 # Interpreting *F*
 
 :: content ::
@@ -625,8 +713,9 @@ At least one population mean differs.
 
 <div class="bg-green-50 border-l-4 border-green-400 p-3 rounded">
 
-Unlike a *t*-test, ANOVA does not tell us *which* means differ —  
-only that **not all of them are the same**.
+Unlike a *t*-test, ANOVA does not tell us *which* means differ — only that **not all of them are the same**.
+
+We are *always* testing if the between-group variance is larger than the within-group variance. Because of this, *F* tests are *always* **one-tailed.**
 
 </div>
 
@@ -886,6 +975,8 @@ Because each extra *t*-test increases the risk of **Type I error** (false positi
 <p v-click>
 
 Post-hoc procedures control that risk by adjusting the critical value or significance threshold.
+When we run "post-hoc tests," we are essentially running *t* tests with built-in corrections for multiple comparisons.
+
 </p>
 
 ---
@@ -966,6 +1057,59 @@ Different journals or software packages may default to different methods —  al
 **Bonferroni example:** You run an ANOVA with 4 groups (6 pairwise comparisons) and find a significant effect. You now want to know *which* groups differ. To keep overall α = .05, each *t* test must meet *p* < .0083 (0.05/6) to be significant.
 
 </p>
+
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+# Reporting One-Way ANOVA Results in APA format
+
+:: content ::
+When reporting ANOVA results, include:
+- The type of ANOVA (e.g., one-way between-groups)
+- The *F* statistic with degrees of freedom
+- The *p* value
+- Effect size (e.g., *η²* or *R²*)
+- Results of post-hoc tests if applicable
+
+<p v-click>
+
+==Example write-up:==
+A one-way between-groups ANOVA was conducted to compare the effect of phone use on driving performance. There was a significant effect of phone use condition on driving performance, *F*(3, 36) = 54.0, *p* < .001, *η²* = .82. Post-hoc comparisons using the Tukey HSD test indicated that the video call condition resulted in significantly worse driving performance compared to the no phone condition (*p* = .023) and the passenger condition (*p* < .001). No other comparisons were significant (*p*s > .05).
+
+</p>
+
+---
+layout: top-title
+color: indigo-light
+align: lt
+---
+
+:: title ::
+# One-Way ANOVA in R
+
+:: content ::
+
+To perform a one-way ANOVA in R, you can use the `aov()` function. Here’s a basic example:
+
+```r
+# Example data
+data <- data.frame(
+  performance = c(85, 90, 78, 88, 92, 80, 75, 95, 89, 84,
+                  70, 65, 72, 68, 74, 66, 69, 71, 73, 67),
+  condition = factor(rep(c("No Phone", "Passenger", "Cell Phone", "Video Call"), each = 5))
+) 
+# Perform one-way ANOVA
+anova_result <- aov(performance ~ condition, data = data)
+
+# View summary
+summary(anova_result)
+
+```
 
 
 ---
