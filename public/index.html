@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PS 211 · Intro to Experimental Design (Fall 2025)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--indigo:#4f46e5;--text:#111827;--muted:#6b7280;--bg:#f8fafc;--card:#ffffff;--ring:#e5e7eb}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg)}
+  .wrap{max-width:1050px;margin:2.5rem auto;padding:0 1rem}
+  .hero{background:linear-gradient(135deg,#eef2ff,#ffffff);border:1px solid var(--ring);border-radius:16px;padding:2rem 2rem 1.5rem}
+  .hero h1{margin:0 0 .25rem;font-size:2rem;letter-spacing:.2px}
+  .hero p{margin:.2rem 0;color:var(--muted)}
+  .cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .9rem;border-radius:10px;text-decoration:none;font-weight:600;border:1px solid var(--ring);background:#fff}
+  .btn.primary{background:var(--indigo);color:#fff;border-color:transparent}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--ring);border-radius:14px;padding:16px}
+  .card h3{margin:.2rem 0 .5rem;font-size:1.05rem}
+  .list{padding:0;margin:.6rem 0 0;list-style:none}
+  .list li{margin:.25rem 0}
+  .list a{text-decoration:none;color:var(--indigo)}
+  .muted{color:var(--muted)}
+  .pill{display:inline-block;font-size:.8rem;color:#fff;background:var(--indigo);padding:.15rem .5rem;border-radius:999px}
+  .foot{margin:2rem 0 1rem;color:var(--muted);font-size:.9rem}
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>PS 211 · Intro to Experimental Design</h1>
+    <p>Fall 2025 · Section C1 · Boston University</p>
+    <div class="cta">
+      <a class="btn primary" href="/ps_211/syllabus.html">📕 Syllabus</a>
+      <a class="btn" href="/ps_211/assignments.html">📝 Assignments</a>
+      <a class="btn" href="/ps_211/slides/">📽️ Slides</a>
+      <a class="btn" href="/ps_211/pdfs/">📄 PDFs</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Overview</h3>
+      <p class="muted">Design, analysis, and communication of behavioral experiments. Emphasis on t-tests, ANOVAs, regression, effect sizes, and reproducible workflows (R / Slidev).</p>
+      <ul class="list">
+        <li>Instructor: <strong>Kate Nussenbaum</strong></li>
+        <li>Meeting: Tue/Thu · 11:00–12:15</li>
+        <li>Office hours: See syllabus</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>This Week <span class="pill">New</span></h3>
+      <ul class="list">
+        <li><a href="/ps_211/lecture14/">Lecture 14: One-Way ANOVA</a></li>
+        <li><a href="/ps_211/lecture15/">Lecture 15: Within-Groups & Two-Way ANOVA</a></li>
+        <li><a href="/ps_211/pdfs/ps211_hw4.pdf">Homework 4 (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Quick Links</h3>
+      <ul class="list">
+        <li><a href="/ps_211/slides/">All slide decks</a></li>
+        <li><a href="/ps_211/pdfs/">All PDFs</a></li>
+        <li><a href="/ps_211/assignments.html#policies">Policies & grading</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="foot">Built with Slidev + GitHub Pages.</p>
+</div>

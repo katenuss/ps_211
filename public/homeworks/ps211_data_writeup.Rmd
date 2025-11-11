@@ -1,0 +1,437 @@
+---
+title: 'PS 211 C1 — Data Write-up'
+author: "FILL IN ALL GROUP MEMBER NAMES HERE"
+date: 'Due: Monday, Nov. 17 by 11:59 p.m.'
+output: pdf_document
+subtitle: Fall 2025
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+# Data Write-up Instructions
+
+In this assignment, you will identify two research questions that you can answer using the dataset from the pre-course survey you completed at the beginning of the semester. You will then formulate hypotheses, identify your variables, run the appropriate statistical tests, and write up your results in APA format.
+
+The rest of this markdown file will guide you through the steps of the assignment. Please read all instructions carefully from top to bottom. 
+
+Unlike previous assignments, we *will* be grading based on the quality of your writing, including grammar and spelling. We *will* be taking points off for typos and misspellings, so please proofread your work carefully before submitting it.
+
+You will be working with the data from the pre-course survey you completed at the beginning of the semester. The data file has been shared on Slack and Blackboard and is called "course_survey.csv". You should download this file and make sure it is in the same folder as this R Markdown file. Then you should create a new R Studio Project in that folder, and open this R Markdown file within that project. Then follow the rest of the instructions in this markdown file. 
+
+You may work in groups of up to 3 people for this assignment. If you work in a group, please submit ONE file (from any of your Blackboard accounts) with all group members' names at the top. You should collaborate on all parts of the assignment, including coming up with your research questions and hypotheses, conducting the analyses, and writing up the results.
+
+We have included a rubric for each question so you know how your work will be graded. Please read the rubrics carefully before answering each question. In total there are 80 points possible for this assignment, plus up to 10 bonus points for creating figures to visualize your results.
+
+# Overall rubric:
+
+## Independent-Samples T Test
+### Part 1: 5 points
+### Part 2: 5 points
+### Part 3: 5 points
+### Part 4: 5 points
+### Part 5: 2 points
+### Part 6: No points (code provided)
+### Part 7: 10 points
+### Part 8: 6 points
+### Part 9 (Bonus): up to 5 points
+
+## One-Way ANOVA
+### Part 10: 5 points
+### Part 11: 5 points
+### Part 12: 5 points
+### Part 13: 5 points
+### Part 14: 2 points
+### Part 15: No points (code provided)
+### Part 16: 10 points
+### Part 17: 4 points
+### Part 18: 6 points
+### Part 19 (Bonus): up to 5 points
+
+---
+
+## Packages 
+
+This assignment uses **ggplot2**, **dplyr**, **tidyr**, and **readr**. These are "packages" that contain pre-written "functions", which are reusable chunks of code that perform specific tasks. *Important note: You may not have **readr** installed yet as we have not used it for the previous homeworks. You will need to install it by "uncommenting" the install.packages("readr") line below (remove the # at the beginning of the line) and running that line once on your computer. After you have installed it, you can "comment" that line back out (put the # back) and just use the "library" function to load the package into your R session.*
+
+```{r libraries, include = FALSE}
+# If needed, remove the # and run these once on your computer to install:
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("readr")
+
+# Once you have installed the packages, you can "comment" those lines out (put the hashtag back) and just use the "library" function to load the packages into your R session.
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readr)
+```
+
+---
+
+# Part 0: Load in the data
+
+Run the following code chunk to load the data from the CSV file into R. You do not need to edit any of the code. The first line reads the datafile into R and saves it as a variable called "data", and the second line prints out the first 6 rows of the data. Look at the columns and their names to familiarize yourself with the data. One very important note: the last three columns — pineapple_on_pizza, hotdog_sandwich, intelligent_life — asked people to use a Likert scale to state how much they agreed with different statements. Even though there are numbers in the columns, those numbers reflect *ordinal* rankings. They should *not* be treated as continuous variables and you should *not* analyze them with the statistical tests we have discussed so far this semester.
+
+The other questions were as follows:
+1. Age 
+2. Hours of sleep per night
+3. Hours of TV per week
+4. Hours spent on social media per week
+5. Favorite musical artist out of Spotify top 5
+6. Starbucks or Dunkin Donuts?
+7. Coffee or Tea?
+8. Still or Sparkling Water?
+
+*If the data does not load properly, make sure that the CSV file is in the same folder as this R Markdown file, and that you have created an R Studio Project in that folder and opened this R Markdown file within that project.*
+
+```{r load data}
+
+#load data
+data <- read_csv('course_survey.csv')
+
+#print first few rows
+head(data)
+```
+
+---
+
+# Part 1: Formulate your first research question (5 points total)
+Think of a question you could use this dataset to answer using an *independent-samples t* test. Write your question as concretely and clearly as possible.
+
+\textcolor{blue}{WRITE YOUR QUESTION HERE}
+
+### Question Rubric:
+#### 2 points: The research question can be addressed using an independent-samples t test.
+#### 2 points: The question is clearly and concretely stated.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+
+# Part 2: What is your null and alternative hypothesis? (5 points total)
+
+\textcolor{blue}{WRITE YOUR NULL HYPOTHESIS HERE (in words)}
+\textcolor{blue}{WRITE YOUR ALTERNATIVE HYPOTHESIS HERE (in words)}
+
+### Question Rubric:
+#### 2 points: Correct null hypothesis for an independent-samples t test.
+#### 2 points: Correct alternative hypothesis for an independent-samples t test.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+
+# Part 3: What is the direction of your statistical test and what alpha level are you going to use? Justify why you are using that particular alpha level. (5 points total)
+\textcolor{blue}{STATE YOUR TEST TYPE (two-tailed, one-tailed) AND ALPHA LEVEL HERE}  
+
+### Question Rubric:
+#### 2 points: Correct test type for your research question
+#### 1 point: Statement of alpha level and justification.
+#### 1 point: Proper grammar, spelling, and punctuation.
+#### 1 point: Correct code edits (see below)
+
+```{r test 1: determine direction of statistical test and alpha}
+
+# Specify whether you are running a two-tailed test, or a one-tailed test. If a one-tailed test, you need to determine if your hypothesis is "greater" or "less" based on whether the first "level" of your independent variable is expected to have a higher (greater) or lower (less) mean than the second level.
+
+test_type <- "two.sided"  # Options are "two.sided", "greater", or "less"
+
+# Specify your alpha level here. Most commonly used alpha level is 0.05.
+alpha_level <- 0.05
+
+```
+
+
+# Part 4: Identify your independent and dependent variable (5 points)
+Based on your research question, what are your independent and dependent variables? What are the levels of your independent variable?
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 1 point: Correct IV
+#### 1 point: Correct DV
+#### 1 point: Correct levels of IV
+#### 1 point: Proper grammar, spelling, and punctuation.
+#### 1 point: Correct code edits (see below)
+
+Next, identify the column names that correspond to those variables. You need to fill these in the code chunk below. Be very careful. Typos will make your code not work! Pay attention to capitalization and underscores!
+
+```{r test 1: identify iv dv}
+
+# REPLACE "AGE" AND "STARBUCKS_DUNKIN" WITH THE COLUMN NAMES FOR YOUR DEPENDENT AND INDEPENDENT VARIABLES. 
+# Pay attention to capitalization and underscores!
+# Keep the column names in quotation marks, as shown below.
+independent <- "starbucks_dunkin"
+dv <- "age"
+
+# REPLACE THE "LEVELS" VALUES WITH THE LEVELS OF YOUR INDEPENDENT VARIABLE (IF APPLICABLE).
+# Pay attention to capitalization and underscores!
+# Keep the levels values in quotation marks, as shown below.
+levels <- c("Starbucks", "Dunkin")
+
+```
+
+
+# Part 5: Justify why you are using an independent-samples t test for your research question (2 points)
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 1 point: Correct justification
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+# Part 6: Run your independent-samples t test (No points - all the code is written for you!)
+You do not need to edit the code chunks below! 
+
+### Print descriptive statistics
+This code chunk will print out the descriptive statistics (mean, standard deviation, and n) for your dependent variable, broken down by levels of your independent variable (if applicable). Run this code chunk to see the results.
+```{r test 1: descriptive stats code}
+
+# Descriptive statistics by levels of independent variable (if applicable)
+by_level_stats <- data %>%
+  group_by(!!sym(independent)) %>%
+  summarize(
+    mean = mean(!!sym(dv)),
+    sd = sd(!!sym(dv)),
+    n = n()
+  )
+
+#print out
+by_level_stats
+
+```
+
+### Run independent-samples t test
+```{r test 1: indepenent-samples t test code}
+
+# Example independent-samples t-test code
+ind_sample_t_test_result <- t.test(
+  data %>% filter(!!sym(independent) == levels[1]) %>% pull(dv),
+  data %>% filter(!!sym(independent) == levels[2]) %>% pull(dv),
+  paired = FALSE,
+  var.equal = TRUE,
+  alternative = test_type 
+)
+
+#print
+ind_sample_t_test_result
+
+```
+
+# Part 7: Write up your results in APA format (10 points)
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 3 points: Correctly states descriptive statistics.
+#### 3 points: Correctly states inferential statistics.
+#### 3 points: Correctly interprets results in context of research question.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+
+# Part 8: Describe the figure you would create to visualize your results (6 points)
+Describe the figure you would create to visualize your results. You do not need to actually create the figure (unless you want to for bonus points - see below). Just describe it in words. Include the following information:
+- What type of figure it would be (e.g., bar graph, box plot, histogram, scatterplot, etc.)
+- What would be on the x-axis and y-axis
+- Any other important features of the figure (e.g., error bars, colors, labels, legend, etc.)
+
+### Question Rubric:
+#### 2 points: Identifies reasonable figure type.
+#### 2 points: Identifies what would be on X and Y axis.
+#### 2 points: Describes other important features.
+
+# Part 9 (Bonus!): Make your figure! (Up to 5 bonus points)
+Create a version of the figure you described. We are not providing code here. Instead, we would like you to try to create the figure on your own using ggplot2. You can refer to the ggplot2 examples from the homeworks, or look up ggplot2 tutorials online. Be sure to include appropriate labels and a legend (if applicable).
+We will assign up to 5 bonus points based on: 
+- whether the figure is appropriate for the data and results you are trying to visualize
+- whether the figure is clearly labeled and easy to understand
+- whether the figure is aesthetically pleasing
+
+```{r test 1: make figure}
+
+#PUT YOUR FIGURE CODE IN THIS CHUNK
+
+
+```
+
+
+---
+
+
+# Part 10: Formulate your second research question (5 points total)
+Think of a question you could use this dataset to answer using a *one-way ANOVA*. Write your question as concretely and clearly as possible.
+
+\textcolor{blue}{WRITE YOUR QUESTION HERE}
+
+### Question Rubric:
+#### 2 points: The research question can be addressed using an independent-samples t test.
+#### 2 points: The question is clearly and concretely stated.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+
+# Part 11: What is your null and alternative hypothesis? (5 points total)
+
+\textcolor{blue}{WRITE YOUR NULL HYPOTHESIS HERE (in words)}
+\textcolor{blue}{WRITE YOUR ALTERNATIVE HYPOTHESIS HERE (in words)}
+
+### Question Rubric:
+#### 2 points: Correct null hypothesis for an independent-samples t test.
+#### 2 points: Correct alternative hypothesis for an independent-samples t test.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+
+# Part 12: What is the direction of your statistical test and what alpha level are you going to use? Justify why you are using that particular alpha level. (5 points total)
+\textcolor{blue}{STATE YOUR TEST TYPE (two-tailed, one-tailed greater, or one-tailed less) AND ALPHA LEVEL HERE. HINT: Is it even possible to run a one-tailed ANOVA?}  
+
+### Question Rubric:
+#### 2 points: Correct test type for your research question
+#### 1 point: Statement of alpha level and justification.
+#### 1 point: Proper grammar, spelling, and punctuation.
+#### 1 point: Correct code edits (see below)
+
+```{r test 2: determine direction of statistical test and alpha}
+
+#Specify the direction of your statistical test here
+test_type <- "two.sided"  # Options are "two.sided", "greater", or "less"
+
+# Specify your alpha level here. Most commonly used alpha level is 0.05.
+alpha_level <- 0.05
+
+```
+
+
+# Part 13: Identify your independent and dependent variable (5 points)
+Based on your research question, what are your independent and dependent variables? What are the levels of your independent variable?
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 1 point: Correct IV
+#### 1 point: Correct DV
+#### 1 point: Correct levels of IV
+#### 1 point: Proper grammar, spelling, and punctuation.
+#### 1 point: Correct code edits (see below)
+
+Next, identify the column names that correspond to those variables. You need to fill these in the code chunk below. Be very careful. Typos will make your code not work! Pay attention to capitalization and underscores!
+
+```{r test 2: identify iv dv}
+
+# REPLACE "AGE" AND "STARBUCKS_DUNKIN" WITH THE COLUMN NAMES FOR YOUR DEPENDENT AND INDEPENDENT VARIABLES. 
+# Pay attention to capitalization and underscores!
+# Keep the column names in quotation marks, as shown below.
+independent <- "starbucks_dunkin"
+dv <- "age"
+
+# REPLACE THE "LEVELS" VALUES WITH THE LEVELS OF YOUR INDEPENDENT VARIABLE (IF APPLICABLE).
+# Pay attention to capitalization and underscores!
+# Keep the levels values in quotation marks, as shown below.
+levels <- c("Starbucks", "Dunkin")
+
+```
+
+
+# Part 14: Justify why you are using a one-way ANOVA to address your research question (2 points)
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 1 point: Correct justification
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+# Part 15: Run your one-way ANOVA (No points - all the code is written for you!)
+You do not need to edit the code chunks below! 
+
+### Print descriptive statistics
+This code chunk will print out the descriptive statistics (mean, standard deviation, and n) for your dependent variable, broken down by levels of your independent variable (if applicable). Run this code chunk to see the results.
+```{r test 2: descriptive stats code}
+
+# Descriptive statistics by levels of independent variable (if applicable)
+by_level_stats <- data %>%
+  group_by(!!sym(independent)) %>%
+  summarize(
+    mean = mean(!!sym(dv)),
+    sd = sd(!!sym(dv)),
+    n = n()
+  )
+
+#print out
+by_level_stats
+
+```
+
+
+### One-way ANOVA code
+```{r test 2: one-way anova code}
+
+# One-way ANOVA code
+anova_result <- aov(
+  formula = as.formula(paste(dv, "~", independent)),
+  data = data
+)
+
+anova_summary <- summary(anova_result)
+
+#print result
+anova_summary
+```
+
+# Part 16: Write up your results in APA format (10 points)
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 3 points: Correctly states descriptive statistics.
+#### 3 points: Correctly states inferential statistics.
+#### 3 points: Correctly interprets results in context of research question.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+# Part 17: Post-hoc tests (4 points)
+You do not need to run any more statistical tests for this assignment. However, please answer the following question. *If* you found a significant effect in your one-way ANOVA, which post-hoc tests would you run to determine which specific groups were significantly different from each other? Justify your choice. Please answer this question even if you did not find a significant effect.
+
+\textcolor{blue}{WRITE YOUR ANSWER HERE}
+
+### Question Rubric:
+#### 3 points: Identifies a reasonable post-hoc test.
+#### 1 point: Proper grammar, spelling, and punctuation.
+
+
+# Part 18: Describe the figure you would create to visualize your results (6 points)
+Describe the figure you would create to visualize your results. You do not need to actually create the figure (unless you want to for bonus points - see below). Just describe it in words. Include the following information:
+- What type of figure it would be (e.g., bar graph, box plot, histogram, scatterplot, etc.)
+- What would be on the x-axis and y-axis
+- Any other important features of the figure (e.g., error bars, colors, labels, legend, etc.)
+
+### Question Rubric:
+#### 2 points: Identifies reasonable figure type.
+#### 2 points: Identifies what would be on X and Y axis.
+#### 2 points: Describes other important features.
+
+# Part 19 (Bonus!): Make your figure! (Up to 5 bonus points)
+Create a version of the figure you described. We are not providing code here. Instead, we would like you to try to create the figure on your own using ggplot2. You can refer to the ggplot2 examples from the homeworks, or look up ggplot2 tutorials online. Be sure to include appropriate labels and a legend (if applicable).
+We will assign up to 5 bonus points based on: 
+- whether the figure is appropriate for the data and results you are trying to visualize
+- whether the figure is clearly labeled and easy to understand
+- whether the figure is aesthetically pleasing
+
+```{r test 2: put your figure code here}
+
+
+```
+
+
+
+---
+
+You've made it to the end of the assignment! Please complete the AI and collaboration statement below before submitting. Please also proofread your work! Remember, we *WILL* be taking points off for typos and misspellings.
+
+
+# AI and collaboration statement
+
+- [] Everyone who worked on this assignment is listed at the top of the file.
+- [] I/We used an AI tool (e.g., ChatGPT, Bard, etc.) to help with this assignment.
+
+*If yes, what tool did you use and how did you use it?*
+\textcolor{blue}{YOUR ANSWER HERE} 
+
+---
+
+**How to submit:** Knit to pdf and upload the `.pdf` file *once* to Blackboard.
+
+---
+
+

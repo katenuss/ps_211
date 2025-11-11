@@ -39,7 +39,7 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Discover & build all lecture*.md
+            - name: Discover & build all lecture*.md
         shell: bash
         run: |
           set -e
@@ -67,22 +67,35 @@ jobs:
             cp -R public/pdfs/. dist/pdfs/
           fi
 
-          # Root index with link to /pdfs and deck list
-          mkdir -p dist
+          # If you provided a custom site in /public, copy it into dist/
+          if [ -d public ]; then
+            rsync -a --exclude 'pdfs' public/ dist/
+          fi
+
+          # Auto-generate a slides index page at /slides/ (keeps dynamic deck list)
+          mkdir -p dist/slides
           {
-            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slide Decks</title>'
-            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
-            echo '<h1>PS 211 — Slide Decks</h1>'
-            echo '<p><a href="pdfs/">📄 PDFs</a></p>'
-            echo '<ul>'
+            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slides</title>'
+            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:860px;margin:2rem auto;padding:0 1rem}ul{line-height:1.9}</style>'
+            echo '<h1>Slide Decks</h1><ul>'
             for d in dist/*/ ; do
               [ -f "${d}index.html" ] || continue
               dname=$(basename "$d")
-              [ "$dname" = "pdfs" ] && continue
-              echo "<li><a href=\"$dname/\">$dname</a></li>"
+              case "$dname" in pdfs|slides) continue;; esac
+              echo "<li><a href=\"/${REPO}/${dname}/\">${dname}</a></li>"
             done
             echo '</ul>'
-          } > dist/index.html
+          } > dist/slides/index.html
+
+          # If no custom index.html provided, fall back to a simple one
+          if [ ! -f dist/index.html ]; then
+            {
+              echo '<!doctype html><meta charset="utf-8"><title>PS 211</title>'
+              echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}ul{line-height:1.8}</style>'
+              echo '<h1>PS 211 — Slide Decks</h1>'
+              echo '<p><a href="pdfs/">📄 PDFs</a> · <a href="slides/">📽️ Slides</a></p>'
+            } > dist/index.html
+          fi
 
           # /pdfs index that lists all uploaded PDFs
           {
