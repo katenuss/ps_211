@@ -73,24 +73,31 @@ jobs:
           fi
 
           # If you provided a custom site in /public, copy it into dist/
+          # (We exclude 'pdfs' because it's already handled above.)
           if [ -d public ]; then
             rsync -a --exclude 'pdfs' public/ dist/
           fi
 
-          # Auto-generate a slides index page at /slides/
+          # Use custom Slides page if provided; otherwise generate a fallback.
+          # Note: rsync above already copies public/slides/index.html if present.
           mkdir -p dist/slides
-          {
-            echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slides</title>'
-            echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:860px;margin:2rem auto;padding:0 1rem}ul{line-height:1.9}</style>'
-            echo '<h1>Slide Decks</h1><ul>'
-            for d in dist/*/ ; do
-              [ -f "${d}index.html" ] || continue
-              dname=$(basename "$d")
-              case "$dname" in pdfs|slides) continue;; esac
-              echo "<li><a href=\"/${REPO}/${dname}/\">${dname}</a></li>"
-            done
-            echo '</ul>'
-          } > dist/slides/index.html
+          if [ -f dist/slides/index.html ]; then
+            echo "✅ Using custom slides page from public/slides/index.html"
+          else
+            echo "⚠️ No custom slides page found — generating simple list"
+            {
+              echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slides</title>'
+              echo '<style>body{font:16px/1.5 system-ui,sans-serif;max-width:860px;margin:2rem auto;padding:0 1rem}ul{line-height:1.9}</style>'
+              echo '<h1>Slide Decks</h1><ul>'
+              for d in dist/*/ ; do
+                [ -f "${d}index.html" ] || continue
+                dname=$(basename "$d")
+                case "$dname" in pdfs|slides) continue;; esac
+                echo "<li><a href=\"/${REPO}/${dname}/\">${dname}</a></li>"
+              done
+              echo '</ul>'
+            } > dist/slides/index.html
+          fi
 
           # If no custom index.html provided, fall back to a simple one
           if [ ! -f dist/index.html ]; then

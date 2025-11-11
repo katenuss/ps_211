@@ -216,23 +216,71 @@
 
 <script>
 (() => {
-  // Auto-link "Lecture N: ..." cells to /ps_211/lectureN/
-  const base = '/ps_211/lecture';
-  document.querySelectorAll('table.schedule td').forEach(td => {
-    const lines = td.innerHTML.split(/<br\s*\/?>/i);
-    if (!lines.length) return;
-    const m = lines[0].match(/^Lecture\s+(\d+):\s*(.*)$/);
-    if (!m) return;
-    const n = m[1], title = m[2];
-    const a = document.createElement('a');
-    a.href = `${base}${n}/`;
-    a.textContent = `Lecture ${n}: ${title}`;
-    a.style.textDecoration = 'none';
-    td.innerHTML = '';
-    td.appendChild(a);
-    if (lines.length > 1) {
-      td.insertAdjacentHTML('beforeend', '<br>' + lines.slice(1).join('<br>'));
+  const base = '/ps_211';
+
+  async function urlExists(url) {
+    try {
+      const res = await fetch(url, { method: 'HEAD' });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  async function deckExists(n) {
+    return await urlExists(`${base}/lecture${n}/`);
+  }
+
+  async function examDeckExists(n) {
+    return await urlExists(`${base}/lecture_exam${n}_review/`);
+  }
+
+  const tds = Array.from(document.querySelectorAll('table.schedule td'));
+  const jobs = tds.map(async (td) => {
+    if (td.querySelector('a')) return;
+
+    const rawHTML = td.innerHTML;
+    const lines = rawHTML.split(/<br\s*\/?>/i);
+    const firstLine = lines[0].trim();
+
+    // --- Regular lecture decks ---
+    const lectureMatch = firstLine.match(/^Lecture\s+(\d+):\s*(.*)$/i);
+    if (lectureMatch) {
+      const n = lectureMatch[1];
+      const title = lectureMatch[2];
+      if (await deckExists(n)) {
+        const a = document.createElement('a');
+        a.href = `${base}/lecture${n}/`;
+        a.textContent = `Lecture ${n}: ${title}`;
+        a.style.textDecoration = 'none';
+        td.innerHTML = '';
+        td.appendChild(a);
+        if (lines.length > 1) {
+          td.insertAdjacentHTML('beforeend', '<br>' + lines.slice(1).join('<br>'));
+        }
+      }
+      return;
+    }
+
+    // --- Exam Review decks ---
+    const examMatch = firstLine.match(/^EXAM\s*#?(\d+)\s*(review.*)$/i);
+    if (examMatch) {
+      const n = examMatch[1];
+      const title = examMatch[2].trim();
+      if (await examDeckExists(n)) {
+        const a = document.createElement('a');
+        a.href = `${base}/lecture_exam${n}_review/`;
+        a.textContent = `EXAM #${n} ${title}`;
+        a.style.textDecoration = 'none';
+        td.innerHTML = '';
+        td.appendChild(a);
+        if (lines.length > 1) {
+          td.insertAdjacentHTML('beforeend', '<br>' + lines.slice(1).join('<br>'));
+        }
+      }
     }
   });
+
+  Promise.all(jobs).catch(() => {/* no-op */});
 })();
 </script>
