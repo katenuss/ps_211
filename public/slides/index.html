@@ -1,0 +1,136 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PS 211 · Slides</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --indigo:#4f46e5; --ink:#111827; --muted:#6b7280; --bg:#f8fafc;
+    --card:#fff; --ring:#e5e7eb; --btn:#4f46e5; --btnText:#fff;
+    --btnGhost:#eef2ff; --btnDisabled:#d1d5db; --btnDisabledText:#6b7280;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  .wrap{max-width:1000px;margin:2rem auto;padding:0 16px}
+  header{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+  header h1{margin:0;font-size:1.8rem}
+  header p{margin:0;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  @media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--ring);border-radius:14px;
+        padding:14px;display:flex;flex-direction:column;gap:10px}
+  .kicker{font-weight:600;color:var(--muted);font-size:.9rem}
+  h3{margin:.1rem 0 .25rem 0;font-size:1.05rem}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:.35rem;
+       padding:.5rem .7rem;border-radius:10px;text-decoration:none;
+       font-weight:600;font-size:.92rem;cursor:pointer;transition:opacity .2s}
+  .primary{background:var(--btn);color:var(--btnText)}
+  .ghost{background:var(--btnGhost);color:var(--indigo)}
+  .disabled{background:var(--btnDisabled);color:var(--btnDisabledText);
+             pointer-events:none;cursor:not-allowed;opacity:.7}
+  .muted{color:var(--muted);font-size:.9rem}
+  .hr{height:1px;background:var(--ring);margin:1rem 0 1.25rem}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Slide Decks</h1>
+    <p class="muted">Lectures in order with quick links</p>
+  </header>
+
+  <div class="hr"></div>
+  <div id="slides" class="grid"></div>
+</div>
+
+<script>
+/**
+ * Builds ordered slide cards.
+ * - Deck URL: /ps_211/lectureN/
+ * - PDF URL:  /ps_211/pdfs/lectureN.pdf
+ * "Open deck" button is greyed out if deck not yet deployed.
+ */
+const START = 1, END = 18;
+const base = '/ps_211';
+const container = document.getElementById('slides');
+
+const titles = {
+  1: 'Introduction & Course Logistics',
+  2: 'Variables, Operational Definitions, Experiment Types',
+  3: 'Frequency Distributions & Visual Displays',
+  4: 'Central Tendency & Variability',
+  5: 'Sampling & Probability',
+  6: 'Normal Distribution & z-scores',
+  7: 'z-scores (continued)',
+  8: 'Hypothesis Testing, z tests, Confidence Intervals',
+  9: 'Effect Size, Power, One-sample t',
+  10: 'Paired-samples t',
+  11: 'Independent-samples t',
+  12: 'Independent t in R',
+  13: 'Reporting in APA Style',
+  14: 'One-way ANOVA',
+  15: 'Repeated-measures & Two-way ANOVA',
+  16: 'Correlation',
+  17: 'Regression',
+  18: 'Chi-square & Non-parametric; Data ethics'
+};
+
+// Helper to test if a URL exists
+async function urlExists(url) {
+  try { const r = await fetch(url, { method: 'HEAD' }); return r.ok; }
+  catch { return false; }
+}
+
+(async () => {
+  for (let n = START; n <= END; n++) {
+    const deckURL = `${base}/lecture${n}/`;
+    const pdfURL  = `${base}/pdfs/lecture${n}.pdf`;
+
+    const [deckOK, pdfOK] = await Promise.all([
+      urlExists(deckURL),
+      urlExists(pdfURL)
+    ]);
+
+    // --- Card layout ---
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const kicker = document.createElement('div');
+    kicker.className = 'kicker';
+    kicker.textContent = `Lecture ${n}`;
+    card.appendChild(kicker);
+
+    const h3 = document.createElement('h3');
+    h3.textContent = titles[n] || `Lecture ${n}`;
+    card.appendChild(h3);
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+
+    // Open Deck Button
+    const openBtn = document.createElement('a');
+    openBtn.textContent = 'Open deck';
+    openBtn.className = 'btn primary';
+    if (deckOK) {
+      openBtn.href = deckURL;
+    } else {
+      openBtn.classList.add('disabled');
+      openBtn.title = 'Deck not yet available';
+    }
+    actions.appendChild(openBtn);
+
+    // PDF Button (only if exists)
+    if (pdfOK) {
+      const pdfBtn = document.createElement('a');
+      pdfBtn.href = pdfURL;
+      pdfBtn.className = 'btn ghost';
+      pdfBtn.textContent = 'Download PDF';
+      actions.appendChild(pdfBtn);
+    }
+
+    card.appendChild(actions);
+    container.appendChild(card);
+  }
+})();
+</script>
