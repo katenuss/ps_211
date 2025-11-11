@@ -865,7 +865,7 @@ The between-groups and within-groups sums of squares are:
 
 <p v-click>
 
-**Final ANOVA result: F(3, 36) = 54.0**
+**Final ANOVA result: *F*(3, 36) = 54.0**
 
 *We need to look up the critical F value for (3, 36) df to determine significance, or use software to get the exact p-value.*
 
@@ -1054,10 +1054,9 @@ Different journals or software packages may default to different methods —  al
 
 <p v-click>
 
-**Bonferroni example:** You run an ANOVA with 4 groups (6 pairwise comparisons) and find a significant effect. You now want to know *which* groups differ. To keep overall α = .05, each *t* test must meet *p* < .0083 (0.05/6) to be significant.
+**Bonferroni example:** You run an ANOVA with 4 groups (6 pairwise comparisons) and find a significant effect. You now want to know *which* groups differ. To keep overall α = .05, each *t* test must meet *p* < .0083 (.05/6) to be significant.
 
 </p>
-
 
 ---
 layout: top-title
@@ -1118,4 +1117,4 @@ color: indigo-light
 ---
 
 # That’s all for today!
-Thursday: 
+Thursday:
