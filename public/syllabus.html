@@ -1,17 +1,238 @@
-<!doctype html><meta charset="utf-8"><title>PS 211 Syllabus</title>
-<style>body{font:16px/1.6 system-ui,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;color:#111}h1{margin-bottom:.25rem}h2{margin-top:1.5rem}</style>
-<h1>PS 211 · Syllabus</h1>
-<p>Fall 2025 · Section C1</p>
+<!doctype html>
+<meta charset="utf-8">
+<title>PS 211 · Syllabus</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --indigo:#4f46e5; --ink:#111827; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff; --ring:#e5e7eb
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--ink);background:var(--bg)}
+  .wrap{max-width:1000px;margin:2.2rem auto;padding:0 16px}
+  header{background:linear-gradient(135deg,#eef2ff,#fff);border:1px solid var(--ring);border-radius:16px;padding:18px 20px;margin-bottom:20px}
+  header h1{margin:0 0 .25rem;font-size:1.9rem;letter-spacing:.2px}
+  header p{margin:.2rem 0;color:var(--muted)}
+  h2{margin:2rem 0 .6rem;color:var(--indigo);font-size:1.35rem;border-bottom:2px solid #e0e7ff;padding-bottom:.25rem}
+  h3{margin:1.2rem 0 .4rem;color:#374151}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--ring);border-radius:14px;padding:14px}
+  .muted{color:var(--muted)}
+  ul{margin:0 0 .6rem 1.25rem}
+  li{margin:.2rem 0}
+  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+  table{border-collapse:collapse;width:100%;background:#fff;border:1px solid var(--ring);border-radius:12px;overflow:hidden}
+  th,td{border-bottom:1px solid var(--ring);padding:8px 10px;vertical-align:top}
+  th{background:#f3f4f6;text-align:left}
+  tr:last-child td{border-bottom:0}
+  .kicker{font-weight:600;color:#374151;margin:.4rem 0 .2rem}
+  .hr{height:1px;background:var(--ring);margin:1.2rem 0}
+  a{color:var(--indigo);text-decoration:none}
+  a:hover{text-decoration:underline}
 
-<h2>Instructor</h2>
-<p>Kate Nussenbaum · Office hours …</p>
+  /* Shade every other week block */
+  table.schedule tbody:nth-of-type(even) td { background:#f9fafb; }
+</style>
 
-<h2>Course Description</h2>
-<p>…</p>
+<div class="wrap">
+  <header>
+    <h1>PS 211: Introduction to Experimental Design</h1>
+    <p>Fall 2025 · Section C1 · Instructor: Kate Nussenbaum </p>
+  </header>
 
-<h2>Schedule</h2>
-<ul>
-  <li>Lecture 14: <a href="/ps_211/lecture14/">One-Way ANOVA</a></li>
-  <li>Lecture 15: <a href="/ps_211/lecture15/">Within-Groups & Two-Way ANOVA</a></li>
+  <div class="hr"></div>
 
-</ul>
+  <h2>COURSE DESCRIPTION</h2>
+  <p>This course is an introduction to the logic and processes involved in descriptive and inferential statistics for psychology. Topics include frequencies, measures of central tendency and variability, statistical inference, significance, t-tests, ANOVAs, correlation, regression, chi-square tests, and statistical software analysis.</p>
+
+  <h2>PREREQUISITE</h2>
+  <p> General Psychology (PS 101). The course will make use of both the programming language R and the interface RStudio, but no prior programming experience or knowledge of R is expected.</p>
+
+  <h2>COURSE OBJECTIVES</h2>
+  <ul>
+    <li>By the end of this course, students should understand:</li>
+    <li>Different types of variables and how to measure them.</li>
+    <li>The difference between populations and samples, and the basic concept of sampling.</li>
+    <li>Different types of descriptive and inferential statistics common in psychological research.</li>
+    <li>The concept of hypothesis-testing.</li>
+    <li>How to use R to conduct basic statistical analyses of data.</li>
+    <li>How to use R to create visualizations of data.</li>
+    <li>How to report and interpret the results of inferential statistical tests.</li>
+  </ul>
+
+  <h2>BU HUB AREAS</h2>
+  <p>This course will address learning outcomes for the Hub areas: HUB Quantitative Reasoning I and HUB Scientific Inquiry II.</p>
+
+  <h2>COURSE MATERIALS</h2>
+  <p>There are no required materials for this class. Lecture notes will be shared on the course website in advance of each class. R and R Studio will be used for assignments. More information will be provided about how to install and use this free software.</p>
+
+  <h2>SLACK</h2>
+  <p>We will use Slack for class-related communication. More information will be provided in class.</p>
+
+  <h2>BLACKBOARD</h2>
+  <p>Assignments will be submitted via Blackboard. Grades will also be posted on Blackboard.</p>
+
+  <h2>AI & COLLABORATION POLICY</h2>
+  <p> By the end of this course, you should be able to understand and conduct basic statistical analyses on your own.  In-class exams will be paper-based and completed individually. However, working with others and using AI tools like ChatGPT or Claude can help you learn. For all take-home assignments (homeworks and the data write-up, more details below), you are free to work with others and utilize whatever resources you want (including AI). If you collaborate or use AI, you must note this on the assignment. Failing to note collaboration or use of AI will be considered a violation of academic honesty.</p>
+  <p>Please see <a href="http://www.bu.edu/academics/cas/policies/academic-conduct/" target="_blank">http://www.bu.edu/academics/cas/policies/academic-conduct/</a> for more information about BU’s Academic Conduct policy.</p>
+
+  <h2>LAPTOP AND PHONE POLICY</h2>
+  <p> You do not need to bring a laptop to class, but doing so will allow you to take notes directly on the lecture slides (posted online) and follow along with coding demonstrations. To facilitate learning for everyone, please avoid viewing distracting material. Please make sure your phones are silenced. Laptop and phone use is strictly prohibited during exams. Having your phone out during an exam will result in a 0. Texting or scrolling during other lectures or discussions is disrespectful and will likely impede your own learning.</p>
+
+  <h2>ACCOMMODATIONS</h2>
+  <p> BU works to provide reasonable accommodations for those with documented disabilities. If you have disability-related accommodations for this class, please reach out to me and Juneau within the first two weeks of the semester and provide copies of your paperwork from disability services. If you are a student with a disability or believe you might have a disability that requires accommodations, please contact the Office for Disability Services (ODS) at (617) 353-3658 or <a href="mailto:access@bu.edu">access@bu.edu</a> to coordinate any reasonable accommodation requests. ODS is located at 25 Buick Street on the 3rd floor.</p>
+
+  <h3>Additional Resources for Students:</h3>
+  <ul>
+    <li>Accessibility: Resources & Service: <a href="http://www.bu.edu/disability/" target="_blank">http://www.bu.edu/disability/</a></li>
+    <li>Education Resource Center: <a href="http://www.bu.edu/erc/" target="_blank">http://www.bu.edu/erc/</a></li>
+    <li>Writing Center: <a href="http://www.bu.edu/writingprogram/the-writing-center/" target="_blank">http://www.bu.edu/writingprogram/the-writing-center/</a></li>
+    <li>Counseling & Psychological Services: <a href="https://www.bu.edu/shs/" target="_blank">https://www.bu.edu/shs/</a></li>
+  </ul>
+
+  <div class="hr"></div>
+
+  <h3 class="kicker">Grading: Final grades will be calculated based on the following total points.</h3>
+  <table>
+    <tr><th>A</th><td>94 - 100%</td><th>B-</th><td>80 - 83.9%</td></tr>
+    <tr><th>A-</th><td>90 - 93.9%</td><th>C+</th><td>77 - 79.9%</td></tr>
+    <tr><th>B+</th><td>87 - 89.9%</td><th>C</th><td>74 - 76.9%</td></tr>
+    <tr><th>B</th><td>84 - 86.9%</td><th>C-</th><td>70 - 73.9%</td></tr>
+    <tr><th>D</th><td>60 - 69.9%</td><th>F</th><td>&lt; 60%</td></tr>
+  </table>
+
+  <div class="hr"></div>
+
+  <h2>TENTATIVE SCHEDULE</h2>
+  <table class="schedule">
+    <thead>
+      <tr><th style="width:7ch;">Week</th><th style="width:12ch;">Date</th><th>Topic</th><th>Assignments Due</th></tr>
+    </thead>
+
+    <!-- Week 1 -->
+    <tbody>
+      <tr><td>1</td><td>Sep. 2</td><td>Lecture 1: Introduction, course logistics, syllabus review, intro to stats & research</td><td></td></tr>
+      <tr><td></td><td>Sep. 4</td><td>Lecture 2: Variables, operational definitions, types of experiments</td><td>Pre-course survey due Friday, Sep. 5 at 11:59 PM (for 1 bonus percentage point on Exam 1)</td></tr>
+      <tr><td></td><td>Discussion 1</td><td>Getting set up with R and R Studio</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 2 -->
+    <tbody>
+      <tr><td>2</td><td>Sep. 9</td><td>Lecture 3: Frequency distributions and visual displays</td><td>Have R and R studio installed</td></tr>
+      <tr><td></td><td>Sep. 11</td><td>Lecture 4: Central tendency and variability</td><td>Homework #1 due Monday, Sep. 15 at 11:59 PM</td></tr>
+      <tr><td></td><td>Discussion 2</td><td>Introductions and overview of discussion section</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 3 -->
+    <tbody>
+      <tr><td>3</td><td>Sep. 16</td><td>Lecture 5: Sampling and probability</td><td></td></tr>
+      <tr><td></td><td>Sep. 18</td><td>Lecture 6: The normal distribution, standardization, z-scores</td><td></td></tr>
+      <tr><td></td><td>Discussion 3</td><td>Forming groups, brainstorming research ideas</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 4 -->
+    <tbody>
+      <tr><td>4</td><td>Sep. 23</td><td>Exam #1 Review</td><td></td></tr>
+      <tr><td></td><td>Sep. 25</td><td>EXAM 1 (Lectures 1 - 5)</td><td></td></tr>
+      <tr><td></td><td>Discussion 4</td><td>Researching poster topics, forming hypotheses</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 5 -->
+    <tbody>
+      <tr><td>5</td><td>Sep. 30</td><td>Lecture 7: z-scores continued</td><td>No Wednesday office hours this week.</td></tr>
+      <tr><td></td><td>Oct. 2</td><td>Lecture 8: Hypothesis testing & z tests, confidence intervals</td><td></td></tr>
+      <tr><td></td><td>Discussion 5</td><td>Refine research poster topic, compile references</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 6 -->
+    <tbody>
+      <tr><td>6</td><td>Oct. 7</td><td>Lecture 9: Effect size, statistical power, single-sample t tests</td><td></td></tr>
+      <tr><td></td><td>Oct. 9</td><td>Exam #2 Review</td><td>Homework #2 due Friday, Oct. 10 at 11:59 p.m.</td></tr>
+      <tr><td></td><td>Discussion 6</td><td>Draft introduction section of poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 7 -->
+    <tbody>
+      <tr><td>7</td><td>Oct. 14</td><td>NO CLASS - classes meet according to Monday schedule</td><td></td></tr>
+      <tr><td></td><td>Oct. 16</td><td>EXAM #2 (Lectures 6 - 9)</td><td></td></tr>
+      <tr><td></td><td>Discussion 7</td><td>Complete introduction section of poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 8 -->
+    <tbody>
+      <tr><td>8</td><td>Oct. 21</td><td>Lecture 10: Paired-samples t tests</td><td></td></tr>
+      <tr><td></td><td>Oct. 23</td><td>Lecture 11: Independent samples t tests</td><td>Mid-course feedback survey due Tuesday, Oct. 28 at 10:59 AM (for 2 bonus percentage points on Exam 3)</td></tr>
+      <tr><td></td><td>Discussion 8</td><td>Draft methods section of poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 9 -->
+    <tbody>
+      <tr><td>9</td><td>Oct. 28</td><td>Lecture 12: Independent samples t tests, t tests in R</td><td></td></tr>
+      <tr><td></td><td>Oct. 30</td><td>Lecture 13:  Reporting results in APA style</td><td>Homework #3 due Friday, Oct. 31 at 11:59 p.m.</td></tr>
+      <tr><td></td><td>Discussion 9</td><td>Complete methods section of poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 10 -->
+    <tbody>
+      <tr><td>10</td><td>Nov. 4</td><td>EXAM #3 review</td><td></td></tr>
+      <tr><td></td><td>Nov. 6</td><td>EXAM #3 (Lectures 10 - 13)</td><td></td></tr>
+      <tr><td></td><td>Discussion 10</td><td>Draft analysis plan and limitations section of poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 11 -->
+    <tbody>
+      <tr><td>11</td><td>Nov. 11</td><td>Lecture 14: One-way ANOVA</td><td></td></tr>
+      <tr><td></td><td>Nov. 13</td><td>Lecture 15: Repeated-measures ANOVA, Two-way ANOVA</td><td>Data write-up due Monday, Nov. 17 at 11:59 p.m.</td></tr>
+      <tr><td></td><td>Discussion 11</td><td>Complete analysis plan and limitations section of poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 12 -->
+    <tbody>
+      <tr><td>12</td><td>Nov. 18</td><td>Lecture 16: Correlation</td><td></td></tr>
+      <tr><td></td><td>Nov. 20</td><td>Lecture 17: Regression</td><td></td></tr>
+      <tr><td></td><td>Discussion 12</td><td>Finalize poster</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 13 -->
+    <tbody>
+      <tr><td>13</td><td>Nov. 25</td><td>NO CLASS - THANKSGIVING</td><td></td></tr>
+      <tr><td></td><td>Nov. 27</td><td>NO CLASS - THANKSGIVING</td><td></td></tr>
+      <tr><td></td><td>Discussion</td><td>NO DISCUSSION</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 14 -->
+    <tbody>
+      <tr><td>14</td><td>Dec. 2</td><td>Lecture 18: Chi square and non-parametric tests, data ethics </td><td>Homework #4 due Tuesday, Dec. 2 at 11:59 p.m.</td></tr>
+      <tr><td></td><td>Dec. 4</td><td>EXAM #4 review</td><td></td></tr>
+      <tr><td></td><td>Discussion 13</td><td>Group poster presentations!</td><td></td></tr>
+    </tbody>
+
+    <!-- Week 15 -->
+    <tbody>
+      <tr><td>15</td><td>Dec. 9</td><td>EXAM #4 (Lectures 14 - 18)</td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+(() => {
+  // Auto-link "Lecture N: ..." cells to /ps_211/lectureN/
+  const base = '/ps_211/lecture';
+  document.querySelectorAll('table.schedule td').forEach(td => {
+    const lines = td.innerHTML.split(/<br\s*\/?>/i);
+    if (!lines.length) return;
+    const m = lines[0].match(/^Lecture\s+(\d+):\s*(.*)$/);
+    if (!m) return;
+    const n = m[1], title = m[2];
+    const a = document.createElement('a');
+    a.href = `${base}${n}/`;
+    a.textContent = `Lecture ${n}: ${title}`;
+    a.style.textDecoration = 'none';
+    td.innerHTML = '';
+    td.appendChild(a);
+    if (lines.length > 1) {
+      td.insertAdjacentHTML('beforeend', '<br>' + lines.slice(1).join('<br>'));
+    }
+  });
+})();
+</script>
