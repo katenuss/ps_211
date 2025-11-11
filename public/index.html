@@ -24,6 +24,50 @@
   .muted{color:var(--muted)}
   .pill{display:inline-block;font-size:.8rem;color:#fff;background:var(--indigo);padding:.15rem .5rem;border-radius:999px}
   .foot{margin:2rem 0 1rem;color:var(--muted);font-size:.9rem}
+
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--indigo);
+}
+
+.small {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.2rem 0;
+}
+
+.emoji {
+  margin-right: 0.4rem;
+}
+
+.meeting-list li {
+  margin-bottom: 0.9rem;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--indigo);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* optional: slightly larger grid gap for four cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 
 <div class="wrap">
@@ -38,33 +82,61 @@
     </div>
   </div>
 
-  <div class="grid">
-    <div class="card">
-      <h3>Overview</h3>
-      <p class="muted">Design, analysis, and communication of behavioral experiments. Emphasis on t-tests, ANOVAs, regression, effect sizes, and reproducible workflows (R / Slidev).</p>
-      <ul class="list">
-        <li>Instructor: <strong>Kate Nussenbaum</strong></li>
-        <li>Meeting: Tue/Thu · 11:00–12:15</li>
-        <li>Office hours: See syllabus</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>This Week <span class="pill">New</span></h3>
-      <ul class="list">
-        <li><a href="/ps_211/lecture14/">Lecture 14: One-Way ANOVA</a></li>
-        <li><a href="/ps_211/lecture15/">Lecture 15: Within-Groups & Two-Way ANOVA</a></li>
-        <li><a href="/ps_211/pdfs/ps211_hw4.pdf">Homework 4 (PDF)</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Quick Links</h3>
-      <ul class="list">
-        <li><a href="/ps_211/slides/">All slide decks</a></li>
-        <li><a href="/ps_211/pdfs/">All PDFs</a></li>
-        <li><a href="/ps_211/assignments.html#policies">Policies & grading</a></li>
-      </ul>
-    </div>
+
+<div class="grid">
+  <!-- Overview -->
+  <div class="card">
+    <h3>Overview</h3>
+    <p class="muted">
+      This course introduces the logic and processes behind descriptive and inferential
+      statistics in psychology. Topics include frequencies, measures of central tendency
+      and variability, statistical inference, significance testing, t-tests, ANOVAs,
+      correlation, regression, chi-square tests, and data analysis using statistical software.
+    </p>
   </div>
+
+    <!-- Meeting Times -->
+  <div class="card">
+    <h3>Meeting Times</h3>
+    <ul class="list meeting-list">
+      <li>
+        <span class="emoji">🎓</span>
+        <strong>Lecture:</strong> Tue / Thu · 11:00 a.m.–12:15 p.m.
+      </li>
+      <li>
+        <span class="emoji">💬</span>
+        <strong>Discussion:</strong> Wed · 12:20–1:10 p.m. (C2) or 1:25–2:15 p.m. (C3)
+      </li>
+      <li>
+        <span class="emoji">📍</span>
+        <strong>Location:</strong> 685–725 Comm Ave · CAS 306
+      </li>
+    </ul>
+  </div>
+
+  <!-- Instructor -->
+  <div class="card">
+    <h3>Instructor</h3>
+    <p><strong>Kate Nussenbaum</strong></p>
+    <p class="small"><span class="emoji">🕓</span> Tues 9:30–10:30 a.m.; Wed 2:30–3:30 p.m.</p>
+    <p class="small"><span class="emoji">📍</span> 111 Cummington Mall · Room 208</p>
+    <p class="small"><span class="emoji">✉️</span> <a href="mailto:katenuss@bu.edu">katenuss@bu.edu</a></p>
+    <p class="small"><span class="emoji">🌐</span> <a href="https://bucoldlab.org" target="_blank">bucoldlab.org</a></p>
+  </div>
+
+  <!-- Teaching Fellow -->
+  <div class="card">
+    <h3>Teaching Fellow</h3>
+    <p><strong>Juneau Wang</strong></p>
+    <p class="small"><span class="emoji">🕓</span> Tues 12:30–2:30 p.m.</p>
+    <p class="small"><span class="emoji">📍</span> 111 Cummington Mall · Room 242</p>
+    <p class="small"><span class="emoji">✉️</span> <a href="mailto:juneauw@bu.edu">juneauw@bu.edu</a></p>
+    <p class="small"><span class="emoji">🌐</span> <a href="https://www.juneauwang.com" target="_blank">juneauwang.com</a></p>
+  </div>
+
+
+</div>
 
   <p class="foot">Built with Slidev + GitHub Pages.</p>
 </div>
+
