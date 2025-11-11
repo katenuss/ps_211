@@ -15,6 +15,8 @@
   header{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
   header h1{margin:0;font-size:1.8rem}
   header p{margin:0;color:var(--muted)}
+  .section{margin-top:1.5rem}
+  .section h2{margin:.5rem 0 .6rem;font-size:1.1rem;color:var(--muted)}
   .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
   @media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (max-width:640px){.grid{grid-template-columns:1fr}}
@@ -22,6 +24,7 @@
         padding:14px;display:flex;flex-direction:column;gap:10px}
   .kicker{font-weight:600;color:var(--muted);font-size:.9rem}
   h3{margin:.1rem 0 .25rem 0;font-size:1.05rem}
+  .date{color:var(--muted);font-size:.9rem;margin-top:-4px}
   .actions{display:flex;gap:8px;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;gap:.35rem;
        padding:.5rem .7rem;border-radius:10px;text-decoration:none;
@@ -37,100 +40,180 @@
 <div class="wrap">
   <header>
     <h1>Slide Decks</h1>
-    <p class="muted">Lectures in order with quick links</p>
+    <p class="muted">Lectures, exam reviews, and discussion sections</p>
   </header>
 
   <div class="hr"></div>
-  <div id="slides" class="grid"></div>
+
+  <div class="section">
+    <h2>Lectures</h2>
+    <div id="lectures" class="grid"></div>
+  </div>
+
+  <div class="section">
+    <h2>Exam Reviews</h2>
+    <div id="exams" class="grid"></div>
+  </div>
+
+  <div class="section">
+    <h2>Discussion Sections</h2>
+    <div id="discussions" class="grid"></div>
+  </div>
 </div>
 
 <script>
-/**
- * Builds ordered slide cards.
- * - Deck URL: /ps_211/lectureN/
- * - PDF URL:  /ps_211/pdfs/lectureN.pdf
- * "Open deck" button is greyed out if deck not yet deployed.
- */
-const START = 1, END = 18;
-const base = '/ps_211';
-const container = document.getElementById('slides');
-
-const titles = {
-  1: 'Introduction & Course Logistics',
-  2: 'Variables, Operational Definitions, Experiment Types',
-  3: 'Frequency Distributions & Visual Displays',
-  4: 'Central Tendency & Variability',
-  5: 'Sampling & Probability',
-  6: 'Normal Distribution & z-scores',
-  7: 'z-scores (continued)',
-  8: 'Hypothesis Testing, z tests, Confidence Intervals',
-  9: 'Effect Size, Power, One-sample t',
-  10: 'Paired-samples t',
-  11: 'Independent-samples t',
-  12: 'Independent t in R',
-  13: 'Reporting in APA Style',
-  14: 'One-way ANOVA',
-  15: 'Repeated-measures & Two-way ANOVA',
-  16: 'Correlation',
-  17: 'Regression',
-  18: 'Chi-square & Non-parametric; Data ethics'
-};
-
-// Helper to test if a URL exists
 async function urlExists(url) {
   try { const r = await fetch(url, { method: 'HEAD' }); return r.ok; }
   catch { return false; }
 }
 
-(async () => {
-  for (let n = START; n <= END; n++) {
-    const deckURL = `${base}/lecture${n}/`;
-    const pdfURL  = `${base}/pdfs/lecture${n}.pdf`;
+(function(){
+  const base = '/ps_211';
+  const L_START = 1, L_END = 18;
+  const EXAMS = [1,2,3];
+  const DISCUSSIONS = 13; // Discussion 1..13
 
-    const [deckOK, pdfOK] = await Promise.all([
-      urlExists(deckURL),
-      urlExists(pdfURL)
-    ]);
+  const lecturesWrap = document.getElementById('lectures');
+  const examsWrap = document.getElementById('exams');
+  const discussionsWrap = document.getElementById('discussions');
 
-    // --- Card layout ---
+  const titles = {
+    1: 'Introduction & Course Logistics',
+    2: 'Variables, Operational Definitions, Experiment Types',
+    3: 'Frequency Distributions & Visual Displays',
+    4: 'Central Tendency & Variability',
+    5: 'Sampling & Probability',
+    6: 'Normal Distribution & Z-scores',
+    7: 'Z-scores (continued)',
+    8: 'Hypothesis Testing, Z tests, Confidence Intervals',
+    9: 'Effect Size, Power, One-sample T Tests',
+    10: 'Paired-samples T Tests',
+    11: 'Independent-samples T Tests',
+    12: 'Independent-samples T Tests (Continued), T Tests in R',
+    13: 'Reporting Results in APA Style',
+    14: 'One-way ANOVA',
+    15: 'Repeated-measures ANOVA & Two-way (Factorial) ANOVA',
+    16: 'Correlation',
+    17: 'Regression',
+    18: 'Chi-square & Non-parametric tests; Data Ethics'
+  };
+
+  const dates = {
+    1: 'Sept. 2',
+    2: 'Sept. 4',
+    3: 'Sept. 9',
+    4: 'Sept. 11',
+    5: 'Sept. 16',
+    6: 'Sept. 18',
+    7: 'Sept. 30',
+    8: 'Oct. 2',
+    9: 'Oct. 7',
+    10: 'Oct. 21',
+    11: 'Oct. 23',
+    12: 'Oct. 28',
+    13: 'Oct. 30',
+    14: 'Nov. 11',
+    15: 'Nov. 13',
+    16: 'Nov. 18',
+    17: 'Nov. 20',
+    18: 'Dec. 2'
+  };
+
+  function makeCard({ kicker, title, date, buttons }) {
     const card = document.createElement('div');
     card.className = 'card';
 
-    const kicker = document.createElement('div');
-    kicker.className = 'kicker';
-    kicker.textContent = `Lecture ${n}`;
-    card.appendChild(kicker);
+    const k = document.createElement('div');
+    k.className = 'kicker';
+    k.textContent = kicker;
+    card.appendChild(k);
 
     const h3 = document.createElement('h3');
-    h3.textContent = titles[n] || `Lecture ${n}`;
+    h3.textContent = title;
     card.appendChild(h3);
+
+    if (date) {
+      const d = document.createElement('div');
+      d.className = 'date';
+      d.textContent = date;
+      card.appendChild(d);
+    }
 
     const actions = document.createElement('div');
     actions.className = 'actions';
-
-    // Open Deck Button
-    const openBtn = document.createElement('a');
-    openBtn.textContent = 'Open deck';
-    openBtn.className = 'btn primary';
-    if (deckOK) {
-      openBtn.href = deckURL;
-    } else {
-      openBtn.classList.add('disabled');
-      openBtn.title = 'Deck not yet available';
-    }
-    actions.appendChild(openBtn);
-
-    // PDF Button (only if exists)
-    if (pdfOK) {
-      const pdfBtn = document.createElement('a');
-      pdfBtn.href = pdfURL;
-      pdfBtn.className = 'btn ghost';
-      pdfBtn.textContent = 'Download PDF';
-      actions.appendChild(pdfBtn);
-    }
-
+    buttons.forEach(b => actions.appendChild(b));
     card.appendChild(actions);
-    container.appendChild(card);
+
+    return card;
   }
+
+  function btnPrimary(label, href, enabled=true, title='') {
+    const a = document.createElement('a');
+    a.textContent = label;
+    a.className = 'btn primary';
+    if (enabled && href) { a.href = href; }
+    else { a.classList.add('disabled'); if (title) a.title = title; }
+    return a;
+  }
+  function btnGhost(label, href, enabled=true, title='') {
+    const a = document.createElement('a');
+    a.textContent = label;
+    a.className = 'btn ghost';
+    if (enabled && href) { a.href = href; }
+    else { a.classList.add('disabled'); if (title) a.title = title; }
+    return a;
+  }
+
+  (async () => {
+    // Lectures
+    for (let n = L_START; n <= L_END; n++) {
+      const deckURL = `${base}/lecture${n}/`;
+      const pdfURL  = `${base}/pdfs/ps211_fall2025_lecture${n}.pdf`;
+
+      const [deckOK, pdfOK] = await Promise.all([urlExists(deckURL), urlExists(pdfURL)]);
+
+      const openBtn = btnPrimary('Open deck', deckURL, deckOK, 'Deck not yet available');
+      const pdfBtn  = pdfOK ? btnGhost('Download PDF', pdfURL, true)
+                            : btnGhost('Download PDF', '', false, 'PDF not yet available');
+
+      const card = makeCard({
+        kicker: `Lecture ${n} — ${dates[n] || ''}`,
+        title: titles[n] || `Lecture ${n}`,
+        date: '',
+        buttons: [openBtn, pdfBtn]
+      });
+      lecturesWrap.appendChild(card);
+    }
+
+    // Exam Reviews
+    for (const n of EXAMS) {
+      const deckURL = `${base}/lecture_exam${n}_review/`;
+      const deckOK = await urlExists(deckURL);
+      const openBtn = btnPrimary('Open deck', deckURL, deckOK, 'Deck not yet available');
+
+      const card = makeCard({
+        kicker: `Exam ${n}`,
+        title: `Exam ${n} Review`,
+        buttons: [openBtn]
+      });
+      examsWrap.appendChild(card);
+    }
+
+    // Discussions
+    for (let n = 1; n <= DISCUSSIONS; n++) {
+      const pdfURL = `${base}/pdfs/ps211_fall2025_discussion${n}.pdf`;
+      const pdfOK  = await urlExists(pdfURL);
+
+      const pdfBtn = pdfOK ? btnGhost('Download PDF', pdfURL, true)
+                           : btnGhost('Download PDF', '', false, 'PDF not yet available');
+
+      const card = makeCard({
+        kicker: `Discussion ${n}`,
+        title: `Discussion ${n}`,
+        buttons: [pdfBtn]
+      });
+      discussionsWrap.appendChild(card);
+    }
+  })();
 })();
 </script>
