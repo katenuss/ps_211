@@ -39,17 +39,22 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
-            - name: Discover & build all lecture*.md
+      - name: Discover & build all lecture*.md
         shell: bash
         run: |
           set -e
           shopt -s nullglob
+
+          # Build directory
+          rm -rf dist
+          mkdir -p dist
+
+          # Find lecture decks
           lectures=(lecture*.md)
           if [ ${#lectures[@]} -eq 0 ]; then
             echo "No lecture*.md files found."
             exit 1
           fi
-
           echo "Found lectures: ${lectures[*]}"
 
           # Build each deck into dist/<slug>/ with correct base /<repo>/<slug>/
@@ -72,7 +77,7 @@ jobs:
             rsync -a --exclude 'pdfs' public/ dist/
           fi
 
-          # Auto-generate a slides index page at /slides/ (keeps dynamic deck list)
+          # Auto-generate a slides index page at /slides/
           mkdir -p dist/slides
           {
             echo '<!doctype html><meta charset="utf-8"><title>PS 211 — Slides</title>'
