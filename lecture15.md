@@ -498,6 +498,7 @@ layout: top-title
 color: indigo-light
 align: lt
 ---
+
 :: title ::
 
 # Accounting for individual variance increases power
@@ -506,7 +507,7 @@ align: lt
 #### Example:
 - Imagine BU asks students to rate their satisfaction (from 0 - 1) with three different dining halls.
 - They ask 10 different students to rate three dining halls.
-- They plot the means responses and include error bars that show +/- 1 SE from each mean:
+- They plot the mean responses and include error bars that show +/- 1 SE from each mean:
 
 <p v-click>
 <img src="/images/lecture15/errorbars1.png" class="w-1/2 mx-auto"/>
