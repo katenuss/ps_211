@@ -26,7 +26,7 @@ align: lt
 - The ==Data Write-up== was due yesterday.
   - We are going to grade them and post feedback by the end of the week.
   - We will accept late submissions through Friday. 
-- ==Homework 4== has been posted. 
+- ==Homework 4== will be posted shortly. 
   - Due **Tuesday, Dec. 2** at 11:59 PM.
   - We are going to post answers on Wednesday, Dec. 3.
 
@@ -573,7 +573,10 @@ t = \frac{r\sqrt{N-2}}{\sqrt{1 - r^2}}
 $$
 </p>
 
+<p v-click>
+
 - We then compare this *t* value to the critical value from the *t* distribution with *N − 2* degrees of freedom.
+</p>
 
 ---
 layout: top-title
