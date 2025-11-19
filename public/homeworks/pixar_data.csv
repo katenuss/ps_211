@@ -1,0 +1,24 @@
+,film,release_year,before_2010,run_time,film_rating,metacritic,rotten_tomatoes
+1,Toy Story,1995,before_2010,81,G,95,100
+2,A Bug's Life,1998,before_2010,95,G,77,92
+3,Toy Story 2,1999,before_2010,92,G,88,100
+4,"Monsters, Inc.",2001,before_2010,92,G,79,96
+5,Finding Nemo,2003,before_2010,100,G,90,99
+6,The Incredibles,2004,before_2010,115,PG,90,97
+7,Cars,2006,before_2010,117,G,73,74
+8,Ratatouille,2007,before_2010,111,G,96,96
+9,WALL-E,2008,before_2010,98,G,95,95
+10,Up,2009,before_2010,96,PG,88,98
+11,Toy Story 3,2010,2010_or_later,103,G,92,98
+12,Cars 2,2011,2010_or_later,106,G,57,40
+13,Brave,2012,2010_or_later,93,PG,69,78
+14,Monsters University,2013,2010_or_later,104,G,65,80
+15,Inside Out,2015,2010_or_later,95,PG,94,98
+16,The Good Dinosaur,2015,2010_or_later,93,PG,66,76
+17,Finding Dory,2016,2010_or_later,97,PG,77,94
+18,Cars 3,2017,2010_or_later,102,G,59,69
+19,Coco,2017,2010_or_later,105,PG,81,97
+20,Incredibles 2,2018,2010_or_later,118,PG,80,93
+21,Toy Story 4,2019,2010_or_later,100,G,84,97
+22,Onward,2020,2010_or_later,102,PG,61,88
+23,Soul,2020,2010_or_later,100,PG,83,96
