@@ -25,8 +25,8 @@ align: lt
 :: content ::
 - ==Homework 4== has been posted and is due **Dec. 2.**
     - Remember, only your top 3 homework grades count.
-- ==Data Write-up== grades have been posted. 
-    - We also returned your write-ups with feedback.
+- ==Data Write-up== grades will be posted by the end of the day tomorrow.
+    - We also directly commented on your submitted PDFs.
     - Good job! 🎉
     - Please come to office hours if you have questions.
     - If you have feedback about how the assignment can be improved, please let me know.

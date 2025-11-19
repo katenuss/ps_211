@@ -1,0 +1,372 @@
+---
+title: 'PS 211 C1 — Homework #4'
+author: "YOUR NAME"
+date: 'Due: Tuesday, Dec. 2 by 11:59 p.m.'
+output: pdf_document
+subtitle: Fall 2025
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# How this homework works
+
+**Almost all code is already written for you.** Your job is to **run** each chunk (click the green play button in the top-right of the chunk in RStudio) and then **answer the interpretation questions** in plain English where it says “**Your answer:**”.
+
+- Work **top-to-bottom**; later chunks often depend on objects created earlier.
+- If a plot/table doesn’t appear, run the chunk **above** it first.
+- Please type your answers inside the brackets where it says "PUT YOUR ANSWER IN THESE BRACKETS." That will make your answer show up in blue, and will be easier for us to find and grade.
+
+- When you are done, you should "knit" the file to a **pdf** document and upload the pdf to Blackboard.
+---
+
+# Problems and Points (30 total points)
+# 1: 7pts - 1 pt for each part
+# 2: 6pts - 1 pt for each part
+# 3: 5pts - 1 pt for each part
+# 4: 10pts - 1 pt for each part
+# 5: 2pts - 1 pt for each part
+
+---
+
+## Packages (run this once at the top)
+
+This assignment uses only **ggplot2**, **dplyr**, and **tidyr**. These are "packages" that contain pre-written "functions", which are reusable chunks of code that perform specific tasks.
+
+```{r libraries}
+# If needed, remove the # and run these once on your computer to install:
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("readr")
+
+# Once you have installed the packages, you can "comment" those lines out (put the hashtag back) and just use the "library" function to load the packages into your R session.
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readr)
+
+#set seed for reproducibility
+set.seed(211)  # ensures the same random numbers are generated each time (DO NOT CHANGE)
+
+```
+
+---
+
+# 1) Determining which statistical tests to use
+
+1. For each of the following scenarios, indicate which statistical test you would use address your research question: a *z* test, a single-sample *t* test, a paired-samples *t* test, an independent-samples *t* test, a one-way between-subjects ANOVA, a one-way repeated-measures ANOVA, a factorial ANOVA, a correlation, or a regression. You do *not* need to explain your choice.
+
+a. You examine whether students who study using flashcards, highlighting, or self-testing differ in their test performance.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+b. You want to know whether the average daily step count in your sample differs from the CDC recommendation of 10,000 steps.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+c. You want to know whether sleep hours are associated with daily stress scores.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+d. You want to compare accuracy on an attention task between children diagnosed with ADHD and neurotypical children.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+e. You test whether age, scores on a memory test, and scores on an attention test predict math achievement.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+f. You want to know whether a mindfulness intervention reduces anxiety. You measure anxiety levels before, during, and two weeks after the intervention in the same group of participants.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+g. You examine how different study techniques (flashcards, highlighting, self-testing) and time of day (morning, afternoon) influence test performance.
+
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+# 2) How do release year and rating influence Pixar film reviews?
+
+For this homework, you're going to explore a fun dataset on Pixar films and their public reception. The dataset includes information on various Pixar films, including their release dates, run times, film ratings, and Rotten Tomatoes scores. Run the code chunk below to load the data. 
+
+```{r load data}
+
+#load data
+pixar_data <- read_csv("https://katenuss.com/ps_211/homeworks/pixar_data.csv")
+pixar_data$before_2010 <- factor(pixar_data$before_2010, levels = c("before_2010", "2010_or_later"))
+
+#view data
+head(pixar_data)
+
+```
+
+Let's first look at how recency and film rating influences metacritic scores. For recency, we will look at whether the movie was released before 2010 or 2010 or later, which is stored in the "before_2010" column. Film rating is stored in the column "film_rating" and has two levels: "G" and "PG". Metacritic scores are stored in the column "metacritic". 
+
+The code below will run a factorial ANOVA to test how release decade and rating influence Rotten Tomatoes scores. Run the code to see the results.
+
+```{r pixar ANOVA}
+
+#run ANOVA
+pixar_anova <- aov(metacritic ~ before_2010 * film_rating, data = pixar_data)
+
+#print results
+summary(pixar_anova)
+```
+
+a) Are there any significant main effects or interactions? If so, what effect is significant? How do you know?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+b) Why is there 1 degree of freedom for each of the main effects and the interaction?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+c) We want to know how much variance in the data is *not* explained by release decade, film rating, or their interaction. To do this, we look at each "cell" in our 2x2 design and compute the squared deviations from the mean for each observation within that cell. What value in the ANOVA output corresponds to this quantity? (Give the numeric value.)
+\textcolor{blue}{YOUR ANSWER HERE}
+
+d) Which of the sum of squares values (from the ANOVA output) corresponds to between-groups variance? (Give the numeric value(s):
+\textcolor{blue}{YOUR ANSWER HERE}
+
+e) Why are we using a factorial *ANOVA* to address our question?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+The code below creates a bar plot of the means, with error bars showing the standard errors. Run the code to see the plot.
+
+```{r pixar plot}
+
+ggplot(pixar_data, aes(x = before_2010, y = metacritic, fill = film_rating)) +
+  stat_summary(fun = mean, geom = "bar", position = position_dodge(width = 0.9)) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = position_dodge(width = 0.9), width = 0.2) +
+  labs(title = "Mean Metacritic Scores by Release Decade and Film Rating",
+       x = "Release Decade",
+       y = "Mean Metacritic Score") +
+  scale_fill_manual(values = c("DarkBlue", "Light Blue"), name = "Film Rating") +
+  coord_cartesian(ylim = c(50, 100)) +
+  theme_classic()
+```
+
+f) Based on the ANOVA results and this visualization, what can you conclude? Describe in words what the results indicate about how release decade, film rating, and their interaction relate to metacritic scores.
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+# 3) How does release year of Pixar films relate to run time?
+
+Now, let's look at how movie run times changed across years. Run the code chunk below to create a scatterplot (with a trend line) of release year versus run time.
+
+```{r run time metacritic}
+
+ggplot(pixar_data, aes(x = release_year, y = run_time)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Release Year vs. Run Time of Pixar Films",
+       x = "Release Year",
+       y = "Run Time") +
+  theme_classic()
+
+```
+
+
+a) Based on the plot, would you expect the correlation coefficient describing the relation between release year and run time to be positive, negative, or very close to zero? Explain your reasoning.
+\textcolor{blue}{YOUR ANSWER HERE}
+
+Run the following code chunk to compute the correlation between release year and run time.
+
+```{r compute correlation}
+
+correlation <- cor(pixar_data$release_year, pixar_data$run_time)  
+
+#print out correlation
+correlation
+
+```
+
+b) Edit the following code chunk to compute the *coefficient of determination* (R squared) for this correlation.
+```{r compute r squared}
+
+r_squared <- correlation  # EDIT THIS LINE TO COMPUTE R SQUARED
+
+#print out R squared
+r_squared
+```
+
+What proportion of the variance in run time is explained by release year?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+c) Based only on what you have computed above, can you conclude that release year explains a *statistically significant* amount of variance in run time? Why or why not? 
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+Now, we can use the function cor.test to gain more information about the relation between these two variables. Run the code chunk below to see the results.
+
+```{r cor test}
+
+cor_test_result <- cor.test(pixar_data$release_year, pixar_data$run_time)
+cor_test_result
+
+```
+
+d) Based on the results of the correlation test, what is your conclusion regarding the relationship between release year and run time?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+e) From our correlation results, can we predict run time from release year? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+# 4) Can we predict metacritic scores?
+Finally, we can use regression to see whether we can predict metacritic scores from some of our other variables.
+
+First, let's try to predict metacritic scores from release year. Run the following code chunk to see the results of this regression.
+
+```{r regression}
+
+metacritic_release_year_regression <- lm(metacritic ~ release_year, data = pixar_data)
+summary(metacritic_release_year_regression)
+
+```
+
+Let's also make a scatter plot with a trend line.
+```{r regression plot}
+
+ggplot(pixar_data, aes(x = release_year, y = metacritic)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Release Year vs. Metacritic Scores of Pixar Films",
+       x = "Release Year",
+       y = "Metacritic Score") +
+  theme_classic()
+
+```
+
+a) The estimate for the intercept of this model is 1434. What does this value represent in the context of the data? Is this a meaningful value? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+b) The estimate for the slope of this model is -0.67. What does this value represent in the context of the data?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+c) Can we significantly predict metacritic scores from release year? How do you know?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+Now, let's try to predict metacritic scores from rotten tomatoes scores. 
+
+First, let's make a scatter plot with a trend line.
+```{r regression 2 plot}
+
+ggplot(pixar_data, aes(x = rotten_tomatoes, y = metacritic)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Rotten Tomatoes vs. Metacritic Scores of Pixar Films",
+       x = "Rotten Tomatoes Score",
+       y = "Metacritic Score") +
+  theme_classic()
+
+```
+
+d) Based on this plot, do you think the data point with a Rotten Tomatoes score around 40 should be excluded from the analysis? Why or why not?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+Run the following code chunk to see the results of this regression.
+```{r regression 2}
+
+metacritic_rotten_tomatoes_regression <- lm(metacritic ~ rotten_tomatoes, data = pixar_data)
+summary(metacritic_rotten_tomatoes_regression)
+```
+
+
+e) Can we significantly predict metacritic scores from rotten tomatoes scores? How do you know?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+f) Based on the R squared value from this regression, what proportion of variance in metacritic scores is explained by rotten tomatoes scores?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+g) Based on these results, if a movie had a Rotten Tomatoes score of 0, what would you expect its metacritic score to be?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+Now we can put *both* predictors into the model and look at how release year and rotten tomatoes scores jointly predict metacritic scores. Run the following code chunk to see the results.
+
+```{r regression 3}
+
+metacritic_both_regression <- lm(metacritic ~ release_year + rotten_tomatoes, data = pixar_data)
+summary(metacritic_both_regression)
+
+```
+
+h) Why would standardized coefficients be useful for interpreting the results of this regression?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+Let's standardize our variables and re-run the regression to get standardized coefficients. Run the following code chunk to see the results.
+```{r regression 4}
+
+#standardize variables
+pixar_data_standardized <- pixar_data %>%
+  mutate(
+    release_year_z = scale(release_year),
+    rotten_tomatoes_z = scale(rotten_tomatoes),
+    metacritic_z = scale(metacritic)
+  )
+
+#run regression with standardized variables
+metacritic_both_regression_standardized <- lm(metacritic_z ~ release_year_z + rotten_tomatoes_z, data = pixar_data_standardized)
+summary(metacritic_both_regression_standardized)
+```
+
+i) Based on the standardized coefficients, which predictor has a larger influence on metacritic scores: release year or rotten tomatoes scores? How do you know?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+j) If a rotten tomatoes score increases by 1 standard deviation, by how many standard deviations would you expect the metacritic score to change, holding release year constant?
+\textcolor{blue}{YOUR ANSWER HERE}
+
+
+
+
+# 5) Course feedback 
+
+You made it to the end of the last homework! We would like to get your feedback on the course so far. We would like thoughtful, honest responses. You will NOT be penalized for criticizing any aspect of the course. 
+
+a. What is one concept that you think could have been explained more clearly or that you are still confused about? (1 pt) *
+\textcolor{blue}{} 
+
+b. How would you rate the course difficulty so far (1 pt)*
+*Put an X in the appropriate box.*
+- [] Too easy
+- [] Just right
+- [] Too hard
+
+c. Is there anything else you would like to share?
+*No points but we are always open to feedback and suggestions!*
+\textcolor{blue}{} 
+
+
+# AI and collaboration statement
+
+- [] I worked with another person / other people on this assignment.
+
+*If yes, who did you work with?*
+\textcolor{blue}{} 
+
+- [] I used an AI tool (e.g., ChatGPT, Bard, etc.) to help me with this assignment.
+
+*If yes, what tool did you use and how did you use it?*
+\textcolor{blue}{} 
+
+---
+
+# Submission checklist
+
+- [] I ran every code chunk and can see each table/plot.  
+- [] I replaced each “**Your answer**” placeholder with my responses.  
+- [] My name is at the top.  
+- [] I knitted to **PDF** and verified that all figures and responses appear.
+
+**How to submit:** Knit to pdf and upload the `.pdf` file to Blackboard.
+
+---
+
+# Quick help
+
+- If something fails to run, execute the **Packages** chunk first, then work top-to-bottom.  
+- Read error messages—they usually name the variable or function that needs attention.  
+- Still stuck on a code bug? Share a screenshot of your code and the exact error message on the "r questions" channel on Slack.
+
