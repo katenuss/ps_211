@@ -25,15 +25,14 @@ align: lt
 :: content ::
 - ==Homework 4== has been posted and is due **Dec. 2.**
     - Remember, only your top 3 homework grades count.
-- ==Data Write-up== grades will be posted by the end of the day tomorrow.
-    - We also directly commented on your submitted PDFs.
+- ==Data Write-up== grades have been posted.
+    - We directly commented on your submitted PDFs.
     - Good job! 🎉
     - Please come to office hours if you have questions.
     - If you have feedback about how the assignment can be improved, please let me know.
         - Next year I will ask better questions on the pre-course survey. 
 - **No class or office hours next week!** 
     - Happy Thanksgiving! 🦃
-
 
 ---
 layout: section
@@ -96,7 +95,7 @@ align: lt
 
 <p v-click>
 
-- **Correlation** can tell us that ice cream sales and shark attacks are related (r = .7).
+- **Correlation** can tell us that ice cream sales and shark attacks are related ($r = .7$).
 
 </p>
 
@@ -111,9 +110,6 @@ align: lt
 - **Regression** allows us to make this prediction by quantifying the relationship between ice cream sales and shark attacks.
 
 </p>
-
-
-
 
 ---
 layout: top-title
@@ -841,9 +837,9 @@ align: lt
 :: content ::
 
 *You want to understand how stress and sleep relate to depression.*
-- You first run a simple linear regression predicting depression from sleep alone. You find that sleep significantly predicts depression (b = -2, p < .01).
+- You first run a simple linear regression predicting depression from sleep alone. You find that sleep significantly predicts depression ($b = -2, p < .01$).
 - However, you then run a ==multiple regression== including both stress and sleep as predictors. 
-    - Here, you find that stress significantly predicts depression (b = 3, p < .001), but sleep no longer significantly predicts depression (b = -0.5, p = .15).
+    - Here, you find that stress significantly predicts depression ($b = 3, p < .001$), but sleep no longer significantly predicts depression ($b = -0.5, p = .15$).
 
 **What do these two findings suggest?**
 
@@ -983,9 +979,8 @@ F-statistic: 98.57 on 1 and 4 DF,  p-value: 0.000195
 
 - The slope for stress is 2.8571, meaning that for each additional unit increase in stress, depression scores are predicted to increase by approximately 2.86 points.
 - The R² value is 0.961, indicating that approximately 96.1% of the variance in depression scores is explained by stress.
-- The p-value for the stress predictor is 0.00020, indicating that the relationship between stress and depression is statistically significant.
+- The p-value for the stress predictor is .00020, indicating that the relationship between stress and depression is statistically significant.
 </p>
-
 
 ---
 layout: top-title
@@ -1028,7 +1023,7 @@ F-statistic: 57.89 on 3 and 3 DF,  p-value: 0.000123
 
 <p v-click>
 
-**Answer:** Stress has the largest impact on depression, as indicated by its highest t-value (7.112) and lowest p-value (0.00045) among the predictors.
+**Answer:** Stress has the largest impact on depression, as indicated by its highest t-value (7.112) and lowest p-value (.00045) among the predictors.
 
 </p>
 
@@ -1195,7 +1190,6 @@ R² indicates that 32% of the variance in job performance is explained by years 
 layout: top-title
 color: indigo-light
 align: lt
-
 ---
 
 :: title ::
@@ -1205,7 +1199,7 @@ align: lt
 :: content ::
 A study predicts college GPA using SAT score (X₁) and high school GPA (X₂).
 
-When SAT score is used alone, it significantly predicts college GPA (b = 0.03, p < .01). When both SAT score and high school GPA are included as predictors in the model, the slope for SAT becomes non-significant.
+When SAT score is used alone, it significantly predicts college GPA ($b = 0.03, p < .01$). When both SAT score and high school GPA are included as predictors in the model, the slope for SAT becomes non-significant.
 
 **What is the best interpretation of this result?**
 
@@ -1262,5 +1256,3 @@ color: indigo-light
 
 # That’s all for today!  
 Enjoy Thanksgiving!  🦃
-
-
