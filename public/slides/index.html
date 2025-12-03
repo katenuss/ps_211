@@ -70,7 +70,7 @@ async function urlExists(url) {
 (function(){
   const base = '/ps_211';
   const L_START = 1, L_END = 18;
-  const EXAMS = [1,2,3];
+  const EXAMS = [1,2,3,4];
   const DISCUSSIONS = 13; // Discussion 1..13
 
   const lecturesWrap = document.getElementById('lectures');
@@ -187,17 +187,25 @@ async function urlExists(url) {
 
     // Exam Reviews
     for (const n of EXAMS) {
+
       const deckURL = `${base}/lecture_exam${n}_review/`;
-      const deckOK = await urlExists(deckURL);
+      const pdfURL  = `${base}/pdfs/ps211_fall2025_lecture_exam${n}_review.pdf`;
+
+      const [deckOK, pdfOK] = await Promise.all([urlExists(deckURL), urlExists(pdfURL)]);
+
       const openBtn = btnPrimary('Open deck', deckURL, deckOK, 'Deck not yet available');
+      const pdfBtn  = pdfOK ? btnGhost('Download PDF', pdfURL, true)
+                            : btnGhost('Download PDF', '', false, 'PDF not yet available');
 
       const card = makeCard({
         kicker: `Exam ${n}`,
         title: `Exam ${n} Review`,
-        buttons: [openBtn]
+        buttons: [openBtn, pdfBtn]
       });
       examsWrap.appendChild(card);
     }
+
+
 
     // Discussions
     for (let n = 1; n <= DISCUSSIONS; n++) {
