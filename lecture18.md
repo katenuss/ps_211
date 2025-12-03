@@ -242,7 +242,7 @@ align: lt-lt-lt
 
 ::left::
 **Examples of how we quantify signal**
-- Group mean differences (ANOVA, t-tests)
+- Group mean differences (ANOVA, *t*-tests)
 - Strength of association (correlation, regression coefficients)
 
 ::right::
@@ -251,7 +251,7 @@ align: lt-lt-lt
 - Standard deviation  
 - Standard error  
 - Within-group variance  
-- Residual error in regression  
+- Residual error in regression
 
 ---
 layout: top-title-two-cols
@@ -409,6 +409,7 @@ align: lt
   - **Between-group variance** (signal)  
   - **Within-group variance** (noise)  
 - To determine *which* means differ, post-hoc tests (Tukey, Bonferroni) are required.
+
 Example: testing if different teaching methods lead to different average test scores across multiple classes.
 
 ---
@@ -659,7 +660,7 @@ align: lt-lt-lt
 - Lower power  
 - Cannot model complex designs easily  
 - Harder to interpret effect sizes  
-- Discard metric information  
+
 
 ::right::
 
